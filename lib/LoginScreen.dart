@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,7 +129,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 276,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const HomeScreen()));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF32983E),
                         shape: RoundedRectangleBorder(
