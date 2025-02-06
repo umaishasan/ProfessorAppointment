@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-        import 'package:scholappoinment_934074496_f2f/figma_to_flutter.dart' as f2f;
-        
+import 'package:scholappoinment_934074496/SplashScreen.dart';
+
 void main() {
+  runApp(const MyApp());
+}
 
-    runApp(
-        f2f.getApp(
-            withInit: (){
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-                print('Figma to Flutter initialized!');
-                f2f.subscribeToEvent('pageLoaded', (e) async {
-
-                    String pageName = e.payload;
-                    print('$pageName loaded');
-
-                });
-
-            }
-        )
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Professor Appointment',
+      theme: ThemeData(
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const SplashScreen(),
     );
-
+  }
 }
