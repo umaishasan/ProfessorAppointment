@@ -104,10 +104,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   const SizedBox(height: 67),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const LoginScreen()));
+                      forgetPassword();
                     },
                     child: Container(
                       width: 276,
@@ -143,5 +140,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void forgetPassword() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
   }
 }

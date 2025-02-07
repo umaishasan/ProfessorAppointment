@@ -87,10 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const LoginScreen()));
+                        signinMethod();
                       },
                       child: const Text(
                         " Signin",
@@ -196,8 +193,7 @@ class _SignupScreenState extends State<SignupScreen> {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+          signupMethod();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF32983E),
@@ -216,5 +212,15 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  void signupMethod() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+  }
+
+  void signinMethod() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
   }
 }

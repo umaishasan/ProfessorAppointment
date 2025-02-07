@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:scholappoinment_934074496/StuSidebarScreen.dart';
+import 'package:scholappoinment_934074496/SidebarScreen.dart';
+//import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,6 +8,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+        backgroundColor: Colors.white,
+      ),
+      drawer: const Sidebar(),
       body: Stack(
         children: [
           // Background ellipse
@@ -23,78 +29,45 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          Column(
-            children: [
-              // Header
-              Container(
-                height: 66,
+          // Profile Card
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Container(
+              margin: const EdgeInsets.only(top: 143),
+              width: 343,
+              decoration: BoxDecoration(
                 color: Colors.white,
-                child: Stack(
-                  children: [
-                    const Center(
-                      child: Text(
-                        'Home',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF1E1E1E),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 15,
-                      top: 26,
-                      child: Image.network(
-                        'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/navigate.png',
-                        width: 32,
-                        height: 18,
-                      ),
-                    ),
-                  ],
-                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-
-              // Profile Card
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Container(
-                  margin: const EdgeInsets.only(top: 143),
-                  width: 343,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+              child: Column(
+                children: [
+                  const SizedBox(height: 45),
+                  const CircleAvatar(
+                    radius: 45,
+                    backgroundImage: NetworkImage(
+                        'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 45),
-                      const CircleAvatar(
-                        radius: 45,
-                        backgroundImage: NetworkImage(
-                            'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
-                      ),
-                      const SizedBox(height: 14),
-                      const Text(
-                        'Student',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300,
-                          color: Color(0xFF080808),
-                        ),
-                      ),
-                      const SizedBox(height: 29),
-                      _buildInfoRow('Name:', 'Maria Jason'),
-                      const SizedBox(height: 18),
-                      _buildInfoRow('Email:', 'mariajason@gmail.com'),
-                      const SizedBox(height: 18),
-                      _buildInfoRow('Phone:', '0123 3456789'),
-                      const SizedBox(height: 18),
-                      _buildInfoRow('Gender:', 'Female'),
-                      const SizedBox(height: 20),
-                    ],
+                  const SizedBox(height: 14),
+                  const Text(
+                    'Student',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: Color(0xFF080808),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 29),
+                  _buildInfoRow('Name:', 'Maria Jason'),
+                  const SizedBox(height: 18),
+                  _buildInfoRow('Email:', 'mariajason@gmail.com'),
+                  const SizedBox(height: 18),
+                  _buildInfoRow('Phone:', '0123 3456789'),
+                  const SizedBox(height: 18),
+                  _buildInfoRow('Gender:', 'Female'),
+                  const SizedBox(height: 20),
+                ],
               ),
-            ],
+            ),
           ),
         ],
       ),

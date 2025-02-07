@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:scholappoinment_934074496/SplashScreen.dart';
-import 'package:scholappoinment_934074496/StuSidebarScreen.dart';
+import 'package:scholappoinment_934074496/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const StudentSidebar(),
+      home: const SplashScreen(),
     );
   }
 }

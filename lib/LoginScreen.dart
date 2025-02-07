@@ -105,11 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const ForgetPasswordScreen()));
+                          forgetPasswordMethod();
                         },
                         child: const Text(
                           'Forget password',
@@ -130,10 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const HomeScreen()));
+                        loginMethod();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF32983E),
@@ -168,10 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const SignupScreen()));
+                          signupMethod();
                         },
                         child: const Text(
                           " SignUp",
@@ -198,5 +188,20 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void loginMethod() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+  }
+
+  void signupMethod() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const SignupScreen()));
+  }
+
+  void forgetPasswordMethod() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => const ForgetPasswordScreen()));
   }
 }
