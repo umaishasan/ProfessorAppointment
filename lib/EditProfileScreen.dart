@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final String name;
-  final String email;
-  final String phone;
-  final String gender;
-  final String profileImage;
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
-  const ProfileScreen({
-    super.key,
-    this.name = "John Doe",
-    this.email = "john@example.com",
-    this.phone = "+1234567890",
-    this.gender = "Male",
-    this.profileImage =
-        "https://dashboard.codeparrot.ai/api/image/Z6W8o6QDH3ZYFIZf/photo-edi.png",
-  });
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController gender = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +77,10 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     // Profile Image
-                    Container(
+                    const SizedBox(
                       width: 90,
                       height: 90,
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         radius: 45,
                         backgroundImage: NetworkImage(
                             'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
@@ -150,7 +146,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
 //Common Widget For TextFields
-  Widget _buildInfoField(String label, String value) {
+  Widget _buildInfoField(String label, TextEditingController value) {
     return Row(
       children: [
         SizedBox(
@@ -167,15 +163,15 @@ class ProfileScreen extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            height: 25,
+            height: 40,
             decoration: BoxDecoration(
               color: const Color(0x9ED9D9D9),
               borderRadius: BorderRadius.circular(4),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(
-              child: Text(
-                value,
+              child: TextField(
+                controller: value,
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black87,

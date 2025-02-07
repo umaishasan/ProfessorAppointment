@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DiscussionScreen extends StatelessWidget {
-  const DiscussionScreen({Key? key}) : super(key: key);
+  const DiscussionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class DiscussionScreen extends StatelessWidget {
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.all(8),
-                  children: [
+                  children: const [
                     // Incoming message
                     IncomingMessage(
                       senderName: 'Maria Jason',
@@ -80,7 +80,8 @@ class DiscussionScreen extends StatelessWidget {
 
               // Message input
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border(top: BorderSide(color: Colors.grey.shade300)),
@@ -97,15 +98,16 @@ class DiscussionScreen extends StatelessWidget {
                           ),
                           filled: true,
                           fillColor: Colors.grey.shade100,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16),
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     IconButton(
-                      icon: Icon(Icons.send),
+                      icon: const Icon(Icons.send),
                       onPressed: () {},
-                      color: Color(0xFF34C759),
+                      color: const Color(0xFF34C759),
                     ),
                   ],
                 ),
@@ -125,6 +127,7 @@ class IncomingMessage extends StatelessWidget {
   final String imageUrl;
 
   const IncomingMessage({
+    super.key,
     required this.senderName,
     required this.message,
     required this.time,
@@ -159,7 +162,7 @@ class IncomingMessage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 message,
                 style: const TextStyle(
@@ -222,7 +225,7 @@ class OutgoingMessage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 message,
                 style: const TextStyle(
@@ -230,7 +233,7 @@ class OutgoingMessage extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 time,
                 style: const TextStyle(

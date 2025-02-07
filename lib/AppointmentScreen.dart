@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppointmentScreen extends StatefulWidget {
-  const AppointmentScreen({Key? key}) : super(key: key);
+  const AppointmentScreen({super.key});
 
   @override
   State<AppointmentScreen> createState() => _AppointmentScreenState();
@@ -148,7 +148,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile Image
-            Container(
+            SizedBox(
               width: 70,
               height: 70,
               child: const CircleAvatar(

@@ -4,9 +4,9 @@ class DoneAppointmentScreen extends StatelessWidget {
   final String doctorName;
 
   const DoneAppointmentScreen({
-    Key? key,
+    super.key,
     this.doctorName = 'Carlos Shawn',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/SidebarScreen.dart';
-//import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,18 +29,19 @@ class HomeScreen extends StatelessWidget {
           ),
 
           // Profile Card
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+          Center(
             child: Container(
-              margin: const EdgeInsets.only(top: 143),
+              margin: const EdgeInsets.only(top: 0),
               width: 343,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color.fromARGB(255, 130, 53, 53),
                 borderRadius: BorderRadius.circular(8),
               ),
+              padding: const EdgeInsets.all(9),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 45),
+                  const SizedBox(height: 20),
                   const CircleAvatar(
                     radius: 45,
                     backgroundImage: NetworkImage(
@@ -56,15 +56,15 @@ class HomeScreen extends StatelessWidget {
                       color: Color(0xFF080808),
                     ),
                   ),
-                  const SizedBox(height: 29),
+                  const SizedBox(height: 18),
                   _buildInfoRow('Name:', 'Maria Jason'),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 10),
                   _buildInfoRow('Email:', 'mariajason@gmail.com'),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 10),
                   _buildInfoRow('Phone:', '0123 3456789'),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 10),
                   _buildInfoRow('Gender:', 'Female'),
-                  const SizedBox(height: 20),
+                  //const SizedBox(height: 20),
                 ],
               ),
             ),
