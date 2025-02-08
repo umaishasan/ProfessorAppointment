@@ -3,6 +3,8 @@ import 'package:scholappoinment_934074496/AppointmentScreen.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/LoginScreen.dart';
+import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 class Sidebar extends StatelessWidget {
   final String name;
@@ -44,7 +46,7 @@ class Sidebar extends StatelessWidget {
         ),
       );
 
-//Profile Photo at header
+  //Profile Photo at header
   Widget buildHeader(BuildContext context) => Container(
         color: const Color.fromARGB(249, 85, 133, 30),
         height: 230,
@@ -78,7 +80,7 @@ class Sidebar extends StatelessWidget {
         ),
       );
 
-//All icons buttons after header
+  //All icons buttons after header
   Widget buildBottom(BuildContext context) => Container(
         child: Column(
           children: [
@@ -143,16 +145,24 @@ class Sidebar extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => const AppointmentScreen()));
             },
           ),
-          ListTile(
+          IsScheduleOn(context),
+        ],
+      );
+
+  // ignore: non_constant_identifier_names
+  Widget IsScheduleOn(BuildContext context) {
+    return LoginScreen.isStudent == false
+        ? ListTile(
             leading: const Icon(Icons.schedule),
             title: const Text("Schedule"),
             iconColor: const Color.fromARGB(255, 0, 0, 0),
             textColor: const Color.fromARGB(255, 0, 0, 0),
             onTap: () {
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (_) => const ()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const SetScheduleScreen()));
             },
-          ),
-        ],
-      );
+          )
+        : const SizedBox
+            .shrink(); // This prevents rendering when isStudent is true
+  }
 }

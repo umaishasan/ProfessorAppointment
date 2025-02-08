@@ -4,6 +4,8 @@ import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static var isStudent;
+
   const LoginScreen({super.key});
 
   @override
@@ -13,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  //static bool isStudent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +194,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginMethod() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    // ignore: unrelated_type_equality_checks
+    if (_emailController.text == "abc" && _passwordController.text == "abc") {
+      LoginScreen.isStudent = true;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    } else {
+      LoginScreen.isStudent = false;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    }
   }
 
   void signupMethod() {

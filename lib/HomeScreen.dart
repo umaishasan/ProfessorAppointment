@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               margin: const EdgeInsets.only(top: 0),
               width: 343,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 130, 53, 53),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(9),

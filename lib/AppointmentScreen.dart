@@ -148,10 +148,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Profile Image
-            SizedBox(
+            const SizedBox(
               width: 70,
               height: 70,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 45,
                 backgroundImage: NetworkImage(
                     'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
