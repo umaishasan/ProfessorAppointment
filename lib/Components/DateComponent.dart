@@ -66,49 +66,29 @@ class _SetDateComponentState extends State<SetDateComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 60, right: 60),
+      margin: const EdgeInsets.only(top: 25, left: 60, right: 60),
       constraints: const BoxConstraints(minWidth: 30, minHeight: 100),
       child: Column(
         children: [
-          //Date Show
           Row(
-            spacing: 15,
+            mainAxisSize: MainAxisSize.min, // Keeps the content compact
             children: [
-              // Date Label
-              const Text(
-                'Date',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
+              const Icon(Icons.calendar_month,
+                  size: 20, color: Colors.black), // Icon
+              const SizedBox(width: 8), // Gap between icon and text
+              Text(
+                "${day.toString().padLeft(2, '0')}  ${_getMonthName(month)}, 20$year", // Your text
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                   color: Colors.black,
                 ),
-              ),
-
-              // Icon & Date Display
-              const SizedBox(width: 10),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_month, size: 15),
-                  const SizedBox(width: 5), // Reduce this if needed
-                  Text(
-                    "${day.toString().padLeft(2, '0')} ${_getMonthName(month)}, 20$year",
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
 
           //Date set cart
           Container(
-            //padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-            //padding: const EdgeInsets.only(left: 40, right: 40),
             margin: const EdgeInsets.only(left: 60, right: 60),
             decoration: BoxDecoration(
               color: Colors.white,

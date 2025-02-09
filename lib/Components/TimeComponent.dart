@@ -68,37 +68,25 @@ class _SetTimeComponentState extends State<SetTimeComponent> {
       children: [
         //For Time
         Container(
-          //padding: const EdgeInsets.all(75.0),
           margin: const EdgeInsets.only(left: 10, right: 10, top: 85),
           constraints: const BoxConstraints(minWidth: 190, minHeight: 100),
+
+          //Time Show
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //Time Show
               Row(
+                mainAxisSize: MainAxisSize.min, // Keeps the content compact
                 children: [
-                  const Text(
-                    'Time',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Inter',
+                  const Icon(Icons.access_time,
+                      size: 20, color: Colors.black), // Icon
+                  const SizedBox(width: 8), // Gap between icon and text
+                  Text(
+                    '${_hour.toString().padLeft(2, '0')}:${_minute.toString().padLeft(2, '0')} ${_isPM ? 'PM' : 'AM'}', // Your text
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
                     ),
-                  ),
-                  const Spacer(flex: 2),
-                  Row(
-                    children: [
-                      const Icon(Icons.access_time, size: 15),
-                      const SizedBox(width: 3),
-                      Text(
-                        '${_hour.toString().padLeft(2, '0')}:${_minute.toString().padLeft(2, '0')} ${_isPM ? 'PM' : 'AM'}',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300,
-                          fontFamily: 'Inter',
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -107,8 +95,6 @@ class _SetTimeComponentState extends State<SetTimeComponent> {
               const SizedBox(height: 8),
               Container(
                 margin: const EdgeInsets.only(left: 80, right: 80),
-                // padding:
-                //     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),

@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF32983E),
       ),
       drawer: const Sidebar(),
       body: Stack(
@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               height: 1701,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0x4D16442C),
+                color: Color.fromARGB(73, 100, 188, 71),
               ),
             ),
           ),

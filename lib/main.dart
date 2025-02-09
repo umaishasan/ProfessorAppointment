@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
+import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
+import 'package:scholappoinment_934074496/DiscussionScreen.dart';
+import 'package:scholappoinment_934074496/EditProfileScreen.dart';
+import 'package:scholappoinment_934074496/SplashScreen.dart';
 //import 'package:scholappoinment_934074496/SplashScreen.dart';
+
+//This variable use for screen size
+late Size screenSizeCommon;
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +19,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Professor Appointment',
+      title: 'My Academic Appointment',
       theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            elevation: 20,
+            iconTheme: IconThemeData(color: Colors.black),
+            titleTextStyle: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+            backgroundColor: Color(0xFF32983E),
+            toolbarTextStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15)),
       ),
-      home: const SetScheduleScreen(),
+      home: const SplashScreen(),
+      //home: const AppointmentScreen(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/TimeComponent.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class SetScheduleScreen extends StatefulWidget {
   final bool initialAvailability;
@@ -41,7 +42,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
             height: 1701,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Color(0x4D16442C),
+              color: Color.fromARGB(73, 100, 188, 71),
             ),
           ),
         ),
@@ -74,98 +75,119 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
           ),
         ),
 
-        //Time
-        const SetTimeComponent(),
+        Card(
+            margin: const EdgeInsets.only(
+                left: 10, right: 10, top: 80, bottom: 250),
+            color: Colors.white,
+            child: Column(children: [
+              const SetTimeComponent(),
+              AvailbilityToggle(_isAvailable),
+            ])),
 
-        //AvailbilityToggle(_isAvailable)
+        // Set schedule Button
+        Container(
+            margin: const EdgeInsets.only(left: 10, right: 10, top: 540),
+            child: Center(
+              child: SizedBox(
+                width: 276,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setSchedule();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF32983E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(23),
+                    ),
+                  ),
+                  child: const Text(
+                    'Setschedule',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontFamily: 'Heebo',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ))
       ]),
     );
   }
 
-  Widget AvailbilityToggle(bool _isAvailable) {
-    //return LayoutBuilder(
-    //builder: (context, constraints) {
+  // ignore: non_constant_identifier_names
+  Widget AvailbilityToggle(bool isAvailable) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Status',
-            style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
+      margin: const EdgeInsets.only(left: 10, right: 10, top: 50),
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => _toggleAvailability(true),
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: isAvailable
+                          ? const Color(0xFF32983E)
+                          : const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Text(
+                    'Available',
+                    style: TextStyle(
+                      fontFamily: 'Heebo',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () => _toggleAvailability(true),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: _isAvailable
-                            ? const Color(0xFF32983E)
-                            : const Color(0xFFD9D9D9),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
+            const SizedBox(width: 38),
+            GestureDetector(
+              onTap: () => _toggleAvailability(false),
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: !isAvailable
+                          ? const Color(0xFF32983E)
+                          : const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      'Available',
-                      style: TextStyle(
-                        fontFamily: 'Heebo',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Text(
+                    'Not Available',
+                    style: TextStyle(
+                      fontFamily: 'Heebo',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 38),
-              GestureDetector(
-                onTap: () => _toggleAvailability(false),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: !_isAvailable
-                            ? const Color(0xFF32983E)
-                            : const Color(0xFFD9D9D9),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      'Not Available',
-                      style: TextStyle(
-                        fontFamily: 'Heebo',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
-    //},
-    //);
+  }
+
+  void setSchedule() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 }
-
-// ignore: non_constant_identifier_names

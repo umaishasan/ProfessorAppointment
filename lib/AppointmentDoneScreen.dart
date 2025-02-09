@@ -13,55 +13,9 @@ class DoneAppointmentScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background ellipse
-          Positioned(
-            top: -18,
-            left: -660,
-            child: Container(
-              width: 1027,
-              height: 1701,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0x4D16442C),
-              ),
-            ),
-          ),
-
           // Main content
           Column(
             children: [
-              // Header
-              Container(
-                height: 64,
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.network(
-                        'https://dashboard.codeparrot.ai/api/image/Z6Xu0cNJMVoCouCq/vector.png',
-                        width: 22,
-                        height: 21,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Expanded(
-                      child: Center(
-                        child: Text(
-                          'Done',
-                          style: TextStyle(
-                            fontFamily: 'Jaro',
-                            fontSize: 36,
-                            color: Color(0xFF1E1E1E),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
               // Appointment status card
               Container(
                 margin: const EdgeInsets.only(top: 13, left: 8, right: 8),

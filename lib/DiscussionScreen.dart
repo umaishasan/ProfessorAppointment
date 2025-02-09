@@ -1,95 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/main.dart';
 
 class DiscussionScreen extends StatelessWidget {
   const DiscussionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    screenSizeCommon = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Background ellipse
-          Positioned(
-            top: -18,
-            left: -660,
-            child: Container(
-              width: 1027,
-              height: 1701,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0x4D16442C),
-              ),
-            ),
-          ),
+          //App bar and background design
+          CommonComponent.AppBarCreator(
+              context, "Discussion", Icons.arrow_back, () => GotoHome(context)),
 
           Column(
             children: [
-              // Header
-              Container(
-                height: 66,
-                color: Colors.white,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 11,
-                      top: 23,
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back, size: 22),
-                      ),
-                    ),
-                    const Center(
-                      child: Text(
-                        'Discussion',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF1E1E1E),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  children: const [
-                    // Incoming message
-                    IncomingMessage(
-                      senderName: 'Maria Jason',
-                      message: 'Hey! How are you?\nAre you Fine?',
-                      time: '09:00 AM',
-                      imageUrl:
-                          'https://dashboard.codeparrot.ai/api/image/Z6XiasNJMVoCouCh/user-imag.png',
-                    ),
-                    SizedBox(height: 16),
-                    // Outgoing message
-                    OutgoingMessage(
-                      senderName: 'Carlos Shawn',
-                      message:
-                          "Hey! yeah yeah I'm fine.\nyou tell me how are you?",
-                      time: '09:00 AM',
-                      imageUrl:
-                          'https://dashboard.codeparrot.ai/api/image/Z6XiasNJMVoCouCh/user-imag-2.png',
-                    ),
-                  ],
+              //show all messages
+              const Expanded(
+                child: Row(
+                  children: [],
                 ),
               ),
 
               // Message input
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(color: Colors.grey.shade300)),
-                ),
+              ChatInput(),
+            ],
+          )
+
+          // Column(
+          //   children: [
+          //     Expanded(
+          //       child: ListView(
+          //         padding: const EdgeInsets.all(8),
+          //         children: const [
+          //           // Incoming message
+          //           IncomingMessage(
+          //             senderName: 'Maria Jason',
+          //             message: 'Hey! How are you?\nAre you Fine?',
+          //             time: '09:00 AM',
+          //             imageUrl:
+          //                 'https://dashboard.codeparrot.ai/api/image/Z6XiasNJMVoCouCh/user-imag.png',
+          //           ),
+
+          //           // Outgoing message
+          //           SizedBox(height: 16),
+          //           OutgoingMessage(
+          //             senderName: 'Carlos Shawn',
+          //             message:
+          //                 "Hey! yeah yeah I'm fine.\nyou tell me how are you?",
+          //             time: '09:00 AM',
+          //             imageUrl:
+          //                 'https://dashboard.codeparrot.ai/api/image/Z6XiasNJMVoCouCh/user-imag-2.png',
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        ],
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  void GotoHome(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget ChatInput() {
+    return Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: screenSizeCommon.width * 0.01,
+            vertical: screenSizeCommon.height * 0.01),
+        child: Row(
+          children: [
+            //Input type message
+            Expanded(
+              child: Card(
+                color: Colors.white,
                 child: Row(
                   children: [
                     Expanded(
                       child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         decoration: InputDecoration(
                           hintText: 'Type a message...',
                           border: OutlineInputBorder(
@@ -103,20 +103,20 @@ class DiscussionScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {},
-                      color: const Color(0xFF34C759),
-                    ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
-    );
+            ),
+
+            //send message button
+            IconButton(
+              padding: const EdgeInsets.all(5),
+              icon: const Icon(Icons.send),
+              onPressed: () {},
+              color: const Color.fromARGB(255, 0, 0, 0),
+            ),
+          ],
+        ));
   }
 }
 

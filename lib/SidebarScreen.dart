@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/AppointmentScreen.dart';
+import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
+import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
@@ -48,7 +49,7 @@ class Sidebar extends StatelessWidget {
 
   //Profile Photo at header
   Widget buildHeader(BuildContext context) => Container(
-        color: const Color.fromARGB(249, 85, 133, 30),
+        color: const Color.fromARGB(180, 101, 188, 71),
         height: 230,
         padding: const EdgeInsets.only(top: 50),
         child: const Column(
@@ -135,24 +136,16 @@ class Sidebar extends StatelessWidget {
                   MaterialPageRoute(builder: (_) => const DiscussionScreen()));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.calendar_month_rounded),
-            title: const Text("Appointment"),
-            iconColor: const Color.fromARGB(255, 0, 0, 0),
-            textColor: const Color.fromARGB(255, 0, 0, 0),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const AppointmentScreen()));
-            },
-          ),
           IsScheduleOn(context),
         ],
       );
 
   // ignore: non_constant_identifier_names
   Widget IsScheduleOn(BuildContext context) {
-    return LoginScreen.isStudent == false
-        ? ListTile(
+    if (LoginScreen.isStudent == false) {
+      return Column(
+        children: [
+          ListTile(
             leading: const Icon(Icons.schedule),
             title: const Text("Schedule"),
             iconColor: const Color.fromARGB(255, 0, 0, 0),
@@ -161,8 +154,38 @@ class Sidebar extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const SetScheduleScreen()));
             },
+          ),
+          ListTile(
+            leading: const Icon(Icons.calendar_month_rounded),
+            title: const Text("Appointment"),
+            iconColor: const Color.fromARGB(255, 0, 0, 0),
+            textColor: const Color.fromARGB(255, 0, 0, 0),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const AppointmentScreenProf()));
+            },
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.calendar_month_rounded),
+            title: const Text("Appointment"),
+            iconColor: const Color.fromARGB(255, 0, 0, 0),
+            textColor: const Color.fromARGB(255, 0, 0, 0),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const AppointmentScreenStu()));
+            },
           )
-        : const SizedBox
-            .shrink(); // This prevents rendering when isStudent is true
+        ],
+      );
+    }
   }
 }

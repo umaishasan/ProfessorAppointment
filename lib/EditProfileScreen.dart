@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,52 +20,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background ellipse
-          Positioned(
-            top: -18,
-            left: -660,
-            child: Container(
-              width: 1027,
-              height: 1701,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0x4D16442C),
-              ),
-            ),
-          ),
+          CommonComponent.AppBarCreator(
+              context, "Profile", Icons.arrow_back, () => editProfile(context)),
 
           // Header
           Column(
             children: [
-              Container(
-                height: 64,
-                color: Colors.white,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 10,
-                      top: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ),
-
-                    //Header
-                    const Center(
-                      child: Text(
-                        'Profile',
-                        style: TextStyle(
-                          fontFamily: 'Jaro',
-                          fontSize: 36,
-                          color: Color(0xFF1E1E1E),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
               // Profile Card
               const SizedBox(height: 100),
               Container(
@@ -172,6 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Center(
               child: TextField(
                 controller: value,
+                decoration: const InputDecoration(border: InputBorder.none),
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black87,
