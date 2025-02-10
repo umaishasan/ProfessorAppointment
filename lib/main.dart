@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
-import 'package:scholappoinment_934074496/DiscussionScreen.dart';
-import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/SplashScreen.dart';
-//import 'package:scholappoinment_934074496/SplashScreen.dart';
 
 //This variable use for screen size
 late Size screenSizeCommon;
@@ -34,7 +30,6 @@ class MyApp extends StatelessWidget {
                 fontSize: 15)),
       ),
       home: const SplashScreen(),
-      //home: const AppointmentScreen(),
     );
   }
 }

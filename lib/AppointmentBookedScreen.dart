@@ -96,6 +96,7 @@ class BookedScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      //Navigator.pop(context, 0);
                       CancleToGoBack(context);
                     },
                     child: Container(

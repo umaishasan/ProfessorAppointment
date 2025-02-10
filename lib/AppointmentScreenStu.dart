@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
-import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class AppointmentScreenStu extends StatefulWidget {
@@ -49,7 +49,7 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
           //Tabbar view
           TabBarView(controller: _tabController, children: const [
             Center(
-              child: BookingScreen(),
+              child: AllAppointmentStuScreen(),
             ),
             Center(
               child: BookedScreen(),

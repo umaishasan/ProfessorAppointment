@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
+import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
 import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
@@ -49,7 +49,7 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
           //Tabbar view
           TabBarView(controller: _tabController, children: const [
             Center(
-              child: BookingScreen(),
+              child: AllPandingAppointmentScreen(),
             ),
             Center(
               child: DoneAppointmentScreen(),
