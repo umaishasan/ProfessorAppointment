@@ -48,11 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
               // Logo
               Center(
-                child: Image.network(
-                  'https://dashboard.codeparrot.ai/api/image/Z6RGdqvsm-LWpeit/logo-1.png',
-                  width: 206,
-                  height: 238,
-                  fit: BoxFit.contain,
+                child: Image.asset(
+                  'assets/splash_screen.png',
                 ),
               ),
 
