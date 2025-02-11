@@ -1,4 +1,7 @@
 // ignore_for_file: file_names
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/LoginScreen.dart';
 import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
@@ -29,7 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     super.initState();
-    //FirebaseServices.InitializeDatabase('MyAcademicAppointment');
+    FirebaseServices.InitializeDatabase(FirebaseServices.DatabaseName);
   }
 
   @override
@@ -66,10 +69,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
 
                   const SizedBox(height: 49),
-                  _buildTextField('Enter Username', _usernameController),
+                  _buildTextField('Enter Username', _usernameController, false),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Email', _emailController),
+                  _buildTextField('Enter Email', _emailController, false),
 
                   const SizedBox(height: 16),
                   _buildUserToggles(),
@@ -78,14 +81,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   _buildGenderToggles(),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Phone', _phoneController),
+                  _buildTextField('Enter Phone', _phoneController, false),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Password', _passwordController),
+                  _buildTextField('Enter Password', _passwordController, true),
 
                   const SizedBox(height: 16),
                   _buildTextField(
-                      'Enter Confirm Password', _cnfrmpasswordController),
+                      'Enter Confirm Password', _cnfrmpasswordController, true),
 
                   //Signup button
                   const SizedBox(height: 41),
@@ -126,15 +129,17 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   //Widget _buildTextField(String hint, dynamic _txtController) {
-  Widget _buildTextField(String hint, TextEditingController textController) {
+  Widget _buildTextField(
+      String hint, TextEditingController textController, bool isPassword) {
     return Container(
       height: 58,
       decoration: BoxDecoration(
-        color: const Color(0xFFE7E5E5),
-        borderRadius: BorderRadius.circular(16),
-      ),
+          color: const Color(0xFFE7E5E5),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.black, width: 1)),
       child: TextField(
         controller: textController,
+        obscureText: isPassword,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           hintText: hint,
@@ -263,16 +268,28 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signupMethod() {
-    FirebaseServices.SignupAccount(
-        _usernameController.text,
-        _emailController.text,
-        UserText,
-        GenderText,
-        _phoneController.text,
-        _passwordController.text);
+    if (_passwordController.text != _cnfrmpasswordController.text) {
+      FirebaseServices.CreateToast("Confirm password should match");
+    } else if (_passwordController == "" ||
+        _cnfrmpasswordController == "" ||
+        _emailController == "" ||
+        _phoneController == "" ||
+        _usernameController == "") {
+      FirebaseServices.CreateToast('Any fields can\'t be empty');
+    } else {
+      FirebaseServices.SignupAccount(
+          _usernameController.text,
+          _emailController.text,
+          UserText,
+          GenderText,
+          _phoneController.text,
+          _passwordController.text);
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+      FirebaseServices.CreateToast('Signup Successfully');
+      Future.delayed(const Duration(seconds: 2));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+    }
   }
 
   void signinMethod() {

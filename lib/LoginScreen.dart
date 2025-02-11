@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -195,16 +198,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginMethod() {
-    // ignore: unrelated_type_equality_checks
-    if (_emailController.text == "abc" && _passwordController.text == "abc") {
-      LoginScreen.isStudent = true;
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-    } else {
-      LoginScreen.isStudent = false;
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-    }
+    FirebaseServices.SigninAccount(
+        _emailController.text, _passwordController.text);
+    FirebaseServices.CreateToast("Login Successfully");
+    Future.delayed(const Duration(seconds: 2));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => const HomeScreen(
+                  userData: {},
+                )));
   }
 
   void signupMethod() {
