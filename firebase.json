@@ -1,0 +1,23 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "my-academic-appointment",
+                    "appId": "1:939211883831:android:58518fd6431afa975ac6b2",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "my-academic-appointment",
+                    "configurations": {
+                        "web": "1:939211883831:web:0e40dd346a9406d45ac6b2",
+                        "android": "1:939211883831:android:58518fd6431afa975ac6b2",
+                        "ios": "1:939211883831:android:58518fd6431afa975ac6b2"
+                    }
+                }
+            }
+        }
+    }
+}

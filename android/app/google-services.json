@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939211883831",
+    "project_id": "my-academic-appointment",
+    "storage_bucket": "my-academic-appointment.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939211883831:android:58518fd6431afa975ac6b2",
+        "android_client_info": {
+          "package_name": "com.example.scholappoinment_934074496"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDYKtfH6ncwbrYjkkX2tKFuiK1E_iV_yA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

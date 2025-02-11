@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/LoginScreen.dart';
+import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -11,10 +12,25 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  bool isStudent = true;
-  bool isTeacher = false;
-  bool isMale = false;
-  bool isFemale = true;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _cnfrmpasswordController =
+      TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
+  // ignore: non_constant_identifier_names
+  late String GenderText = "";
+  int _selectedGenderIndex = 0;
+  // ignore: non_constant_identifier_names
+  late String UserText = "";
+  int _selectedUserIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    //FirebaseServices.InitializeDatabase('MyAcademicAppointment');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,25 +66,26 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
 
                   const SizedBox(height: 49),
-                  _buildTextField('Enter Username'),
+                  _buildTextField('Enter Username', _usernameController),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Email'),
+                  _buildTextField('Enter Email', _emailController),
 
                   const SizedBox(height: 16),
-                  _buildToggleButtons(),
+                  _buildUserToggles(),
 
                   const SizedBox(height: 16),
                   _buildGenderToggles(),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Phone'),
+                  _buildTextField('Enter Phone', _phoneController),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Password'),
+                  _buildTextField('Enter Password', _passwordController),
 
                   const SizedBox(height: 16),
-                  _buildTextField('Enter Confirm Password'),
+                  _buildTextField(
+                      'Enter Confirm Password', _cnfrmpasswordController),
 
                   //Signup button
                   const SizedBox(height: 41),
@@ -109,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   //Widget _buildTextField(String hint, dynamic _txtController) {
-  Widget _buildTextField(String hint) {
+  Widget _buildTextField(String hint, TextEditingController textController) {
     return Container(
       height: 58,
       decoration: BoxDecoration(
@@ -117,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: TextField(
-        //controller: _txtController,
+        controller: textController,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           hintText: hint,
@@ -132,56 +149,87 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildToggleButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+  Widget _buildUserToggles() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildToggle(
-            'Student', isStudent, (val) => setState(() => isStudent = val)),
-        const SizedBox(width: 50),
-        _buildToggle(
-            'Teacher', isTeacher, (val) => setState(() => isTeacher = val)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildUserToggleOption("Student", 0),
+            const SizedBox(width: 16),
+            _buildUserToggleOption("Teacher", 1),
+          ],
+        ),
       ],
     );
   }
 
   Widget _buildGenderToggles() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildToggle('Male', isMale, (val) => setState(() => isMale = val)),
-        const SizedBox(width: 50),
-        _buildToggle(
-            'Female', isFemale, (val) => setState(() => isFemale = val)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildGenderToggleOption("Male", 0),
+            const SizedBox(width: 16),
+            _buildGenderToggleOption("Female", 1),
+          ],
+        ),
       ],
     );
   }
 
-  Widget _buildToggle(String text, bool value, Function(bool) onChanged) {
+  Widget _buildGenderToggleOption(String text, int index) {
+    bool isSelected = _selectedGenderIndex == index;
+    GenderText = index == 0 ? "Male" : "Female";
     return GestureDetector(
-      //Condition
-      onTap: () => onChanged(!value),
-
+      onTap: () {
+        setState(() {
+          _selectedGenderIndex = index;
+        });
+      },
       child: Row(
         children: [
           Container(
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-              color: value ? const Color(0xFF32983E) : const Color(0xFFD9D9D9),
+              color: isSelected ? Colors.green : Colors.grey[300],
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.black, width: 1),
             ),
           ),
+          const SizedBox(width: 8),
+          Text(text, style: const TextStyle(fontSize: 16)),
+        ],
+      ),
+    );
+  }
 
-          //Common Design
-          const SizedBox(width: 5),
-          Text(
-            text,
-            style: const TextStyle(
-              fontFamily: 'Heebo',
-              fontSize: 20,
-              color: Colors.black,
+  Widget _buildUserToggleOption(String text, int index) {
+    bool isSelected = _selectedUserIndex == index;
+    UserText = index == 0 ? "Student" : "Teacher";
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedUserIndex = index;
+        });
+      },
+      child: Row(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.green : Colors.grey[300],
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: Colors.black, width: 1),
             ),
           ),
+          const SizedBox(width: 8),
+          Text(text, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );
@@ -215,6 +263,14 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signupMethod() {
+    FirebaseServices.SignupAccount(
+        _usernameController.text,
+        _emailController.text,
+        UserText,
+        GenderText,
+        _phoneController.text,
+        _passwordController.text);
+
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const LoginScreen()));
   }

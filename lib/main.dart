@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/SplashScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'Firebase/firebase_options.dart';
 
 //This variable use for screen size
 late Size screenSizeCommon;
 
 void main() {
+  _InitializeFirebase();
   runApp(const MyApp());
 }
 
@@ -32,4 +35,9 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
     );
   }
+}
+
+//Initialize firebase method for integrating
+_InitializeFirebase() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
