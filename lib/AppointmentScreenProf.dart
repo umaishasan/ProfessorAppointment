@@ -86,7 +86,6 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
 
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 }

@@ -147,7 +147,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void editProfile(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 }

@@ -225,8 +225,7 @@ class PendingScreen extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   void BackToAppointmentPage(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 
   // ignore: non_constant_identifier_names

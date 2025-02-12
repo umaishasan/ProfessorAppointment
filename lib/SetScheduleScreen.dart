@@ -187,7 +187,6 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   }
 
   void setSchedule() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 }

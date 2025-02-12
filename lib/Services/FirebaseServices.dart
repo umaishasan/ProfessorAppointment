@@ -6,12 +6,11 @@ import 'package:scholappoinment_934074496/Models/Model.dart';
 
 // ignore: must_be_immutable
 class FirebaseServices extends StatelessWidget {
-  FirebaseServices({super.key});
+  const FirebaseServices({super.key});
   // ignore: non_constant_identifier_names
   static String DatabaseName = "MyAcademicAppointment";
   static late DatabaseReference dbref;
   static late DataSnapshot dsnapshot;
-  Model model = Model();
 
   @override
   Widget build(BuildContext context) {
@@ -47,26 +46,40 @@ class FirebaseServices extends StatelessWidget {
   }
 
   // ignore: non_constant_identifier_names
-  static void SigninAccount(String email, String password) async {
+  static Future<Model?> SigninAccount(String email, String password) async {
+    Model model = Model();
     try {
+      //login condition check
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null) {
-        String uid = userCredential.user!.uid;
-        DatabaseReference ref =
-            FirebaseDatabase.instance.ref("$DatabaseName/$uid");
-        dsnapshot = await ref.get();
-        if (dsnapshot.exists) {
-          Map<dynamic, dynamic> userData =
-              dsnapshot.value as Map<dynamic, dynamic>;
-          // model.Name = userData['Username'];
-        }
+
+      //prepare get user data
+      String uid = userCredential.user!.uid;
+      DatabaseReference ref =
+          FirebaseDatabase.instance.ref("MyAcademicAppointment");
+      DatabaseEvent event =
+          await ref.orderByChild("Email").equalTo(email).once();
+
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> users =
+            event.snapshot.value as Map<dynamic, dynamic>;
+        users.forEach((key, value) {
+          print("User found at key: $key, Email: ${value['Email']}");
+          model.Name = value['Username'];
+          model.Email = value['Email'];
+          model.Phone = value['Phone'];
+          model.User = value['User'];
+          model.Gender = value['Gender'];
+        });
+      } else {
+        print("User not found!");
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         CreateToast('email or password maybe wrong');
       }
     }
+    return model;
   }
 
   // ignore: non_constant_identifier_names
