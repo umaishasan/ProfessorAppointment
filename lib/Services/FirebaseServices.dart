@@ -2,14 +2,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Models/Model.dart';
 
 // ignore: must_be_immutable
 class FirebaseServices extends StatelessWidget {
-  const FirebaseServices({super.key});
+  FirebaseServices({super.key});
   // ignore: non_constant_identifier_names
   static String DatabaseName = "MyAcademicAppointment";
   static late DatabaseReference dbref;
   static late DataSnapshot dsnapshot;
+  Model model = Model();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class FirebaseServices extends StatelessWidget {
         if (dsnapshot.exists) {
           Map<dynamic, dynamic> userData =
               dsnapshot.value as Map<dynamic, dynamic>;
+          // model.Name = userData['Username'];
         }
       }
     } on FirebaseAuthException catch (e) {
