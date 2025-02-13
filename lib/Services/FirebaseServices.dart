@@ -54,7 +54,6 @@ class FirebaseServices extends StatelessWidget {
           .signInWithEmailAndPassword(email: email, password: password);
 
       //prepare get user data
-      String uid = userCredential.user!.uid;
       DatabaseReference ref =
           FirebaseDatabase.instance.ref("MyAcademicAppointment");
       DatabaseEvent event =
@@ -64,7 +63,7 @@ class FirebaseServices extends StatelessWidget {
         Map<dynamic, dynamic> users =
             event.snapshot.value as Map<dynamic, dynamic>;
         users.forEach((key, value) {
-          print("User found at key: $key, Email: ${value['Email']}");
+          //print("User found at key: $key, Email: ${value['Email']}");
           model.Name = value['Username'];
           model.Email = value['Email'];
           model.Phone = value['Phone'];

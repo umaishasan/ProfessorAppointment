@@ -1,9 +1,11 @@
-class Model {
-  late String _name;
-  late String _email;
-  late String _phon;
-  late String _gender;
-  late String _user;
+import 'package:flutter/material.dart';
+
+class Model with ChangeNotifier {
+  late String _name = "";
+  late String _email = "";
+  late String _phon = "";
+  late String _gender = "";
+  late String _user = "";
 
   // Getter
   // ignore: non_constant_identifier_names, unnecessary_getters_setters
@@ -25,29 +27,34 @@ class Model {
   // ignore: non_constant_identifier_names
   set Name(String newName) {
     _name = newName;
+    notifyListeners();
   }
 
   // Setter
   // ignore: non_constant_identifier_names
   set Email(String newEmail) {
     _email = newEmail;
+    notifyListeners();
   }
 
   // Setter
   // ignore: non_constant_identifier_names
   set Phone(String newPhone) {
     _phon = newPhone;
+    notifyListeners();
   }
 
   // Setter
   // ignore: non_constant_identifier_names
   set Gender(String newGender) {
     _gender = newGender;
+    notifyListeners();
   }
 
   // Setter
   // ignore: non_constant_identifier_names
   set User(String newUser) {
     _user = newUser;
+    notifyListeners();
   }
 }

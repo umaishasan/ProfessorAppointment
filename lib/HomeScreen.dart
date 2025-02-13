@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:scholappoinment_934074496/Models/Model.dart';
 import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,6 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<Model>(context);
+    print("Why data is empty: ${userData.Email} and name: ${userData.Name}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -48,22 +52,22 @@ class HomeScreen extends StatelessWidget {
                         'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
                   ),
                   const SizedBox(height: 14),
-                  const Text(
-                    'Student',
-                    style: TextStyle(
+                  Text(
+                    userData.User,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w300,
                       color: Color(0xFF080808),
                     ),
                   ),
                   const SizedBox(height: 18),
-                  _buildInfoRow('Name:', 'Maria Jason'),
+                  _buildInfoRow('Name:', userData.Name),
                   const SizedBox(height: 10),
-                  _buildInfoRow('Email:', 'mariajason@gmail.com'),
+                  _buildInfoRow('Email:', userData.Email),
                   const SizedBox(height: 10),
-                  _buildInfoRow('Phone:', '0123 3456789'),
+                  _buildInfoRow('Phone:', userData.Phone),
                   const SizedBox(height: 10),
-                  _buildInfoRow('Gender:', 'Female'),
+                  _buildInfoRow('Gender:', userData.Gender),
                   //const SizedBox(height: 20),
                 ],
               ),

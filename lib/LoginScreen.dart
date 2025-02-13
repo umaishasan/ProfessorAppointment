@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Model.dart';
@@ -6,7 +7,7 @@ import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String User = "";
+  //static String User = "";
 
   const LoginScreen({super.key});
 
@@ -199,18 +200,20 @@ class _LoginScreenState extends State<LoginScreen> {
     Model? user = await FirebaseServices.SigninAccount(
         _emailController.text, _passwordController.text);
 
-    if (user == null) {
-      print("User not Found");
-    } else {
-      setState(() {
-        LoginScreen.User = user.User;
-        //print("Is user found? ${LoginScreen.User}");
-      });
-    }
-
+    // if (user == null) {
+    //   print("User not Found");
+    // }
+    print("User found at key: ${user?.Name}, Email: ${user?.Email}");
     FirebaseServices.CreateToast("Login Successfully");
     Future.delayed(const Duration(seconds: 2));
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider.value(
+            value: user,
+            child: HomeScreen(),
+          ),
+        ));
   }
 
   void signupMethod() {
