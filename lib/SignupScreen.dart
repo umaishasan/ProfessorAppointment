@@ -1,7 +1,4 @@
-// ignore_for_file: file_names
-
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/LoginScreen.dart';
 import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
@@ -23,11 +20,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _phoneController = TextEditingController();
 
   // ignore: non_constant_identifier_names
-  late String GenderText = "";
-  int _selectedGenderIndex = 0;
+  String GenderText = "";
+
   // ignore: non_constant_identifier_names
   late String UserText = "";
-  int _selectedUserIndex = 0;
 
   @override
   void initState() {
@@ -161,9 +157,9 @@ class _SignupScreenState extends State<SignupScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildUserToggleOption("Student", 0),
+            _buildUserToggleOption("Student"),
             const SizedBox(width: 16),
-            _buildUserToggleOption("Teacher", 1),
+            _buildUserToggleOption("Teacher"),
           ],
         ),
       ],
@@ -177,23 +173,22 @@ class _SignupScreenState extends State<SignupScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildGenderToggleOption("Male", 0),
+            _buildGenderToggleOption("Male"),
             const SizedBox(width: 16),
-            _buildGenderToggleOption("Female", 1),
+            _buildGenderToggleOption("Female"),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildGenderToggleOption(String text, int index) {
-    bool isSelected = _selectedGenderIndex == index;
-    GenderText = index == 0 ? "Male" : "Female";
+  Widget _buildGenderToggleOption(String gender) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedGenderIndex = index;
+          GenderText = gender;
         });
+        print("Selected Gender: ${GenderText}");
       },
       child: Row(
         children: [
@@ -201,26 +196,25 @@ class _SignupScreenState extends State<SignupScreen> {
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.green : Colors.grey[300],
+              color: GenderText == gender ? Colors.green : Colors.grey[300],
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.black, width: 1),
             ),
           ),
           const SizedBox(width: 8),
-          Text(text, style: const TextStyle(fontSize: 16)),
+          Text(gender, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );
   }
 
-  Widget _buildUserToggleOption(String text, int index) {
-    bool isSelected = _selectedUserIndex == index;
-    UserText = index == 0 ? "Student" : "Teacher";
+  Widget _buildUserToggleOption(String user) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedUserIndex = index;
+          UserText = user;
         });
+        print("Selected User: ${UserText}");
       },
       child: Row(
         children: [
@@ -228,13 +222,13 @@ class _SignupScreenState extends State<SignupScreen> {
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.green : Colors.grey[300],
+              color: UserText == user ? Colors.green : Colors.grey[300],
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.black, width: 1),
             ),
           ),
           const SizedBox(width: 8),
-          Text(text, style: const TextStyle(fontSize: 16)),
+          Text(user, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );
