@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class CommonComponent extends StatelessWidget {
   const CommonComponent({super.key});
@@ -27,6 +28,13 @@ class CommonComponent extends StatelessWidget {
         leading: IconButton(onPressed: onPressed, icon: Icon(iconName)),
         title: Text(appBarTitle),
       ),
+    );
+  }
+
+  static void BacktoHome(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
   }
 

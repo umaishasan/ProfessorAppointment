@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
@@ -102,8 +103,7 @@ class Sidebar extends StatelessWidget {
             iconColor: const Color.fromARGB(255, 0, 0, 0),
             textColor: const Color.fromARGB(255, 0, 0, 0),
             onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => HomeScreen()));
+              CommonComponent.BacktoHome(context);
             },
           ),
           ListTile(

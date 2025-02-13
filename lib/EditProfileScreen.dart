@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,6 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<Model>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -50,9 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //Student label
                     const SizedBox(height: 16),
-                    const Text(
-                      'Student',
-                      style: TextStyle(
+                    Text(
+                      userData.User,
+                      style: const TextStyle(
                         fontFamily: 'Heebo',
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
@@ -147,6 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void editProfile(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    CommonComponent.BacktoHome(context);
   }
 }

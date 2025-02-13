@@ -50,25 +50,25 @@ class FirebaseServices extends StatelessWidget {
     Model model = Model();
     try {
       //login condition check
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       //prepare get user data
       DatabaseReference ref =
           FirebaseDatabase.instance.ref("MyAcademicAppointment");
-      DatabaseEvent event =
-          await ref.orderByChild("Email").equalTo(email).once();
+      DatabaseEvent event = await ref.once();
 
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic> users =
             event.snapshot.value as Map<dynamic, dynamic>;
         users.forEach((key, value) {
-          //print("User found at key: $key, Email: ${value['Email']}");
-          model.Name = value['Username'];
-          model.Email = value['Email'];
-          model.Phone = value['Phone'];
-          model.User = value['User'];
-          model.Gender = value['Gender'];
+          if (value['Email'] == email) {
+            model.Name = value['Username'];
+            model.Email = value['Email'];
+            model.Phone = value['Phone'];
+            model.User = value['User'];
+            model.Gender = value['Gender'];
+          }
         });
       } else {
         print("User not found!");
