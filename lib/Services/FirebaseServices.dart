@@ -54,9 +54,8 @@ class FirebaseServices extends StatelessWidget {
           .signInWithEmailAndPassword(email: email, password: password);
 
       //prepare get user data
-      DatabaseReference ref =
-          FirebaseDatabase.instance.ref("MyAcademicAppointment");
-      DatabaseEvent event = await ref.once();
+      dbref = FirebaseDatabase.instance.ref(DatabaseName);
+      DatabaseEvent event = await dbref.once();
 
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic> users =

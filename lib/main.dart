@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Model.dart';
-import 'package:scholappoinment_934074496/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:scholappoinment_934074496/SplashScreen.dart';
 import 'Firebase/firebase_options.dart';
 
 //This variable use for screen size

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Components/Messages.dart';
 import 'package:scholappoinment_934074496/main.dart';
 
 class DiscussionScreen extends StatelessWidget {
@@ -22,7 +23,9 @@ class DiscussionScreen extends StatelessWidget {
               //show all messages
               const Expanded(
                 child: Row(
-                  children: [],
+                  children: [
+                    MessageScreen(),
+                  ],
                 ),
               ),
 
