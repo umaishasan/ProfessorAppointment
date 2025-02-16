@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Model with ChangeNotifier {
+class Person with ChangeNotifier {
   late String _name = "";
   late String _email = "";
   late String _phone = "";

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Components/Messages.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/main.dart';
 
-class DiscussionScreen extends StatelessWidget {
-  const DiscussionScreen({super.key});
+// ignore: must_be_immutable
+class DiscussionScreen extends StatefulWidget {
+  final List<Messaging> userMessages;
+  DiscussionScreen({super.key, required this.userMessages});
 
+  @override
+  State<DiscussionScreen> createState() => _DiscussionScreenState();
+}
+
+class _DiscussionScreenState extends State<DiscussionScreen> {
   @override
   Widget build(BuildContext context) {
     screenSizeCommon = MediaQuery.of(context).size;
@@ -21,12 +29,8 @@ class DiscussionScreen extends StatelessWidget {
           Column(
             children: [
               //show all messages
-              const Expanded(
-                child: Row(
-                  children: [
-                    MessageScreen(),
-                  ],
-                ),
+              Expanded(
+                child: AllMesages(),
               ),
 
               // Message input
@@ -40,7 +44,8 @@ class DiscussionScreen extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 
   // ignore: non_constant_identifier_names
@@ -89,139 +94,16 @@ class DiscussionScreen extends StatelessWidget {
           ],
         ));
   }
-}
 
-class IncomingMessage extends StatelessWidget {
-  final String senderName;
-  final String message;
-  final String time;
-  final String imageUrl;
-
-  const IncomingMessage({
-    super.key,
-    required this.senderName,
-    required this.message,
-    required this.time,
-    required this.imageUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 22.5,
-          backgroundImage: NetworkImage(imageUrl),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          constraints: const BoxConstraints(maxWidth: 200),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFF34C759),
-            borderRadius: BorderRadius.circular(11),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                senderName,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                message,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                time,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w100,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class OutgoingMessage extends StatelessWidget {
-  final String senderName;
-  final String message;
-  final String time;
-  final String imageUrl;
-
-  const OutgoingMessage({
-    super.key,
-    required this.senderName,
-    required this.message,
-    required this.time,
-    required this.imageUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          constraints: const BoxConstraints(maxWidth: 200),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFFEBEDF0),
-            borderRadius: BorderRadius.circular(11),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                senderName,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                message,
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                time,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w100,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-        CircleAvatar(
-          radius: 22.5,
-          backgroundImage: NetworkImage(imageUrl),
-        ),
-      ],
+  Widget AllMesages() {
+    return ListView.builder(
+      itemCount: widget.userMessages.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var messageUser = widget.userMessages[index];
+        return MessageScreen(messaging: messageUser);
+      },
     );
   }
 }

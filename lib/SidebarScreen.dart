@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
@@ -5,15 +6,29 @@ import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Model.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Models/Messaging.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 // ignore: must_be_immutable
-class Sidebar extends StatelessWidget {
-  const Sidebar({
+class Sidebar extends StatefulWidget {
+  Sidebar({
     super.key,
   });
+
+  @override
+  State<Sidebar> createState() => _SidebarState();
+}
+
+class _SidebarState extends State<Sidebar> {
+  List<Messaging> messagesList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchMessages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +51,8 @@ class Sidebar extends StatelessWidget {
 
   //Profile Photo at header
   Widget buildHeader(BuildContext context) {
-    String role = Provider.of<Model>(context, listen: false).User;
-    String name = Provider.of<Model>(context, listen: false).Name;
+    String role = Provider.of<Person>(context, listen: false).User;
+    String name = Provider.of<Person>(context, listen: false).Name;
     return Container(
       color: const Color.fromARGB(180, 101, 188, 71),
       height: 230,
@@ -122,8 +137,11 @@ class Sidebar extends StatelessWidget {
             iconColor: const Color.fromARGB(255, 0, 0, 0),
             textColor: const Color.fromARGB(255, 0, 0, 0),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const DiscussionScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) =>
+                          DiscussionScreen(userMessages: messagesList)));
             },
           ),
           IsScheduleOn(context),
@@ -132,7 +150,7 @@ class Sidebar extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   Widget IsScheduleOn(BuildContext context) {
-    String role = Provider.of<Model>(context, listen: false).User;
+    String role = Provider.of<Person>(context, listen: false).User;
     if (role == "Teacher") {
       return Column(
         children: [
@@ -179,4 +197,58 @@ class Sidebar extends StatelessWidget {
       );
     }
   }
+
+  Future<void> _fetchMessages() async {
+    FirebaseServices.GetAllMeassages().listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        List<Messaging> fetchedMessages =
+            snapshot.docs.map((doc) => Messaging.fromJson(doc.data())).toList();
+        setState(() {
+          messagesList = fetchedMessages;
+        });
+        print("Fetched Messages: ${jsonEncode(messagesList)}");
+      }
+    });
+  }
+
+  // void AllMesagesInitialize() {
+  //   List<Messaging> messagesList = [];
+
+  //   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+  //       stream: FirebaseServices.GetAllMeassages(),
+  //       builder: (context, snapshots) {
+  //         // Checking connection state
+  //         if (snapshots.connectionState == ConnectionState.waiting) {
+  //           return const Center(child: CircularProgressIndicator());
+  //         }
+
+  //         if (!snapshots.hasData || snapshots.data!.docs.isEmpty) {
+  //           return const Center(child: Text("No messages found"));
+  //         }
+
+  //         messagesList = snapshots.data!.docs
+  //             .map((doc) => Messaging.fromJson(doc.data()))
+  //             .toList();
+
+  //         // Debugging: Print JSON data
+  //         print("Get Data: ${jsonEncode(messagesList)}");
+
+  //         // Return list of messages
+  //         return ListView.builder(
+  //           itemCount: messagesList.length,
+  //           itemBuilder: (context, index) {
+  //             message = messagesList[index];
+  //             return ListTile(
+  //               title: Text(message.Name),
+  //               subtitle: Text(message.Message),
+  //               trailing: Text(
+  //                 DateTime.fromMillisecondsSinceEpoch(
+  //                         int.tryParse(message.MesageTime) ?? 0)
+  //                     .toString(),
+  //               ),
+  //             );
+  //           },
+  //         );
+  //       });
+  // }
 }

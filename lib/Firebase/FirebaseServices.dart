@@ -1,0 +1,152 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Models/Messaging.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
+
+// ignore: must_be_immutable
+class FirebaseServices extends StatelessWidget {
+  const FirebaseServices({super.key});
+
+  // ignore: non_constant_identifier_names
+  static String DatabaseName = "MyAcademicAppointment";
+  static String FirestoreMsgCollectionName = "Messages";
+  static FirebaseAuth Auth = FirebaseAuth.instance;
+  static FirebaseFirestore Firestore = FirebaseFirestore.instance;
+  static late DataSnapshot dsnapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+
+  // initialize database when load app
+  static void InitializeDatabase(String databaseName) {
+    FirebaseDatabase.instance.ref().child(databaseName);
+  }
+
+  // create/signup account in this app
+  static Future<void> SignupAccount(String userName, String email, String user,
+      String gender, String phoneNumber, String password) async {
+    try {
+      Map<String, String> schoolmembers = {
+        'Username': userName,
+        'Email': email,
+        'User': user,
+        'Gender': gender,
+        'Phone': phoneNumber,
+        'Password': password
+      };
+      FirebaseDatabase.instance
+          .ref()
+          .child(DatabaseName)
+          .push()
+          .set(schoolmembers);
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      CreateToast('Successfully Signup');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        CreateToast('An account is already exist with that email');
+      }
+    }
+  }
+
+  // login/signin app in this app
+  static Future<Person?> SigninAccount(String email, String password) async {
+    Person person = Person();
+    try {
+      //login condition check
+      await Auth.signInWithEmailAndPassword(email: email, password: password);
+
+      //prepare get user data
+      var dbref = FirebaseDatabase.instance.ref(DatabaseName);
+      DatabaseEvent event = await dbref.once();
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> users =
+            event.snapshot.value as Map<dynamic, dynamic>;
+        users.forEach((key, value) {
+          if (value['Email'] == email) {
+            person.Name = value['Username'];
+            person.Email = value['Email'];
+            person.Phone = value['Phone'];
+            person.User = value['User'];
+            person.Gender = value['Gender'];
+          }
+        });
+      } else {
+        print("User not found!");
+      }
+
+      //create message user data
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        CreateToast('email or password maybe wrong');
+      }
+    }
+    return person;
+  }
+
+  //check if login user is exist then he can type message
+  static Future<bool> IsAccountExist() async {
+    var docId = (await Firestore.collection("Messages")
+            .doc(Auth.currentUser!.uid)
+            .get())
+        .exists;
+    return docId;
+  }
+
+  //check if this user not available then create user for message
+  static Future<void> CreateMessageUser(String Name) async {
+    final time = DateTime.now().microsecondsSinceEpoch.toString();
+    final messageUser = Messaging(
+        Id: Auth.currentUser!.uid, Name: Name, MesageTime: time, Message: "");
+
+    await Firestore.collection("Messages")
+        .doc(Auth.currentUser!.uid)
+        .set(messageUser.toJson());
+  }
+
+  // when any warning or any message system related then you can see in bar
+  static void CreateToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.NONE,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 12,
+      timeInSecForIosWeb: 2,
+    );
+  }
+
+  //common method for get conversation id
+  String GetCoversationId(String id) =>
+      Auth.currentUser!.uid.hashCode <= id.hashCode
+          ? '${Auth.currentUser!.uid}_${id}'
+          : '${id}_${Auth.currentUser!.uid}';
+
+  //get all messages
+  // ignore: non_constant_identifier_names
+  static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
+    print(
+        "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
+    return Firestore.collection('${FirestoreMsgCollectionName}').snapshots();
+  }
+
+  static Future<void> SendMessage(
+      Messaging userMessing, String messages) async {
+    final time = DateTime.now().microsecondsSinceEpoch.toString();
+    final Messaging msg = Messaging(
+        Message: messages,
+        Name: userMessing.Name,
+        MesageTime: time,
+        Id: userMessing.Id);
+    final ref =
+        Firestore.collection('FirestoreMsgCollectionName/${userMessing.Id}');
+
+    await ref.doc(time).set(msg.toJson());
+  }
+}

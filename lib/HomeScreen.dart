@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Models/Model.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,14 +8,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<Model>(context);
+    final userData = Provider.of<Person>(context);
     print("Why data is empty: ${userData.Email} and name: ${userData.Name}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
         backgroundColor: const Color(0xFF32983E),
       ),
-      drawer: const Sidebar(),
+      drawer: Sidebar(),
       body: Stack(
         children: [
           // Background ellipse

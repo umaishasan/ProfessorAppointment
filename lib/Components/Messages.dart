@@ -1,35 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/DiscussionScreen.dart';
+import 'package:scholappoinment_934074496/Components/IncomingMessage.dart';
+import 'package:scholappoinment_934074496/Components/OutgoingMessage.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Models/Messaging.dart';
 
-class MessageScreen extends StatelessWidget {
-  const MessageScreen({super.key});
+class MessageScreen extends StatefulWidget {
+  const MessageScreen({super.key, required this.messaging});
+
+  final Messaging messaging;
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        padding: const EdgeInsets.only(top: 65, left: 10, right: 10),
-        children: const [
-          // Incoming message
-          IncomingMessage(
-            senderName: 'Maria Jason',
-            message: 'Hey! How are you?\nAre you Fine?',
-            time: '09:00 AM',
-            imageUrl:
-                'https://dashboard.codeparrot.ai/api/image/Z68w_-epongUSRix/user-imag.png',
-          ),
+  State<MessageScreen> createState() => _MessageScreenState();
+}
 
-          // Outgoing message
-          SizedBox(height: 16),
-          OutgoingMessage(
-            senderName: 'Carlos Shawn',
-            message: 'Hey! yeah yeah I\'m fine.\nyou tell me how are you?',
-            time: '09:00 AM',
-            imageUrl:
-                'https://dashboard.codeparrot.ai/api/image/Z68w_-epongUSRix/user-imag-2.png',
-          ),
-        ],
-      ),
-    );
+class _MessageScreenState extends State<MessageScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return FirebaseServices.Auth.currentUser!.uid == widget.messaging.Id
+        ? YoursMessages()
+        : OthersMessages();
   }
+
+  Widget OthersMessages() {
+    return IncomingMessage(
+        senderName: widget.messaging.Name,
+        messageUser: widget.messaging.Message,
+        messageTime: widget.messaging.MesageTime);
+  }
+
+  Widget YoursMessages() {
+    return OutgoingMessage(
+        yourName: widget.messaging.Name,
+        messageUser: widget.messaging.Message,
+        messageTime: widget.messaging.MesageTime);
+  }
+
+  //dummy
+  // Widget OthersMessages() {
+  //   return IncomingMessage(
+  //       senderName: "Ali", messageUser: "Kesa hai", messageTime: "02:00 PM");
+  // }
+
+  //dummy
+  // Widget YoursMessages() {
+  //   return OutgoingMessage(
+  //       yourName: "Ahmed", messageUser: "Set hoon", messageTime: "04:00 AM");
+  // }
 }

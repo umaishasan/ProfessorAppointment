@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Models/Model.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:scholappoinment_934074496/SplashScreen.dart';
 import 'Firebase/firebase_options.dart';
@@ -10,12 +10,12 @@ late Size screenSizeCommon;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _InitializeFirebase();
+  await _InitializeFirebase();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Model()), // Theme Settings
+        ChangeNotifierProvider(create: (context) => Person()),
       ],
       child: const MyApp(),
     ),

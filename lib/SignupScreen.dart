@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/LoginScreen.dart';
-import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -188,7 +188,7 @@ class _SignupScreenState extends State<SignupScreen> {
         setState(() {
           GenderText = gender;
         });
-        print("Selected Gender: ${GenderText}");
+        print("Selected Gender: $GenderText");
       },
       child: Row(
         children: [
@@ -214,7 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
         setState(() {
           UserText = user;
         });
-        print("Selected User: ${UserText}");
+        print("Selected User: $UserText");
       },
       child: Row(
         children: [

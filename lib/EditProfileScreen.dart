@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Model.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<Model>(context);
+    final userData = Provider.of<Person>(context);
     return Scaffold(
       body: Stack(
         children: [

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Model.dart';
-import 'package:scholappoinment_934074496/Services/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -198,23 +197,31 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginMethod() async {
-    Model? user = await FirebaseServices.SigninAccount(
+    Person? user = await FirebaseServices.SigninAccount(
         _emailController.text, _passwordController.text);
 
     if (user != null) {
-      Provider.of<Model>(context, listen: false).updateUserData({
+      Provider.of<Person>(context, listen: false).updateUserData({
         "Username": user.Name,
         "Email": user.Email,
         "Phone": user.Phone,
         "Gender": user.Gender,
         "User": user.User
       });
+
+      if (await FirebaseServices.IsAccountExist()) {
+        Future.delayed(const Duration(seconds: 2));
+        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.BacktoHome(context);
+      } else {
+        await FirebaseServices.CreateMessageUser(user.Name).then(
+          (value) => CommonComponent.BacktoHome(context),
+        );
+        Future.delayed(const Duration(seconds: 1));
+        FirebaseServices.CreateToast("Login Successfully");
+      }
     }
-    print(
-        "Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
-    FirebaseServices.CreateToast("Login Successfully");
-    Future.delayed(const Duration(seconds: 2));
-    CommonComponent.BacktoHome(context);
+    //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }
 
   void signupMethod() {
