@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Components/IncomingMessage.dart';
 import 'package:scholappoinment_934074496/Components/OutgoingMessage.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
@@ -25,25 +26,15 @@ class _MessageScreenState extends State<MessageScreen> {
     return IncomingMessage(
         senderName: widget.messaging.Name,
         messageUser: widget.messaging.Message,
-        messageTime: widget.messaging.MesageTime);
+        messageTime:
+            CommonComponent.FetchTiming(context, widget.messaging.MesageTime));
   }
 
   Widget YoursMessages() {
     return OutgoingMessage(
         yourName: widget.messaging.Name,
         messageUser: widget.messaging.Message,
-        messageTime: widget.messaging.MesageTime);
+        messageTime:
+            CommonComponent.FetchTiming(context, widget.messaging.MesageTime));
   }
-
-  //dummy
-  // Widget OthersMessages() {
-  //   return IncomingMessage(
-  //       senderName: "Ali", messageUser: "Kesa hai", messageTime: "02:00 PM");
-  // }
-
-  //dummy
-  // Widget YoursMessages() {
-  //   return OutgoingMessage(
-  //       yourName: "Ahmed", messageUser: "Set hoon", messageTime: "04:00 AM");
-  // }
 }

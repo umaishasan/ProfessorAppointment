@@ -140,8 +140,9 @@ class _SidebarState extends State<Sidebar> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) =>
-                          DiscussionScreen(userMessages: messagesList)));
+                      builder: (_) => DiscussionScreen(
+                          userMessages: messagesList,
+                          messaging: messagesList.last)));
             },
           ),
           IsScheduleOn(context),

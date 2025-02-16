@@ -102,7 +102,10 @@ class FirebaseServices extends StatelessWidget {
   static Future<void> CreateMessageUser(String Name) async {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
     final messageUser = Messaging(
-        Id: Auth.currentUser!.uid, Name: Name, MesageTime: time, Message: "");
+        Id: Auth.currentUser!.uid,
+        Name: Name,
+        MesageTime: time,
+        Message: "This new member available now!");
 
     await Firestore.collection("Messages")
         .doc(Auth.currentUser!.uid)
@@ -144,8 +147,7 @@ class FirebaseServices extends StatelessWidget {
         Name: userMessing.Name,
         MesageTime: time,
         Id: userMessing.Id);
-    final ref =
-        Firestore.collection('FirestoreMsgCollectionName/${userMessing.Id}');
+    final ref = Firestore.collection('${FirestoreMsgCollectionName}');
 
     await ref.doc(time).set(msg.toJson());
   }

@@ -38,6 +38,12 @@ class CommonComponent extends StatelessWidget {
     );
   }
 
+  static String FetchTiming(BuildContext context, String time) {
+    final date = DateTime.fromMicrosecondsSinceEpoch(int.parse(time));
+    var timeFormat = TimeOfDay.fromDateTime(date).format(context);
+    return timeFormat;
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
