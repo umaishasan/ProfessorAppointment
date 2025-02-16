@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 // ignore: must_be_immutable
 class FirebaseServices extends StatelessWidget {
@@ -13,6 +14,7 @@ class FirebaseServices extends StatelessWidget {
   // ignore: non_constant_identifier_names
   static String DatabaseName = "MyAcademicAppointment";
   static String FirestoreMsgCollectionName = "Messages";
+  static String FirestoreScheduleCollectionName = "Schedule";
   static FirebaseAuth Auth = FirebaseAuth.instance;
   static FirebaseFirestore Firestore = FirebaseFirestore.instance;
   static late DataSnapshot dsnapshot;
@@ -91,7 +93,7 @@ class FirebaseServices extends StatelessWidget {
 
   //check if login user is exist then he can type message
   static Future<bool> IsAccountExist() async {
-    var docId = (await Firestore.collection("Messages")
+    var docId = (await Firestore.collection(FirestoreMsgCollectionName)
             .doc(Auth.currentUser!.uid)
             .get())
         .exists;
@@ -107,10 +109,25 @@ class FirebaseServices extends StatelessWidget {
         MesageTime: time,
         Message: "This new member available now!");
 
-    await Firestore.collection("Messages")
+    await Firestore.collection(FirestoreMsgCollectionName)
         .doc(Auth.currentUser!.uid)
         .set(messageUser.toJson());
   }
+
+  //check if this user not available then create user for schedule
+  // static Future<void> CreateScheduleUser(String Name) async {
+  //   final scheduleUser = Schedule(
+  //       Id: Auth.currentUser!.uid,
+  //       Name: Name,
+  //       Time: time,
+  //       Date: date,
+  //       Status: status,
+  //       Qualification: qualification);
+
+  //   await Firestore.collection(FirestoreScheduleCollectionName)
+  //       .doc(Auth.currentUser!.uid)
+  //       .set(scheduleUser.toJson());
+  // }
 
   // when any warning or any message system related then you can see in bar
   static void CreateToast(String message) {
@@ -132,11 +149,18 @@ class FirebaseServices extends StatelessWidget {
           : '${id}_${Auth.currentUser!.uid}';
 
   //get all messages
-  // ignore: non_constant_identifier_names
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
-    print(
-        "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
+    // print(
+    //     "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
     return Firestore.collection('${FirestoreMsgCollectionName}').snapshots();
+  }
+
+  //get all schedule
+  static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllSchedule() {
+    // print(
+    //     "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
+    return Firestore.collection('${FirestoreScheduleCollectionName}')
+        .snapshots();
   }
 
   static Future<void> SendMessage(

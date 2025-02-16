@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
@@ -207,49 +206,8 @@ class _SidebarState extends State<Sidebar> {
         setState(() {
           messagesList = fetchedMessages;
         });
-        print("Fetched Messages: ${jsonEncode(messagesList)}");
+        //print("Fetched Messages: ${jsonEncode(messagesList)}");
       }
     });
   }
-
-  // void AllMesagesInitialize() {
-  //   List<Messaging> messagesList = [];
-
-  //   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-  //       stream: FirebaseServices.GetAllMeassages(),
-  //       builder: (context, snapshots) {
-  //         // Checking connection state
-  //         if (snapshots.connectionState == ConnectionState.waiting) {
-  //           return const Center(child: CircularProgressIndicator());
-  //         }
-
-  //         if (!snapshots.hasData || snapshots.data!.docs.isEmpty) {
-  //           return const Center(child: Text("No messages found"));
-  //         }
-
-  //         messagesList = snapshots.data!.docs
-  //             .map((doc) => Messaging.fromJson(doc.data()))
-  //             .toList();
-
-  //         // Debugging: Print JSON data
-  //         print("Get Data: ${jsonEncode(messagesList)}");
-
-  //         // Return list of messages
-  //         return ListView.builder(
-  //           itemCount: messagesList.length,
-  //           itemBuilder: (context, index) {
-  //             message = messagesList[index];
-  //             return ListTile(
-  //               title: Text(message.Name),
-  //               subtitle: Text(message.Message),
-  //               trailing: Text(
-  //                 DateTime.fromMillisecondsSinceEpoch(
-  //                         int.tryParse(message.MesageTime) ?? 0)
-  //                     .toString(),
-  //               ),
-  //             );
-  //           },
-  //         );
-  //       });
-  // }
 }

@@ -68,7 +68,7 @@ class _SetTimeComponentState extends State<SetTimeComponent> {
       children: [
         //For Time
         Container(
-          margin: const EdgeInsets.only(left: 10, right: 10, top: 85),
+          margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
           constraints: const BoxConstraints(minWidth: 190, minHeight: 100),
 
           //Time Show
