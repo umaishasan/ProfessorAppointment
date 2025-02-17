@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
+import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
-  const AllAppointmentStuScreen({super.key});
+  const AllAppointmentStuScreen(
+      {super.key, required this.schedule, required this.scheduleList});
+  final Schedule schedule;
+  final List<Schedule> scheduleList;
 
   @override
   State<AllAppointmentStuScreen> createState() =>
@@ -47,27 +51,27 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Prof. Charlie',
-                      style: TextStyle(
+                    Text(
+                      widget.schedule.Name,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      'PhD. In AI',
-                      style: TextStyle(
+                    Text(
+                      widget.schedule.Qualification,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      'Available Now',
-                      style: TextStyle(
+                    Text(
+                      widget.schedule.Status,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -107,6 +111,11 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
 
   void GotoAppointmentScreen(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const BookingScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (_) => BookingScreen(
+                  schedule: widget.schedule,
+                  scheduleList: widget.scheduleList,
+                )));
   }
 }

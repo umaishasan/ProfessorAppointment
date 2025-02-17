@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
@@ -8,6 +10,7 @@ import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:scholappoinment_934074496/Models/Schedule.dart';
 import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 // ignore: must_be_immutable
@@ -22,11 +25,13 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   List<Messaging> messagesList = [];
+  List<Schedule> scheduleList = [];
 
   @override
   void initState() {
     super.initState();
     _fetchMessages();
+    _fetchSchedules();
   }
 
   @override
@@ -87,66 +92,70 @@ class _SidebarState extends State<Sidebar> {
   }
 
   //All icons buttons after header
-  Widget buildBottom(BuildContext context) => Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: ListTile(
-                  title: const Text("Logout"),
-                  leading: const Icon(Icons.logout),
-                  iconColor: const Color.fromARGB(255, 0, 0, 0),
-                  textColor: const Color.fromARGB(255, 0, 0, 0),
-                  onTap: () {
-                    // Handle logout logic here
-                  },
-                ),
+  Widget buildBottom(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: ListTile(
+                title: const Text("Logout"),
+                leading: const Icon(Icons.logout),
+                iconColor: const Color.fromARGB(255, 0, 0, 0),
+                textColor: const Color.fromARGB(255, 0, 0, 0),
+                onTap: () {
+                  // Handle logout logic here
+                },
               ),
             ),
-          ],
-        ),
-      );
-
-  Widget buildMenuItem(BuildContext context) => Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.home_filled),
-            title: const Text("Home"),
-            iconColor: const Color.fromARGB(255, 0, 0, 0),
-            textColor: const Color.fromARGB(255, 0, 0, 0),
-            onTap: () {
-              CommonComponent.BacktoHome(context);
-            },
           ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text("Profile"),
-            iconColor: const Color.fromARGB(255, 0, 0, 0),
-            textColor: const Color.fromARGB(255, 0, 0, 0),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const ProfileScreen()));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.comment),
-            title: const Text("Discussion"),
-            iconColor: const Color.fromARGB(255, 0, 0, 0),
-            textColor: const Color.fromARGB(255, 0, 0, 0),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => DiscussionScreen(
-                          userMessages: messagesList,
-                          messaging: messagesList.last)));
-            },
-          ),
-          IsScheduleOn(context),
         ],
-      );
+      ),
+    );
+  }
+
+  Widget buildMenuItem(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          leading: const Icon(Icons.home_filled),
+          title: const Text("Home"),
+          iconColor: const Color.fromARGB(255, 0, 0, 0),
+          textColor: const Color.fromARGB(255, 0, 0, 0),
+          onTap: () {
+            CommonComponent.BacktoHome(context);
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.person),
+          title: const Text("Profile"),
+          iconColor: const Color.fromARGB(255, 0, 0, 0),
+          textColor: const Color.fromARGB(255, 0, 0, 0),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const ProfileScreen()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.comment),
+          title: const Text("Discussion"),
+          iconColor: const Color.fromARGB(255, 0, 0, 0),
+          textColor: const Color.fromARGB(255, 0, 0, 0),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => DiscussionScreen(
+                        userMessages: messagesList,
+                        messaging: messagesList.last)));
+          },
+        ),
+        IsScheduleOn(context),
+      ],
+    );
+  }
 
   // ignore: non_constant_identifier_names
   Widget IsScheduleOn(BuildContext context) {
@@ -190,7 +199,8 @@ class _SidebarState extends State<Sidebar> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => const AppointmentScreenStu()));
+                      builder: (_) =>
+                          AppointmentScreenStu(scheduleList: scheduleList)));
             },
           )
         ],
@@ -207,6 +217,18 @@ class _SidebarState extends State<Sidebar> {
           messagesList = fetchedMessages;
         });
         //print("Fetched Messages: ${jsonEncode(messagesList)}");
+      }
+    });
+  }
+
+  Future<void> _fetchSchedules() async {
+    FirebaseServices.GetAllSchedule().listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        List<Schedule> fetchedSchedule =
+            snapshot.docs.map((doc) => Schedule.fromJson(doc.data())).toList();
+        setState(() {
+          scheduleList = fetchedSchedule;
+        });
       }
     });
   }

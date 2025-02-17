@@ -208,20 +208,40 @@ class _LoginScreenState extends State<LoginScreen> {
         "Gender": user.Gender,
         "User": user.User
       });
+      checkScheduleChecker(user.User, user.Name,
+          ["03 Janwary, 2025 at 09:00 AM"], "Not Available", "Master");
+    }
+    //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
+  }
 
-      if (await FirebaseServices.IsAccountExist()) {
+  void checkScheduleChecker(String user, String name, List<String> dateTimes,
+      String status, String qualification) async {
+    if (user == "Teacher") {
+      if (await FirebaseServices.IsAccountExistForSche() &&
+          await FirebaseServices.IsAccountExistForMsg()) {
         Future.delayed(const Duration(seconds: 2));
         FirebaseServices.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       } else {
-        await FirebaseServices.CreateMessageUser(user.Name).then(
-          (value) => CommonComponent.BacktoHome(context),
-        );
+        await FirebaseServices.CreateMessageUser(name);
+        await FirebaseServices.CreateScheduleUser(
+            name, dateTimes, status, qualification);
         Future.delayed(const Duration(seconds: 1));
         FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.BacktoHome(context);
+      }
+    } else {
+      if (await FirebaseServices.IsAccountExistForMsg()) {
+        Future.delayed(const Duration(seconds: 2));
+        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.BacktoHome(context);
+      } else {
+        await FirebaseServices.CreateMessageUser(name);
+        Future.delayed(const Duration(seconds: 1));
+        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.BacktoHome(context);
       }
     }
-    //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }
 
   void signupMethod() {

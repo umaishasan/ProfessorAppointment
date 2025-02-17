@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AppointmentScreenStu extends StatefulWidget {
-  const AppointmentScreenStu({super.key});
+  AppointmentScreenStu({super.key, required this.scheduleList});
+  final List<Schedule> scheduleList;
+  //late Schedule schedule;
 
   @override
   State<AppointmentScreenStu> createState() => AppointmentScreenStuState();
@@ -47,11 +50,11 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
           ),
 
           //Tabbar view
-          TabBarView(controller: _tabController, children: const [
+          TabBarView(controller: _tabController, children: [
             Center(
-              child: AllAppointmentStuScreen(),
+              child: AllAppointments(),
             ),
-            Center(
+            const Center(
               child: BookedScreen(),
             )
           ])
@@ -87,6 +90,19 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+  }
+
+  Widget AllAppointments() {
+    return ListView.builder(
+      itemCount: widget.scheduleList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var schedule = widget.scheduleList[index];
+        return AllAppointmentStuScreen(
+            schedule: schedule, scheduleList: widget.scheduleList);
+      },
+    );
   }
 
   // void GotoBookedAppointment() {

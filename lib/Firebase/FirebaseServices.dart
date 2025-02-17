@@ -92,8 +92,17 @@ class FirebaseServices extends StatelessWidget {
   }
 
   //check if login user is exist then he can type message
-  static Future<bool> IsAccountExist() async {
+  static Future<bool> IsAccountExistForMsg() async {
     var docId = (await Firestore.collection(FirestoreMsgCollectionName)
+            .doc(Auth.currentUser!.uid)
+            .get())
+        .exists;
+    return docId;
+  }
+
+  //check if login user is exist then he can type message
+  static Future<bool> IsAccountExistForSche() async {
+    var docId = (await Firestore.collection(FirestoreScheduleCollectionName)
             .doc(Auth.currentUser!.uid)
             .get())
         .exists;
@@ -115,19 +124,19 @@ class FirebaseServices extends StatelessWidget {
   }
 
   //check if this user not available then create user for schedule
-  // static Future<void> CreateScheduleUser(String Name) async {
-  //   final scheduleUser = Schedule(
-  //       Id: Auth.currentUser!.uid,
-  //       Name: Name,
-  //       Time: time,
-  //       Date: date,
-  //       Status: status,
-  //       Qualification: qualification);
+  static Future<void> CreateScheduleUser(String name, List<String> dateTimes,
+      String status, String qualification) async {
+    final scheduleUser = Schedule(
+        Id: Auth.currentUser!.uid,
+        Name: name,
+        DateTimes: dateTimes,
+        Status: status,
+        Qualification: qualification);
 
-  //   await Firestore.collection(FirestoreScheduleCollectionName)
-  //       .doc(Auth.currentUser!.uid)
-  //       .set(scheduleUser.toJson());
-  // }
+    await Firestore.collection(FirestoreScheduleCollectionName)
+        .doc(Auth.currentUser!.uid)
+        .set(scheduleUser.toJson());
+  }
 
   // when any warning or any message system related then you can see in bar
   static void CreateToast(String message) {
