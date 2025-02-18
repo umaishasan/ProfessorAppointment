@@ -206,10 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
         "Email": user.Email,
         "Phone": user.Phone,
         "Gender": user.Gender,
-        "User": user.User
+        "User": user.User,
+        "Qualification": user.Qualification
       });
-      checkScheduleChecker(user.User, user.Name,
-          ["03 Janwary, 2025 at 09:00 AM"], "Not Available", "Master");
+      checkScheduleChecker(user.User, user.Name, [""], "", user.Qualification);
     }
     //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }

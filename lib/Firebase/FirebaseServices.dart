@@ -30,8 +30,14 @@ class FirebaseServices extends StatelessWidget {
   }
 
   // create/signup account in this app
-  static Future<void> SignupAccount(String userName, String email, String user,
-      String gender, String phoneNumber, String password) async {
+  static Future<void> SignupAccount(
+      String userName,
+      String email,
+      String user,
+      String gender,
+      String phoneNumber,
+      String password,
+      String qualification) async {
     try {
       Map<String, String> schoolmembers = {
         'Username': userName,
@@ -39,7 +45,8 @@ class FirebaseServices extends StatelessWidget {
         'User': user,
         'Gender': gender,
         'Phone': phoneNumber,
-        'Password': password
+        'Password': password,
+        'Qualification': qualification
       };
       FirebaseDatabase.instance
           .ref()
@@ -76,6 +83,7 @@ class FirebaseServices extends StatelessWidget {
             person.Phone = value['Phone'];
             person.User = value['User'];
             person.Gender = value['Gender'];
+            person.Qualification = value['Qualification'];
           }
         });
       } else {
@@ -183,5 +191,16 @@ class FirebaseServices extends StatelessWidget {
     final ref = Firestore.collection('${FirestoreMsgCollectionName}');
 
     await ref.doc(time).set(msg.toJson());
+  }
+
+  static Future<void> SetSchedule(List<String> elements, String status) async {
+    DocumentReference docRef =
+        Firestore.collection(FirestoreScheduleCollectionName)
+            .doc(Auth.currentUser!.uid);
+    docRef.update({
+      "DateTimes": FieldValue.arrayUnion(elements),
+      "Status": status,
+    });
+    CreateToast("Set schedule successfully");
   }
 }

@@ -18,6 +18,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _cnfrmpasswordController =
       TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _qualificationController =
+      TextEditingController();
 
   // ignore: non_constant_identifier_names
   String GenderText = "";
@@ -75,6 +77,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   const SizedBox(height: 16),
                   _buildGenderToggles(),
+
+                  const SizedBox(height: 16),
+                  _checkForQualification(),
 
                   const SizedBox(height: 16),
                   _buildTextField('Enter Phone', _phoneController, false),
@@ -148,6 +153,15 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  Widget _checkForQualification() {
+    if (UserText == "Teacher") {
+      return _buildTextField(
+          "Enter Qualification", _qualificationController, false);
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
   Widget _buildUserToggles() {
@@ -264,11 +278,12 @@ class _SignupScreenState extends State<SignupScreen> {
   void signupMethod() {
     if (_passwordController.text != _cnfrmpasswordController.text) {
       FirebaseServices.CreateToast("Confirm password should match");
-    } else if (_passwordController == "" ||
-        _cnfrmpasswordController == "" ||
-        _emailController == "" ||
-        _phoneController == "" ||
-        _usernameController == "") {
+    } else if (_passwordController.text == "" ||
+        _cnfrmpasswordController.text == "" ||
+        _emailController.text == "" ||
+        _phoneController.text == "" ||
+        _usernameController.text == "" ||
+        _qualificationController.text == "") {
       FirebaseServices.CreateToast('Any fields can\'t be empty');
     } else {
       FirebaseServices.SignupAccount(
@@ -277,7 +292,8 @@ class _SignupScreenState extends State<SignupScreen> {
           UserText,
           GenderText,
           _phoneController.text,
-          _passwordController.text);
+          _passwordController.text,
+          _qualificationController.text);
 
       FirebaseServices.CreateToast('Signup Successfully');
       Future.delayed(const Duration(seconds: 2));

@@ -15,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController gender = TextEditingController();
+  final TextEditingController qualification = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +72,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildInfoField('Phone:', phone),
                     const SizedBox(height: 16),
                     _buildInfoField('Gender:', gender),
+                    const SizedBox(height: 16),
+                    _checkQualification(userData.User)
                   ],
                 ),
               ),
@@ -106,6 +109,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  Widget _checkQualification(String userdata) {
+    if (userdata == "Teacher") {
+      //const SizedBox(height: 16);
+      return _buildInfoField('Qual.:', qualification);
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
 //Common Widget For TextFields

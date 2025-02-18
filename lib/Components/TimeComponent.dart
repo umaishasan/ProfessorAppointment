@@ -5,8 +5,9 @@ class SetTimeComponent extends StatefulWidget {
   final int initialHour;
   final int initialMinute;
   final bool initialIsPM;
+  static late String scheduleTime = '';
 
-  const SetTimeComponent({
+  SetTimeComponent({
     super.key,
     this.initialHour = 7,
     this.initialMinute = 0,
@@ -63,6 +64,8 @@ class _SetTimeComponentState extends State<SetTimeComponent> {
 
   @override
   Widget build(BuildContext context) {
+    SetTimeComponent.scheduleTime =
+        '${_hour.toString().padLeft(2, '0')}:${_minute.toString().padLeft(2, '0')} ${_isPM ? 'PM' : 'AM'}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -81,7 +84,7 @@ class _SetTimeComponentState extends State<SetTimeComponent> {
                       size: 20, color: Colors.black), // Icon
                   const SizedBox(width: 8), // Gap between icon and text
                   Text(
-                    '${_hour.toString().padLeft(2, '0')}:${_minute.toString().padLeft(2, '0')} ${_isPM ? 'PM' : 'AM'}', // Your text
+                    SetTimeComponent.scheduleTime,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,

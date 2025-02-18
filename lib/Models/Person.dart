@@ -6,6 +6,7 @@ class Person with ChangeNotifier {
   late String _phone = "";
   late String _gender = "";
   late String _user = "";
+  late String _qualification = "";
 
   void updateUserData(Map<String, dynamic> userData) {
     _name = userData["Username"] ?? "";
@@ -13,6 +14,7 @@ class Person with ChangeNotifier {
     _phone = userData["Phone"] ?? "";
     _gender = userData["Gender"] ?? "";
     _user = userData["User"] ?? "";
+    _qualification = userData["Qualification"] ?? "";
 
     notifyListeners(); // UI ko update karne ke liye zaroori hai
   }
@@ -32,6 +34,8 @@ class Person with ChangeNotifier {
   // Getter
   // ignore: non_constant_identifier_names, unnecessary_getters_setters
   String get User => _user;
+
+  String get Qualification => _qualification;
 
   // Setter
   // ignore: non_constant_identifier_names
@@ -65,6 +69,11 @@ class Person with ChangeNotifier {
   // ignore: non_constant_identifier_names
   set User(String newUser) {
     _user = newUser;
+    notifyListeners();
+  }
+
+  set Qualification(String newQualification) {
+    _qualification = newQualification;
     notifyListeners();
   }
 }

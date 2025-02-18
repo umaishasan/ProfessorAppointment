@@ -68,6 +68,8 @@ class HomeScreen extends StatelessWidget {
                   _buildInfoRow('Phone:', userData.Phone),
                   const SizedBox(height: 10),
                   _buildInfoRow('Gender:', userData.Gender),
+                  const SizedBox(height: 10),
+                  _checkQualification(userData.User, userData.Qualification)
                   //const SizedBox(height: 20),
                 ],
               ),
@@ -76,6 +78,15 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _checkQualification(String userdata, String qualification) {
+    if (userdata == "Teacher") {
+      //const SizedBox(height: 16);
+      return _buildInfoRow('Qual.:', qualification);
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
   Widget _buildInfoRow(String label, String value) {

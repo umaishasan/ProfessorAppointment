@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SetDateComponent extends StatefulWidget {
   const SetDateComponent({super.key});
+  static late String scheduleDate = '';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -65,6 +66,8 @@ class _SetDateComponentState extends State<SetDateComponent> {
 
   @override
   Widget build(BuildContext context) {
+    SetDateComponent.scheduleDate =
+        "${day.toString().padLeft(2, '0')}  ${_getMonthName(month)}, 20$year";
     return Container(
       margin: const EdgeInsets.only(top: 25, left: 60, right: 60),
       constraints: const BoxConstraints(minWidth: 30, minHeight: 100),
@@ -77,7 +80,7 @@ class _SetDateComponentState extends State<SetDateComponent> {
                   size: 20, color: Colors.black), // Icon
               const SizedBox(width: 8), // Gap between icon and text
               Text(
-                "${day.toString().padLeft(2, '0')}  ${_getMonthName(month)}, 20$year", // Your text
+                SetDateComponent.scheduleDate,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
