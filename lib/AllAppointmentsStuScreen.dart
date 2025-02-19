@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
+import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
-  const AllAppointmentStuScreen(
-      {super.key, required this.schedule, required this.scheduleList});
+  const AllAppointmentStuScreen({super.key, required this.schedule});
   final Schedule schedule;
-  final List<Schedule> scheduleList;
 
   @override
   State<AllAppointmentStuScreen> createState() =>
@@ -110,12 +109,15 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
   }
 
   void GotoAppointmentScreen(BuildContext context) {
+    for (var element in SetScheduleScreen.scheduleDateData) {
+      print("Kia data hai list me? ${element}");
+    }
+
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => BookingScreen(
                   schedule: widget.schedule,
-                  scheduleList: widget.scheduleList,
                 )));
   }
 }

@@ -73,9 +73,11 @@ class FirebaseServices extends StatelessWidget {
       //prepare get user data
       var dbref = FirebaseDatabase.instance.ref(DatabaseName);
       DatabaseEvent event = await dbref.once();
+
       if (event.snapshot.value != null) {
         Map<dynamic, dynamic> users =
             event.snapshot.value as Map<dynamic, dynamic>;
+
         users.forEach((key, value) {
           if (value['Email'] == email) {
             person.Name = value['Username'];
@@ -86,15 +88,15 @@ class FirebaseServices extends StatelessWidget {
             person.Qualification = value['Qualification'];
           }
         });
-      } else {
-        print("User not found!");
       }
 
       //create message user data
     } on FirebaseAuthException catch (e) {
+      CreateToast("User not found!");
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         CreateToast('email or password maybe wrong');
       }
+      return null;
     }
     return person;
   }
@@ -198,7 +200,7 @@ class FirebaseServices extends StatelessWidget {
         Firestore.collection(FirestoreScheduleCollectionName)
             .doc(Auth.currentUser!.uid);
     docRef.update({
-      "DateTimes": FieldValue.arrayUnion(elements),
+      "DatesTimes": FieldValue.arrayUnion(elements),
       "Status": status,
     });
     CreateToast("Set schedule successfully");

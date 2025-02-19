@@ -80,7 +80,7 @@ class _AllPandingAppointmentScreenState
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  minimumSize: const Size(double.infinity, 30),
+                  minimumSize: const Size(double.infinity, 40),
                 ),
                 child: const Text(
                   'Check Appointment >',

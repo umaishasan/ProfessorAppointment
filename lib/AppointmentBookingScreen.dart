@@ -5,9 +5,7 @@ import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class BookingScreen extends StatefulWidget {
-  const BookingScreen(
-      {super.key, required this.scheduleList, required this.schedule});
-  final List<Schedule> scheduleList;
+  const BookingScreen({super.key, required this.schedule});
   final Schedule schedule;
 
   @override
@@ -15,10 +13,12 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  int currentIndex = 0;
+  int currentIndex = 1;
+  String confrimDate = "";
 
   @override
   Widget build(BuildContext context) {
+    confrimDate = widget.schedule.DateTimes[currentIndex];
     return Scaffold(
       body: Stack(
         children: [
@@ -38,14 +38,14 @@ class _BookingScreenState extends State<BookingScreen> {
                       Container(
                         width: 352,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 105, 55, 55),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
                             const CircleAvatar(
-                              radius: 10,
+                              radius: 35,
                               backgroundImage: NetworkImage(
                                   'https://dashboard.codeparrot.ai/api/image/Z6Xs4qQDH3ZYFIaL/user-imag.png'),
                             ),
@@ -140,36 +140,23 @@ class _BookingScreenState extends State<BookingScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.arrow_back_ios,
                                             size: 12),
                                         onPressed: selectPrevious,
                                       ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            widget.schedule
-                                                .DateTimes[currentIndex]
-                                                .split(
-                                                    ' at ')[1], // Extract time
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
+                                            confrimDate, // Extract time
                                             style: const TextStyle(
                                                 fontFamily: 'Inter',
                                                 fontSize: 13),
                                           ),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                            widget.schedule
-                                                .DateTimes[currentIndex]
-                                                .split(
-                                                    ' at ')[0], // Extract date
-                                            style: const TextStyle(
-                                                fontFamily: 'Inter',
-                                                fontSize: 13),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                       IconButton(
                                         icon: const Icon(
@@ -247,7 +234,7 @@ class _BookingScreenState extends State<BookingScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (_) =>
-                AppointmentScreenStu(scheduleList: widget.scheduleList)));
+            builder: (_) => AppointmentScreenStu(
+                scheduleList: AppointmentScreenStu.tempStore)));
   }
 }

@@ -10,6 +10,7 @@ class SetScheduleScreen extends StatefulWidget {
   const SetScheduleScreen({
     super.key,
   });
+  static List<String> scheduleDateData = [];
 
   @override
   State<SetScheduleScreen> createState() => _SetScheduleScreenState();
@@ -18,7 +19,6 @@ class SetScheduleScreen extends StatefulWidget {
 class _SetScheduleScreenState extends State<SetScheduleScreen> {
   String completeDateTime = '';
   String AvailableText = "";
-  List<String> scheduleDateData = [];
 
   @override
   void initState() {
@@ -111,9 +111,9 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     String time = SetTimeComponent.scheduleTime;
     String date = SetDateComponent.scheduleDate;
     completeDateTime = "${date} at ${time}";
-    scheduleDateData.add(completeDateTime);
+    SetScheduleScreen.scheduleDateData.add(completeDateTime);
 
-    for (var element in scheduleDateData) {
+    for (var element in SetScheduleScreen.scheduleDateData) {
       print(element);
     }
   }
@@ -170,8 +170,9 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   }
 
   void setSchedule() {
-    FirebaseServices.SetSchedule(scheduleDateData, AvailableText).then((_) =>
-        Navigator.push(
+    FirebaseServices.SetSchedule(
+            SetScheduleScreen.scheduleDateData, AvailableText)
+        .then((_) => Navigator.push(
             context, MaterialPageRoute(builder: (_) => HomeScreen())));
   }
 }

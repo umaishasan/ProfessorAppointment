@@ -7,7 +7,7 @@ import 'package:scholappoinment_934074496/Models/Schedule.dart';
 class AppointmentScreenStu extends StatefulWidget {
   AppointmentScreenStu({super.key, required this.scheduleList});
   final List<Schedule> scheduleList;
-  //late Schedule schedule;
+  static late List<Schedule> tempStore;
 
   @override
   State<AppointmentScreenStu> createState() => AppointmentScreenStuState();
@@ -93,21 +93,15 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
   }
 
   Widget AllAppointments() {
+    AppointmentScreenStu.tempStore = widget.scheduleList;
     return ListView.builder(
       itemCount: widget.scheduleList.length,
       padding: const EdgeInsets.all(16),
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var schedule = widget.scheduleList[index];
-        return AllAppointmentStuScreen(
-            schedule: schedule, scheduleList: widget.scheduleList);
+        return AllAppointmentStuScreen(schedule: schedule);
       },
     );
   }
-
-  // void GotoBookedAppointment() {
-
-  //   Navigator. (
-  //       context, MaterialPageRoute(builder: (_) => const AppointmentScreen()));
-  // }
 }

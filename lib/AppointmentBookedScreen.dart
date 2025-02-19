@@ -97,7 +97,7 @@ class BookedScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       //Navigator.pop(context, 0);
-                      CancleToGoBack(context);
+                      //CancleToGoBack(context);
                     },
                     child: Container(
                       width: 150,
@@ -127,8 +127,8 @@ class BookedScreen extends StatelessWidget {
     );
   }
 
-  void CancleToGoBack(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (_) => const AppointmentScreenStu()));
-  }
+  // void CancleToGoBack(BuildContext context) {
+  //   Navigator.push(context,
+  //       MaterialPageRoute(builder: (_) => const AppointmentScreenStu()));
+  // }
 }

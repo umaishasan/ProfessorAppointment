@@ -19,7 +19,7 @@ class Schedule {
     data['Name'] = Name;
     data['Qualification'] = Qualification;
     data['Status'] = Status;
-    data['DateTimes'] = DateTimes;
+    data['DatesTimes'] = DateTimes;
     return data;
   }
 
