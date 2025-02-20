@@ -26,6 +26,14 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3), // Light shadow
+                spreadRadius: 1,
+                blurRadius: 6,
+                offset: const Offset(0, 4), // Position of shadow
+              ),
+            ],
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,9 +117,9 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
   }
 
   void GotoAppointmentScreen(BuildContext context) {
-    for (var element in SetScheduleScreen.scheduleDateData) {
-      print("Kia data hai list me? ${element}");
-    }
+    // for (var element in SetScheduleScreen.scheduleDateData) {
+    //   print("Kia data hai list me? ${element}");
+    // }
 
     Navigator.push(
         context,

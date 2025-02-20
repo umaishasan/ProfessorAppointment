@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
 import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class AppointmentScreenProf extends StatefulWidget {
-  const AppointmentScreenProf({super.key});
+  const AppointmentScreenProf({super.key, required this.appointmentList});
+  final List<Appointment> appointmentList;
+  static late List<Appointment> tempStoreAppoint;
 
   @override
   State<AppointmentScreenProf> createState() => AppointmentScreenProfState();
@@ -47,11 +50,11 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
           ),
 
           //Tabbar view
-          TabBarView(controller: _tabController, children: const [
+          TabBarView(controller: _tabController, children: [
             Center(
-              child: AllPandingAppointmentScreen(),
+              child: AllPandingAppointments(),
             ),
-            Center(
+            const Center(
               child: DoneAppointmentScreen(),
             )
           ])
@@ -87,5 +90,18 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+  }
+
+  Widget AllPandingAppointments() {
+    AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    return ListView.builder(
+      itemCount: widget.appointmentList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var appointment = widget.appointmentList[index];
+        return AllPandingAppointmentScreen(appointment: appointment);
+      },
+    );
   }
 }

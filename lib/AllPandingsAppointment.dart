@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentPandingScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class AllPandingAppointmentScreen extends StatefulWidget {
-  const AllPandingAppointmentScreen({super.key});
+  const AllPandingAppointmentScreen({super.key, required this.appointment});
+  final Appointment appointment;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -25,40 +27,48 @@ class _AllPandingAppointmentScreenState
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3), // Light shadow
+                spreadRadius: 1,
+                blurRadius: 6,
+                offset: const Offset(0, 4), // Position of shadow
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 35,
                     backgroundImage: NetworkImage(
                         'https://dashboard.codeparrot.ai/api/image/Z6mXXYcVzJUvTtx8/user-imag.png'),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Carlos Shawn',
-                        style: TextStyle(
+                        widget.appointment.Name,
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
-                        'Student',
-                        style: TextStyle(
+                        widget.appointment.User,
+                        style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 15,
                           fontWeight: FontWeight.w300,
                         ),
                       ),
-                      SizedBox(height: 4),
-                      Text(
+                      const SizedBox(height: 4),
+                      const Text(
                         'Request For Appointment',
                         style: TextStyle(
                           fontFamily: 'Inter',
@@ -136,6 +146,8 @@ class _AllPandingAppointmentScreenState
   // ignore: non_constant_identifier_names
   void CheckingAppointment(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const PendingScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (_) => PendingScreen(appointment: widget.appointment)));
   }
 }

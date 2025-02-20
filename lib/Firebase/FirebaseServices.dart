@@ -15,6 +15,7 @@ class FirebaseServices extends StatelessWidget {
   static String DatabaseName = "MyAcademicAppointment";
   static String FirestoreMsgCollectionName = "Messages";
   static String FirestoreScheduleCollectionName = "Schedule";
+  static String FirestoreAppointmentCollectionName = "Appointment";
   static FirebaseAuth Auth = FirebaseAuth.instance;
   static FirebaseFirestore Firestore = FirebaseFirestore.instance;
   static late DataSnapshot dsnapshot;
@@ -89,7 +90,6 @@ class FirebaseServices extends StatelessWidget {
           }
         });
       }
-
       //create message user data
     } on FirebaseAuthException catch (e) {
       CreateToast("User not found!");
@@ -176,9 +176,17 @@ class FirebaseServices extends StatelessWidget {
 
   //get all schedule
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllSchedule() {
-    // print(
-    //     "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
+    //print(
+    //    "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
     return Firestore.collection('${FirestoreScheduleCollectionName}')
+        .snapshots();
+  }
+
+  //get all appointment
+  static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllAppointment() {
+    //print(
+    //    "Get message id: ${Firestore.collection('${FirestoreAppointmentCollectionName}')}");
+    return Firestore.collection('${FirestoreAppointmentCollectionName}')
         .snapshots();
   }
 
@@ -203,6 +211,25 @@ class FirebaseServices extends StatelessWidget {
       "DatesTimes": FieldValue.arrayUnion(elements),
       "Status": status,
     });
+    CreateToast("Set schedule successfully");
+  }
+
+  static Future<void> SetAppointment(
+      String name, String user, String dateTime, bool isAccept) async {
+    Map<String, dynamic> appointment = {
+      'Name': name,
+      'User': user,
+      'DateTime': dateTime,
+      'Accept': isAccept,
+    };
+
+    try {
+      await Firestore.collection(FirestoreAppointmentCollectionName)
+          .add(appointment);
+      print("Data added successfully!");
+    } catch (e) {
+      print("Firestore Error: $e");
+    }
     CreateToast("Set schedule successfully");
   }
 }

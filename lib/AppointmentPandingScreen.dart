@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
-class PendingScreen extends StatelessWidget {
-  const PendingScreen({super.key});
+class PendingScreen extends StatefulWidget {
+  const PendingScreen({super.key, required this.appointment});
+  final Appointment appointment;
 
+  @override
+  State<PendingScreen> createState() => _PendingScreenState();
+}
+
+class _PendingScreenState extends State<PendingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +31,14 @@ class PendingScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // Light shadow
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: const Offset(0, 4), // Position of shadow
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
@@ -35,17 +50,17 @@ class PendingScreen extends StatelessWidget {
                           'https://dashboard.codeparrot.ai/api/image/Z6mBHvrycnbNR_jh/user-imag.png'),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      'Carlos Shawn',
-                      style: TextStyle(
+                    Text(
+                      widget.appointment.Name,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      'Student',
-                      style: TextStyle(
+                    Text(
+                      widget.appointment.User,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 15,
                         fontWeight: FontWeight.w300,
@@ -116,10 +131,10 @@ class PendingScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Time & Date',
                                   style: TextStyle(
                                     fontFamily: 'Inter',
@@ -127,25 +142,14 @@ class PendingScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    Icon(Icons.access_time, size: 15),
-                                    SizedBox(width: 8),
+                                    const Icon(Icons.access_time, size: 15),
+                                    const SizedBox(width: 8),
                                     Text(
-                                      '07:00 PM',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                    SizedBox(width: 20),
-                                    Icon(Icons.calendar_today, size: 15),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      '03 February, 2025',
-                                      style: TextStyle(
+                                      widget.appointment.DateTimes,
+                                      style: const TextStyle(
                                         fontFamily: 'Inter',
                                         fontSize: 13,
                                         fontWeight: FontWeight.w300,
@@ -235,7 +239,10 @@ class PendingScreen extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   void CancleAppointment(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (_) => const AppointmentScreenProf()));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => AppointmentScreenProf(
+                appointmentList: AppointmentScreenProf.tempStoreAppoint)));
   }
 }

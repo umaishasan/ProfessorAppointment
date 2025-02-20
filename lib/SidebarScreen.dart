@@ -8,6 +8,7 @@ import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
@@ -26,12 +27,14 @@ class Sidebar extends StatefulWidget {
 class _SidebarState extends State<Sidebar> {
   List<Messaging> messagesList = [];
   List<Schedule> scheduleList = [];
+  List<Appointment> appointmentList = [];
 
   @override
   void initState() {
     super.initState();
     _fetchMessages();
     _fetchSchedules();
+    _fetchAppointments();
   }
 
   @override
@@ -182,7 +185,8 @@ class _SidebarState extends State<Sidebar> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => const AppointmentScreenProf()));
+                      builder: (_) => AppointmentScreenProf(
+                          appointmentList: appointmentList)));
             },
           ),
         ],
@@ -228,6 +232,19 @@ class _SidebarState extends State<Sidebar> {
             snapshot.docs.map((doc) => Schedule.fromJson(doc.data())).toList();
         setState(() {
           scheduleList = fetchedSchedule;
+        });
+      }
+    });
+  }
+
+  Future<void> _fetchAppointments() async {
+    FirebaseServices.GetAllAppointment().listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        List<Appointment> fetchedAppointment = snapshot.docs
+            .map((doc) => Appointment.fromJson(doc.data()))
+            .toList();
+        setState(() {
+          appointmentList = fetchedAppointment;
         });
       }
     });

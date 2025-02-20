@@ -37,6 +37,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
             margin: const EdgeInsets.only(
                 left: 10, right: 10, top: 100, bottom: 250),
             color: Colors.white,
+            elevation: 3,
             child: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenSizeCommon.width * 0.01,

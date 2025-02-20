@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -18,6 +21,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var person = Provider.of<Person>(context);
     confrimDate = widget.schedule.DateTimes[currentIndex];
     return Scaffold(
       body: Stack(
@@ -40,6 +44,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.3), // Light shadow
+                              spreadRadius: 1,
+                              blurRadius: 6,
+                              offset: const Offset(0, 4), // Position of shadow
+                            ),
+                          ],
                         ),
                         child: Column(
                           children: [
@@ -178,7 +191,8 @@ class _BookingScreenState extends State<BookingScreen> {
                       // Confirm button
                       ElevatedButton(
                         onPressed: () {
-                          BookedAppointment(context);
+                          BookedAppointment(
+                              context, person.Name, person.User, confrimDate);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF32983E),
@@ -225,7 +239,10 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   // ignore: non_constant_identifier_names
-  void BookedAppointment(BuildContext context) {
+  void BookedAppointment(
+      BuildContext context, String name, String user, String dateTime) {
+    //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
+    FirebaseServices.SetAppointment(name, user, dateTime, false);
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 
