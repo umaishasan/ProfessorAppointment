@@ -164,30 +164,28 @@ class FirebaseServices extends StatelessWidget {
   //common method for get conversation id
   String GetCoversationId(String id) =>
       Auth.currentUser!.uid.hashCode <= id.hashCode
-          ? '${Auth.currentUser!.uid}_${id}'
+          ? '${Auth.currentUser!.uid}_$id'
           : '${id}_${Auth.currentUser!.uid}';
 
   //get all messages
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
     // print(
     //     "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
-    return Firestore.collection('${FirestoreMsgCollectionName}').snapshots();
+    return Firestore.collection(FirestoreMsgCollectionName).snapshots();
   }
 
   //get all schedule
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllSchedule() {
     //print(
     //    "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
-    return Firestore.collection('${FirestoreScheduleCollectionName}')
-        .snapshots();
+    return Firestore.collection(FirestoreScheduleCollectionName).snapshots();
   }
 
   //get all appointment
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllAppointment() {
     //print(
     //    "Get message id: ${Firestore.collection('${FirestoreAppointmentCollectionName}')}");
-    return Firestore.collection('${FirestoreAppointmentCollectionName}')
-        .snapshots();
+    return Firestore.collection(FirestoreAppointmentCollectionName).snapshots();
   }
 
   static Future<void> SendMessage(
@@ -198,7 +196,7 @@ class FirebaseServices extends StatelessWidget {
         Name: userMessing.Name,
         MesageTime: time,
         Id: userMessing.Id);
-    final ref = Firestore.collection('${FirestoreMsgCollectionName}');
+    final ref = Firestore.collection(FirestoreMsgCollectionName);
 
     await ref.doc(time).set(msg.toJson());
   }
@@ -216,20 +214,27 @@ class FirebaseServices extends StatelessWidget {
 
   static Future<void> SetAppointment(
       String name, String user, String dateTime, bool isAccept) async {
-    Map<String, dynamic> appointment = {
-      'Name': name,
-      'User': user,
-      'DateTime': dateTime,
-      'Accept': isAccept,
-    };
-
     try {
-      await Firestore.collection(FirestoreAppointmentCollectionName)
-          .add(appointment);
+      DocumentReference docRef =
+          await Firestore.collection(FirestoreAppointmentCollectionName).add({
+        'Name': name,
+        'User': user,
+        'DateTime': dateTime,
+        'Accept': isAccept,
+      });
+      await docRef.update({'Id': docRef.id});
       print("Data added successfully!");
+      CreateToast("Set appointment successfully");
     } catch (e) {
       print("Firestore Error: $e");
+      CreateToast("Not Set");
     }
-    CreateToast("Set schedule successfully");
+  }
+
+  static Future<void> AcceptAppointment(String id, bool isAccept) async {
+    DocumentReference docRef =
+        Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
+    await docRef.update({"Accept": isAccept});
+    CreateToast("Appointment generate successfully");
   }
 }

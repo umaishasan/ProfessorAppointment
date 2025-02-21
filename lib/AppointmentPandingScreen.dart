@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class PendingScreen extends StatefulWidget {
@@ -227,13 +227,17 @@ class _PendingScreenState extends State<PendingScreen> {
     );
   }
 
-  // ignore: non_constant_identifier_names
+  //Navigate to the AppointmentPage
   void BackToAppointmentPage(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.pop(context, 1);
   }
 
   // ignore: non_constant_identifier_names
   void AcceptAppointment(BuildContext context) {
+    FirebaseServices.AcceptAppointment(widget.appointment.Id, true);
+    print(
+        "Before => Id: ${widget.appointment.Id}, Accpr: ${widget.appointment.Accept}");
+
     Navigator.pop(context, 2);
   }
 
