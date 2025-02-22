@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
+import 'package:scholappoinment_934074496/Models/Messaging.dart';
+import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class CommonComponent extends StatelessWidget {
   const CommonComponent({super.key});
+
+  static late Schedule schedule;
+  static late Appointment appointment;
+  static late Messaging messaging;
+
+  static late List<Messaging> messagesList;
+  static late List<Schedule> scheduleList;
+  static late List<Appointment> appointmentList;
 
   // ignore: non_constant_identifier_names
   static Widget AppBarCreator(BuildContext context, String appBarTitle,

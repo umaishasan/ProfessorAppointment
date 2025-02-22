@@ -169,12 +169,13 @@ class _PendingScreenState extends State<PendingScreen> {
 
               const SizedBox(height: 20),
 
-              // Action buttons
+              //both button action & cancle
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 21),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Action buttons
                     ElevatedButton(
                       onPressed: () {
                         AcceptAppointment(context);
@@ -196,6 +197,8 @@ class _PendingScreenState extends State<PendingScreen> {
                         ),
                       ),
                     ),
+
+                    //cancla button
                     ElevatedButton(
                       onPressed: () {
                         CancleAppointment(context);
@@ -232,7 +235,7 @@ class _PendingScreenState extends State<PendingScreen> {
     Navigator.pop(context, 1);
   }
 
-  // ignore: non_constant_identifier_names
+  //when click to accept button then it will accept appointment
   void AcceptAppointment(BuildContext context) {
     FirebaseServices.AcceptAppointment(widget.appointment.Id, true);
     print(

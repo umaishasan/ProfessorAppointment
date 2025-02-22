@@ -4,6 +4,7 @@ import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
@@ -192,7 +193,12 @@ class _BookingScreenState extends State<BookingScreen> {
                       ElevatedButton(
                         onPressed: () {
                           BookedAppointment(
-                              context, person.Name, person.User, confrimDate);
+                              context,
+                              person.Name,
+                              person.User,
+                              confrimDate,
+                              widget.schedule.Name,
+                              widget.schedule.Qualification);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF32983E),
@@ -238,20 +244,28 @@ class _BookingScreenState extends State<BookingScreen> {
     });
   }
 
-  // ignore: non_constant_identifier_names
-  void BookedAppointment(
-      BuildContext context, String name, String user, String dateTime) {
+  //when click on confirm button then appointment will set
+  void BookedAppointment(BuildContext context, String name, String user,
+      String dateTime, String teacherName, String teacherQualification) {
     //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
-    FirebaseServices.SetAppointment(name, user, dateTime, false);
+    FirebaseServices.SetAppointment(
+        name, user, dateTime, false, teacherName, teacherQualification);
+
+    setState(() {
+      CommonComponent.appointment =
+          FirebaseServices.GetAllAppointment().last as Appointment;
+    });
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 
-  // ignore: non_constant_identifier_names
+  //back to the appointment screen
   void BackToAppointmentScreen(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => AppointmentScreenStu(
-                scheduleList: AppointmentScreenStu.tempStore)));
+                  scheduleList: CommonComponent.scheduleList,
+                  appointment: CommonComponent.appointment,
+                )));
   }
 }

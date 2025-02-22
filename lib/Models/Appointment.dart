@@ -5,6 +5,8 @@ class Appointment {
     required this.Name,
     required this.DateTimes,
     required this.Accept,
+    required this.TeacherName,
+    required this.TeacherQualification,
   });
 
   late String Id;
@@ -12,6 +14,8 @@ class Appointment {
   late String Name;
   late String DateTimes;
   late bool Accept;
+  late String TeacherName;
+  late String TeacherQualification;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -20,6 +24,8 @@ class Appointment {
     data['Accept'] = Accept;
     data['User'] = User;
     data['DatesTimes'] = DateTimes;
+    data['TeacherName'] = TeacherName;
+    data['TeaQualif'] = TeacherQualification;
     return data;
   }
 
@@ -29,5 +35,7 @@ class Appointment {
     User = json['User'];
     Accept = json['Accept'];
     DateTimes = json['DateTime'];
+    TeacherName = json['TeacherName'];
+    TeacherQualification = json['TeaQualif'];
   }
 }

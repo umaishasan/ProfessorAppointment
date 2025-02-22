@@ -54,8 +54,8 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
             Center(
               child: AllPandingAppointments(),
             ),
-            const Center(
-              child: DoneAppointmentScreen(),
+            Center(
+              child: AllDoneAppointments(),
             )
           ])
         ],
@@ -93,7 +93,7 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
   }
 
   Widget AllPandingAppointments() {
-    AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    //AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
     return ListView.builder(
       itemCount: widget.appointmentList.length,
       padding: const EdgeInsets.all(16),
@@ -101,6 +101,21 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
       itemBuilder: (context, index) {
         var appointment = widget.appointmentList[index];
         return AllPandingAppointmentScreen(appointment: appointment);
+      },
+    );
+  }
+
+  Widget AllDoneAppointments() {
+    //AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    return ListView.builder(
+      itemCount: widget.appointmentList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var appointment = widget.appointmentList[index];
+        if (appointment.Accept == true) {
+          return DoneAppointmentScreen(appointment: appointment);
+        }
       },
     );
   }

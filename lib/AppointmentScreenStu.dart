@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AppointmentScreenStu extends StatefulWidget {
-  AppointmentScreenStu({super.key, required this.scheduleList});
+  AppointmentScreenStu(
+      {super.key, required this.scheduleList, required this.appointment});
   final List<Schedule> scheduleList;
-  static late List<Schedule> tempStore;
+  late Appointment appointment;
 
   @override
   State<AppointmentScreenStu> createState() => AppointmentScreenStuState();
@@ -54,8 +57,8 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
             Center(
               child: AllAppointments(),
             ),
-            const Center(
-              child: BookedScreen(),
+            Center(
+              child: BookedScreen(appointment: widget.appointment),
             )
           ])
         ],
@@ -87,13 +90,15 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
     );
   }
 
-  // ignore: non_constant_identifier_names
+  //back button to go home
   void GotoHome(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 
   Widget AllAppointments() {
-    AppointmentScreenStu.tempStore = widget.scheduleList;
+    setState(() {
+      CommonComponent.scheduleList = widget.scheduleList;
+    });
     return ListView.builder(
       itemCount: widget.scheduleList.length,
       padding: const EdgeInsets.all(16),

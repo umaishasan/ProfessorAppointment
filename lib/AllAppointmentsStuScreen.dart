@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
-import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
   const AllAppointmentStuScreen({super.key, required this.schedule});

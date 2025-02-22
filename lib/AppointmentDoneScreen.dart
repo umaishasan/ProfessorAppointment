@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class DoneAppointmentScreen extends StatelessWidget {
-  final String doctorName;
-
-  const DoneAppointmentScreen({
+  late Appointment appointment;
+  DoneAppointmentScreen({
     super.key,
-    this.doctorName = 'Carlos Shawn',
+    required this.appointment,
   });
 
   @override
@@ -30,7 +30,7 @@ class DoneAppointmentScreen extends StatelessWidget {
             ],
           ),
           child: Text(
-            'Your appointment with $doctorName was \nsuccessful.',
+            'Your appointment had approved with ${appointment.Name} on ${appointment.DateTimes}.',
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 15,

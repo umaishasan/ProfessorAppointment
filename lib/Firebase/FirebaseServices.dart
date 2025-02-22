@@ -212,8 +212,8 @@ class FirebaseServices extends StatelessWidget {
     CreateToast("Set schedule successfully");
   }
 
-  static Future<void> SetAppointment(
-      String name, String user, String dateTime, bool isAccept) async {
+  static Future<void> SetAppointment(String name, String user, String dateTime,
+      bool isAccept, String teacherName, String teacherQualification) async {
     try {
       DocumentReference docRef =
           await Firestore.collection(FirestoreAppointmentCollectionName).add({
@@ -221,6 +221,8 @@ class FirebaseServices extends StatelessWidget {
         'User': user,
         'DateTime': dateTime,
         'Accept': isAccept,
+        'TeacherName': teacherName,
+        'TeaQualif': teacherQualification
       });
       await docRef.update({'Id': docRef.id});
       print("Data added successfully!");

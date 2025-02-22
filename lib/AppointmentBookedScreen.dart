@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class BookedScreen extends StatelessWidget {
-  const BookedScreen({super.key});
+  BookedScreen({super.key, required this.appointment});
+  late Appointment appointment;
 
   @override
   Widget build(BuildContext context) {
+    String checkAppointStatus =
+        appointment.Accept == true ? "Booked" : "Panding";
     return Column(
       children: [
         // Appointment Card
@@ -19,28 +23,28 @@ class BookedScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 35,
                     backgroundImage: NetworkImage(
                         'https://dashboard.codeparrot.ai/api/image/Z6XuIqQDH3ZYFIaM/user-imag.png'),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Prof. Charlie',
-                        style: TextStyle(
+                        appointment.TeacherName,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
-                        'PhD. In AI',
-                        style: TextStyle(
+                        appointment.TeacherQualification,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w300,
                         ),
@@ -50,23 +54,13 @@ class BookedScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 25),
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.access_time, size: 15),
-                  SizedBox(width: 3),
+                  const Icon(Icons.access_time, size: 15),
+                  const SizedBox(width: 3),
                   Text(
-                    '07:00 PM',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  SizedBox(width: 41),
-                  Icon(Icons.calendar_today, size: 15),
-                  SizedBox(width: 3),
-                  Text(
-                    '03 February, 2025',
-                    style: TextStyle(
+                    appointment.DateTimes,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w300,
                     ),
@@ -84,16 +78,18 @@ class BookedScreen extends StatelessWidget {
                       color: const Color(0xFFD0D0D0),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'Booked',
-                        style: TextStyle(
+                        checkAppointStatus,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
+
+                  //cancle button
                   GestureDetector(
                     onTap: () {
                       //Navigator.pop(context, 0);
