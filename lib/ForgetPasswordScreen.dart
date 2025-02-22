@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/LoginScreen.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
-  const ForgetPasswordScreen({super.key});
+  const ForgetPasswordScreen({super.key, required this.email});
+  final String email;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -144,6 +149,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   }
 
   void forgetPassword() {
+    if (_newPasswordController.text != _confirmPasswordController.text) {
+      CommonComponent.CreateToast("Confirm password should be match.");
+    } else {
+      FirebaseServices.forgotPassword(widget.email);
+      CommonComponent.CreateAlert(context, "Reset Password",
+          "Check your mail for reset password", GotoLoginPage);
+    }
+  }
+
+  void GotoLoginPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const LoginScreen()));
   }

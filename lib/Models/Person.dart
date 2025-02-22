@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Person with ChangeNotifier {
   late String _name = "";
+  late String _id = "";
   late String _email = "";
   late String _phone = "";
   late String _gender = "";
@@ -10,6 +11,7 @@ class Person with ChangeNotifier {
 
   void updateUserData(Map<String, dynamic> userData) {
     _name = userData["Username"] ?? "";
+    _id = userData["Id"] ?? "";
     _email = userData["Email"] ?? "";
     _phone = userData["Phone"] ?? "";
     _gender = userData["Gender"] ?? "";
@@ -19,59 +21,58 @@ class Person with ChangeNotifier {
     notifyListeners(); // UI ko update karne ke liye zaroori hai
   }
 
-  // Getter
-  // ignore: non_constant_identifier_names, unnecessary_getters_setters
+  // Getter name
   String get Name => _name;
-  // Getter
-  // ignore: non_constant_identifier_names, unnecessary_getters_setters
+  // Getter id
+  String get Id => _id;
+  // Getter email
   String get Email => _email;
-  // Getter
-  // ignore: non_constant_identifier_names, unnecessary_getters_setters
+  // Getter phone
   String get Phone => _phone;
-  // Getter
-  // ignore: non_constant_identifier_names, unnecessary_getters_setters
+  // Getter gender
   String get Gender => _gender;
-  // Getter
-  // ignore: non_constant_identifier_names, unnecessary_getters_setters
+  // Getter user
   String get User => _user;
-
+  // Getter qualification
   String get Qualification => _qualification;
 
-  // Setter
-  // ignore: non_constant_identifier_names
+  //Setter name
   set Name(String newName) {
     _name = newName;
     notifyListeners();
   }
 
-  // Setter
-  // ignore: non_constant_identifier_names
+  //Setter id
+  set Id(String newId) {
+    _id = newId;
+    notifyListeners();
+  }
+
+  //Setter email
   set Email(String newEmail) {
     _email = newEmail;
     notifyListeners();
   }
 
-  // Setter
-  // ignore: non_constant_identifier_names
+  // Setter phone
   set Phone(String newPhone) {
     _phone = newPhone;
     notifyListeners();
   }
 
-  // Setter
-  // ignore: non_constant_identifier_names
+  // Setter gender
   set Gender(String newGender) {
     _gender = newGender;
     notifyListeners();
   }
 
-  // Setter
-  // ignore: non_constant_identifier_names
+  // Setter user
   set User(String newUser) {
     _user = newUser;
     notifyListeners();
   }
 
+  // Setter qualification
   set Qualification(String newQualification) {
     _qualification = newQualification;
     notifyListeners();

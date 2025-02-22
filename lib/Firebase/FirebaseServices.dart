@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
@@ -46,20 +46,20 @@ class FirebaseServices extends StatelessWidget {
         'User': user,
         'Gender': gender,
         'Phone': phoneNumber,
-        'Password': password,
-        'Qualification': qualification
+        'Qualification': qualification,
       };
       FirebaseDatabase.instance
           .ref()
           .child(DatabaseName)
           .push()
           .set(schoolmembers);
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      CreateToast('Successfully Signup');
+      await Auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      CommonComponent.CreateToast('Successfully Signup');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        CreateToast('An account is already exist with that email');
+        CommonComponent.CreateToast(
+            'An account is already exist with that email');
       }
     }
   }
@@ -81,6 +81,7 @@ class FirebaseServices extends StatelessWidget {
 
         users.forEach((key, value) {
           if (value['Email'] == email) {
+            person.Id = key.toString();
             person.Name = value['Username'];
             person.Email = value['Email'];
             person.Phone = value['Phone'];
@@ -92,9 +93,9 @@ class FirebaseServices extends StatelessWidget {
       }
       //create message user data
     } on FirebaseAuthException catch (e) {
-      CreateToast("User not found!");
+      CommonComponent.CreateToast("User not found!");
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        CreateToast('email or password maybe wrong');
+        CommonComponent.CreateToast('email or password maybe wrong');
       }
       return null;
     }
@@ -148,19 +149,6 @@ class FirebaseServices extends StatelessWidget {
         .set(scheduleUser.toJson());
   }
 
-  // when any warning or any message system related then you can see in bar
-  static void CreateToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.NONE,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-      fontSize: 12,
-      timeInSecForIosWeb: 2,
-    );
-  }
-
   //common method for get conversation id
   String GetCoversationId(String id) =>
       Auth.currentUser!.uid.hashCode <= id.hashCode
@@ -209,7 +197,7 @@ class FirebaseServices extends StatelessWidget {
       "DatesTimes": FieldValue.arrayUnion(elements),
       "Status": status,
     });
-    CreateToast("Set schedule successfully");
+    CommonComponent.CreateToast("Set schedule successfully");
   }
 
   static Future<void> SetAppointment(
@@ -224,10 +212,10 @@ class FirebaseServices extends StatelessWidget {
       });
       await docRef.update({'Id': docRef.id});
       print("Data added successfully!");
-      CreateToast("Set appointment successfully");
+      CommonComponent.CreateToast("Set appointment successfully");
     } catch (e) {
       print("Firestore Error: $e");
-      CreateToast("Not Set");
+      CommonComponent.CreateToast("Not Set");
     }
   }
 
@@ -235,6 +223,33 @@ class FirebaseServices extends StatelessWidget {
     DocumentReference docRef =
         Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
     await docRef.update({"Accept": isAccept});
-    CreateToast("Appointment generate successfully");
+    CommonComponent.CreateToast("Appointment generate successfully");
+  }
+
+  static Future<void> forgotPassword(String email) async {
+    try {
+      await Auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      CommonComponent.CreateToast(
+          "Failed to reset password against on email: $e");
+    }
+  }
+
+  Future<void> UpdateUserProfile(String id, String name, String user,
+      String qualification, String phone, String gender) async {
+    try {
+      DatabaseReference dbRef =
+          FirebaseDatabase.instance.ref().child(DatabaseName).child(id);
+      await dbRef.update({
+        'Username': name,
+        'User': user,
+        'Gender': gender,
+        'Phone': phone,
+        'Qualification': qualification
+      });
+      CommonComponent.CreateToast("Profile update successfully");
+    } catch (e) {
+      CommonComponent.CreateToast("Profile do not update");
+    }
   }
 }

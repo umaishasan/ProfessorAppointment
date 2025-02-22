@@ -73,15 +73,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     //Text fields
                     const SizedBox(height: 24),
-                    _buildInfoField('Name:', name),
+                    _buildInfoField('Name:', name, userData.Name),
+                    //const SizedBox(height: 16),
+                    //_buildInfoField('Email:', email, userData.Email),
                     const SizedBox(height: 16),
-                    _buildInfoField('Email:', email),
+                    _buildInfoField('Phone:', phone, userData.Phone),
                     const SizedBox(height: 16),
-                    _buildInfoField('Phone:', phone),
+                    _buildInfoField('Gender:', gender, userData.Gender),
                     const SizedBox(height: 16),
-                    _buildInfoField('Gender:', gender),
-                    const SizedBox(height: 16),
-                    _checkQualification(userData.User)
+                    _checkQualification(userData.User, userData.User)
                   ],
                 ),
               ),
@@ -119,17 +119,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _checkQualification(String userdata) {
+  Widget _checkQualification(String userdata, String showTxtInitial) {
     if (userdata == "Teacher") {
       //const SizedBox(height: 16);
-      return _buildInfoField('Qual.:', qualification);
+      return _buildInfoField('Qual.:', qualification, showTxtInitial);
     } else {
       return SizedBox.shrink();
     }
   }
 
 //Common Widget For TextFields
-  Widget _buildInfoField(String label, TextEditingController value) {
+  Widget _buildInfoField(
+      String label, TextEditingController value, String showTxtInitial) {
+    value.text = showTxtInitial;
     return Row(
       children: [
         SizedBox(

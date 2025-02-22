@@ -202,6 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (user != null) {
       Provider.of<Person>(context, listen: false).updateUserData({
+        "Id": user.Id,
         "Username": user.Name,
         "Email": user.Email,
         "Phone": user.Phone,
@@ -220,25 +221,25 @@ class _LoginScreenState extends State<LoginScreen> {
       if (await FirebaseServices.IsAccountExistForSche() &&
           await FirebaseServices.IsAccountExistForMsg()) {
         Future.delayed(const Duration(seconds: 2));
-        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
         await FirebaseServices.CreateScheduleUser(
             name, dateTimes, status, qualification);
         Future.delayed(const Duration(seconds: 1));
-        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       }
     } else {
       if (await FirebaseServices.IsAccountExistForMsg()) {
         Future.delayed(const Duration(seconds: 2));
-        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
         Future.delayed(const Duration(seconds: 1));
-        FirebaseServices.CreateToast("Login Successfully");
+        CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       }
     }
@@ -250,7 +251,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void forgetPasswordMethod() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (_) => const ForgetPasswordScreen()));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => ForgetPasswordScreen(
+                  email: _emailController.text,
+                )));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class CommonComponent extends StatelessWidget {
@@ -42,6 +43,40 @@ class CommonComponent extends StatelessWidget {
     final date = DateTime.fromMicrosecondsSinceEpoch(int.parse(time));
     var timeFormat = TimeOfDay.fromDateTime(date).format(context);
     return timeFormat;
+  }
+
+  // when any warning or any message system related then you can see in bar
+  static void CreateToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.NONE,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 12,
+      timeInSecForIosWeb: 2,
+    );
+  }
+
+  static void CreateAlert(BuildContext context, String titleAlert,
+      String content, VoidCallback onPressed) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          alignment: Alignment.center,
+          title: Text(titleAlert),
+          contentPadding: EdgeInsets.all(20.0),
+          content: Text(content),
+          actions: [
+            TextButton(
+              onPressed: onPressed,
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
