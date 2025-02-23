@@ -48,16 +48,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Profile Image
-                    const SizedBox(
-                      width: 90,
-                      height: 90,
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundImage: NetworkImage(
-                            'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
+                    //Profile Image
+                    Stack(children: [
+                      CommonComponent.ImageAvatar("", 90, 90),
+                      Positioned(
+                        top: 55,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            //Image edit button
+                            print("Edit profile image tapped");
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(
+                                  107, 117, 117, 117), // Background color
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ]),
 
                     //Student label
                     const SizedBox(height: 16),

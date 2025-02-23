@@ -265,4 +265,8 @@ class FirebaseServices extends StatelessWidget {
     await docRef.delete();
     CreateToast("Cancle appointment successfully");
   }
+
+  static Future<void> LogoutUser() async {
+    await Auth.signOut();
+  }
 }

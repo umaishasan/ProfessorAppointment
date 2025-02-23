@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
@@ -53,6 +55,18 @@ class CommonComponent extends StatelessWidget {
     final date = DateTime.fromMicrosecondsSinceEpoch(int.parse(time));
     var timeFormat = TimeOfDay.fromDateTime(date).format(context);
     return timeFormat;
+  }
+
+  static Widget ImageAvatar(String imageUrl, double width, double height) {
+    return CachedNetworkImage(
+      width: width,
+      height: height,
+      imageUrl: imageUrl,
+      placeholder: (context, url) => CircularProgressIndicator(),
+      errorWidget: (context, url, error) => const CircleAvatar(
+        child: Icon(CupertinoIcons.person),
+      ),
+    );
   }
 
   @override

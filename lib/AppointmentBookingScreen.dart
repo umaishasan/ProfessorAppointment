@@ -57,11 +57,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
-                            const CircleAvatar(
-                              radius: 35,
-                              backgroundImage: NetworkImage(
-                                  'https://dashboard.codeparrot.ai/api/image/Z6Xs4qQDH3ZYFIaL/user-imag.png'),
-                            ),
+                            CommonComponent.ImageAvatar("", 70, 70),
                             const SizedBox(height: 12),
                             Text(
                               widget.schedule.Name,

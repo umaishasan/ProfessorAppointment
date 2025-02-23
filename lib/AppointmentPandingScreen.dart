@@ -44,11 +44,7 @@ class _PendingScreenState extends State<PendingScreen> {
                   children: [
                     const SizedBox(height: 23),
                     // Profile image
-                    const CircleAvatar(
-                      radius: 35,
-                      backgroundImage: NetworkImage(
-                          'https://dashboard.codeparrot.ai/api/image/Z6mBHvrycnbNR_jh/user-imag.png'),
-                    ),
+                    CommonComponent.ImageAvatar("", 70, 70),
                     const SizedBox(height: 12),
                     Text(
                       widget.appointment.Name,

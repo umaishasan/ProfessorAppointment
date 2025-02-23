@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 
 class IncomingMessage extends StatelessWidget {
   late String senderName;
@@ -21,10 +22,7 @@ class IncomingMessage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 30.5,
-            backgroundImage: NetworkImage(imageUrl),
-          ),
+          CommonComponent.ImageAvatar("", 50, 50),
           const SizedBox(width: 8),
           Flexible(
             child: Container(

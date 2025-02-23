@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
@@ -34,11 +35,7 @@ class BookedScreen extends StatelessWidget {
               //Profile Info
               Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 35,
-                    backgroundImage: NetworkImage(
-                        'https://dashboard.codeparrot.ai/api/image/Z6XuIqQDH3ZYFIaM/user-imag.png'),
-                  ),
+                  CommonComponent.ImageAvatar("", 60, 60),
                   const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
