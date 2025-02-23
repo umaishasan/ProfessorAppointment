@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
 import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
@@ -94,13 +95,23 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
 
   Widget AllPandingAppointments() {
     //AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    //print("how amny appointment? ${widget.appointmentList.length}");
+    //print(
+    //   "Fetched Appointments: ${widget.appointmentList.map((e) => e.Id).toList()}");
     return ListView.builder(
       itemCount: widget.appointmentList.length,
       padding: const EdgeInsets.all(16),
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var appointment = widget.appointmentList[index];
-        return AllPandingAppointmentScreen(appointment: appointment);
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.TeacherId) {
+          if (appointment.Accept == true) {
+            return SizedBox.shrink();
+          } else {
+            return AllPandingAppointmentScreen(appointment: appointment);
+          }
+        }
+        return SizedBox.shrink();
       },
     );
   }
@@ -113,9 +124,12 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var appointment = widget.appointmentList[index];
-        if (appointment.Accept == true) {
-          return DoneAppointmentScreen(appointment: appointment);
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.TeacherId) {
+          if (appointment.Accept == true) {
+            return DoneAppointmentScreen(appointment: appointment);
+          }
         }
+        return SizedBox.shrink();
       },
     );
   }

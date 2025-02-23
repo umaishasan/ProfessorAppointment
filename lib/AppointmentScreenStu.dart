@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AppointmentScreenStu extends StatefulWidget {
   AppointmentScreenStu(
-      {super.key, required this.scheduleList, required this.appointment});
+      {super.key, required this.scheduleList, required this.appointmentList});
   final List<Schedule> scheduleList;
-  late Appointment appointment;
+  late List<Appointment> appointmentList;
 
   @override
   State<AppointmentScreenStu> createState() => AppointmentScreenStuState();
@@ -58,7 +59,7 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
               child: AllAppointments(),
             ),
             Center(
-              child: BookedScreen(appointment: widget.appointment),
+              child: AllBookedAppointments(),
             )
           ])
         ],
@@ -106,6 +107,24 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
       itemBuilder: (context, index) {
         var schedule = widget.scheduleList[index];
         return AllAppointmentStuScreen(schedule: schedule);
+      },
+    );
+  }
+
+  Widget AllBookedAppointments() {
+    // print("how amny appointment? ${widget.appointmentList.length}");
+    // print(
+    //     "Fetched Appointments: ${widget.appointmentList.map((e) => e.Id).toList()}");
+    return ListView.builder(
+      itemCount: widget.appointmentList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var appointment = widget.appointmentList[index];
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.Id) {
+          return BookedScreen(appointment: appointment);
+        }
+        return SizedBox.shrink();
       },
     );
   }

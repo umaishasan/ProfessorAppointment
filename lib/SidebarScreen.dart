@@ -205,7 +205,7 @@ class _SidebarState extends State<Sidebar> {
                   MaterialPageRoute(
                       builder: (_) => AppointmentScreenStu(
                             scheduleList: scheduleList,
-                            appointment: appointmentList.last,
+                            appointmentList: appointmentList,
                           )));
             },
           )

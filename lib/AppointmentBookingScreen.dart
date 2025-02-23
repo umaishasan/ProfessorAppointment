@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
@@ -198,6 +197,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               person.User,
                               confrimDate,
                               widget.schedule.Name,
+                              widget.schedule.Id,
                               widget.schedule.Qualification);
                         },
                         style: ElevatedButton.styleFrom(
@@ -245,11 +245,17 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   //when click on confirm button then appointment will set
-  void BookedAppointment(BuildContext context, String name, String user,
-      String dateTime, String teacherName, String teacherQualification) {
+  void BookedAppointment(
+      BuildContext context,
+      String name,
+      String user,
+      String dateTime,
+      String teacherName,
+      String teacherId,
+      String teacherQualification) {
     //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
-    FirebaseServices.SetAppointment(
-        name, user, dateTime, false, teacherName, teacherQualification);
+    FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
+        teacherId, teacherQualification);
 
     setState(() {
       CommonComponent.appointment =
@@ -260,12 +266,6 @@ class _BookingScreenState extends State<BookingScreen> {
 
   //back to the appointment screen
   void BackToAppointmentScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => AppointmentScreenStu(
-                  scheduleList: CommonComponent.scheduleList,
-                  appointment: CommonComponent.appointment,
-                )));
+    Navigator.pop(context, 1);
   }
 }

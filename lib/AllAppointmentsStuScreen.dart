@@ -116,6 +116,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
   }
 
   void GotoAppointmentScreen(BuildContext context) {
+    //debug in console
     // for (var element in SetScheduleScreen.scheduleDateData) {
     //   print("Kia data hai list me? ${element}");
     // }

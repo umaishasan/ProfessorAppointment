@@ -183,9 +183,19 @@ class FirebaseServices extends StatelessWidget {
 
   //get all appointment
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllAppointment() {
-    //print(
-    //    "Get message id: ${Firestore.collection('${FirestoreAppointmentCollectionName}')}");
-    return Firestore.collection(FirestoreAppointmentCollectionName).snapshots();
+    var snap =
+        Firestore.collection(FirestoreAppointmentCollectionName).snapshots();
+
+    return snap;
+  }
+
+  //get all appointment doc id
+  static void GetAllAppointmentDocId() async {
+    var snap =
+        await Firestore.collection(FirestoreAppointmentCollectionName).get();
+    for (var element in snap.docs) {
+      print("Is this appointment doc id: ${element}");
+    }
   }
 
   static Future<void> SendMessage(
@@ -212,8 +222,14 @@ class FirebaseServices extends StatelessWidget {
     CreateToast("Set schedule successfully");
   }
 
-  static Future<void> SetAppointment(String name, String user, String dateTime,
-      bool isAccept, String teacherName, String teacherQualification) async {
+  static Future<void> SetAppointment(
+      String name,
+      String user,
+      String dateTime,
+      bool isAccept,
+      String teacherName,
+      String teacherId,
+      String teacherQualification) async {
     try {
       DocumentReference docRef =
           await Firestore.collection(FirestoreAppointmentCollectionName).add({
@@ -222,10 +238,12 @@ class FirebaseServices extends StatelessWidget {
         'DateTime': dateTime,
         'Accept': isAccept,
         'TeacherName': teacherName,
-        'TeaQualif': teacherQualification
+        'TeacherId': teacherId,
+        'TeaQualif': teacherQualification,
+        'Id': Auth.currentUser!.uid,
       });
-      await docRef.update({'Id': docRef.id});
-      print("Data added successfully!");
+      await docRef.update({'DocId': docRef.id});
+      print("Data added successfully! ${docRef.id}");
       CreateToast("Set appointment successfully");
     } catch (e) {
       print("Firestore Error: $e");
@@ -238,5 +256,13 @@ class FirebaseServices extends StatelessWidget {
         Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
     await docRef.update({"Accept": isAccept});
     CreateToast("Appointment generate successfully");
+  }
+
+  static Future<void> DeleteAppointment(String docId) async {
+    DocumentReference docRef =
+        Firestore.collection(FirestoreAppointmentCollectionName).doc(docId);
+    print("is this Id: ${docId}");
+    await docRef.delete();
+    CreateToast("Cancle appointment successfully");
   }
 }

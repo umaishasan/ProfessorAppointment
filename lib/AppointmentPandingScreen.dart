@@ -201,7 +201,7 @@ class _PendingScreenState extends State<PendingScreen> {
                     //cancla button
                     ElevatedButton(
                       onPressed: () {
-                        CancleAppointment(context);
+                        CancleAppointment(context, widget.appointment.DocId);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF32983E),
@@ -245,11 +245,13 @@ class _PendingScreenState extends State<PendingScreen> {
   }
 
   // ignore: non_constant_identifier_names
-  void CancleAppointment(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => AppointmentScreenProf(
-                appointmentList: AppointmentScreenProf.tempStoreAppoint)));
+  void CancleAppointment(BuildContext context, String docId) {
+    FirebaseServices.DeleteAppointment(docId).then((_) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => AppointmentScreenProf(
+                  appointmentList: AppointmentScreenProf.tempStoreAppoint)));
+    });
   }
 }
