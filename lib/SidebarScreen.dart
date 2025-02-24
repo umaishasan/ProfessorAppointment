@@ -8,6 +8,7 @@ import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/DiscussionScreen.dart';
 import 'package:scholappoinment_934074496/EditProfileScreen.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/LoginScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
@@ -16,7 +17,7 @@ import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 // ignore: must_be_immutable
 class Sidebar extends StatefulWidget {
-  Sidebar({
+  const Sidebar({
     super.key,
   });
 
@@ -67,11 +68,7 @@ class _SidebarState extends State<Sidebar> {
       child: Column(
         children: [
           const SizedBox(height: 35),
-          const CircleAvatar(
-            radius: 35,
-            backgroundImage: NetworkImage(
-                'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
-          ),
+          CommonComponent.ImageAvatar("", 80, 80),
           const SizedBox(height: 5),
           Text(
             name,
@@ -109,7 +106,7 @@ class _SidebarState extends State<Sidebar> {
                 iconColor: const Color.fromARGB(255, 0, 0, 0),
                 textColor: const Color.fromARGB(255, 0, 0, 0),
                 onTap: () {
-                  // Handle logout logic here
+                  LogoutToLogin();
                 },
               ),
             ),
@@ -203,8 +200,10 @@ class _SidebarState extends State<Sidebar> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) =>
-                          AppointmentScreenStu(scheduleList: scheduleList)));
+                      builder: (_) => AppointmentScreenStu(
+                            scheduleList: scheduleList,
+                            appointmentList: appointmentList,
+                          )));
             },
           )
         ],
@@ -247,6 +246,13 @@ class _SidebarState extends State<Sidebar> {
           appointmentList = fetchedAppointment;
         });
       }
+    });
+  }
+
+  Future<void> LogoutToLogin() async {
+    await FirebaseServices.LogoutUser().then((value) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
     });
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
-import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
   const AllAppointmentStuScreen({super.key, required this.schedule});
@@ -39,18 +39,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Profile Image
-              Container(
-                width: 70,
-                height: 70,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://dashboard.codeparrot.ai/api/image/Z6mJ6vrycnbNR_jj/user-imag.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              CommonComponent.ImageAvatar("", 70, 70),
               const SizedBox(width: 15),
 
               // Info and Button Column
@@ -117,6 +106,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
   }
 
   void GotoAppointmentScreen(BuildContext context) {
+    //debug in console
     // for (var element in SetScheduleScreen.scheduleDateData) {
     //   print("Kia data hai list me? ${element}");
     // }

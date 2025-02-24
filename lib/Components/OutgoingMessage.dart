@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 
 class OutgoingMessage extends StatelessWidget {
   final String yourName;
@@ -36,7 +37,7 @@ class OutgoingMessage extends StatelessWidget {
                         .withOpacity(0.5), // Shadow color with opacity
                     spreadRadius: 2, // Spread of the shadow
                     blurRadius: 5, // Blur effect
-                    offset: Offset(2, 4), // Shadow position (x, y)
+                    offset: const Offset(2, 4), // Shadow position (x, y)
                   ),
                 ],
               ),
@@ -81,11 +82,8 @@ class OutgoingMessage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: CircleAvatar(
-              radius: 30.5,
-              backgroundImage: NetworkImage(imageUrl),
-            ),
+            padding: const EdgeInsets.only(left: 5),
+            child: CommonComponent.ImageAvatar("", 50, 50),
           ),
         ],
       ),

@@ -5,9 +5,9 @@ class SetTimeComponent extends StatefulWidget {
   final int initialHour;
   final int initialMinute;
   final bool initialIsPM;
-  static late String scheduleTime = '';
+  static String scheduleTime = '';
 
-  SetTimeComponent({
+  const SetTimeComponent({
     super.key,
     this.initialHour = 7,
     this.initialMinute = 0,

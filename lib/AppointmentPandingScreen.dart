@@ -44,11 +44,7 @@ class _PendingScreenState extends State<PendingScreen> {
                   children: [
                     const SizedBox(height: 23),
                     // Profile image
-                    const CircleAvatar(
-                      radius: 35,
-                      backgroundImage: NetworkImage(
-                          'https://dashboard.codeparrot.ai/api/image/Z6mBHvrycnbNR_jh/user-imag.png'),
-                    ),
+                    CommonComponent.ImageAvatar("", 70, 70),
                     const SizedBox(height: 12),
                     Text(
                       widget.appointment.Name,
@@ -169,12 +165,13 @@ class _PendingScreenState extends State<PendingScreen> {
 
               const SizedBox(height: 20),
 
-              // Action buttons
+              //both button action & cancle
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 21),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Action buttons
                     ElevatedButton(
                       onPressed: () {
                         AcceptAppointment(context);
@@ -196,9 +193,11 @@ class _PendingScreenState extends State<PendingScreen> {
                         ),
                       ),
                     ),
+
+                    //cancla button
                     ElevatedButton(
                       onPressed: () {
-                        CancleAppointment(context);
+                        CancleAppointment(context, widget.appointment.DocId);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF32983E),
@@ -232,7 +231,7 @@ class _PendingScreenState extends State<PendingScreen> {
     Navigator.pop(context, 1);
   }
 
-  // ignore: non_constant_identifier_names
+  //when click to accept button then it will accept appointment
   void AcceptAppointment(BuildContext context) {
     FirebaseServices.AcceptAppointment(widget.appointment.Id, true);
     print(
@@ -242,11 +241,13 @@ class _PendingScreenState extends State<PendingScreen> {
   }
 
   // ignore: non_constant_identifier_names
-  void CancleAppointment(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => AppointmentScreenProf(
-                appointmentList: AppointmentScreenProf.tempStoreAppoint)));
+  void CancleAppointment(BuildContext context, String docId) {
+    FirebaseServices.DeleteAppointment(docId).then((_) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => AppointmentScreenProf(
+                  appointmentList: AppointmentScreenProf.tempStoreAppoint)));
+    });
   }
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AppointmentScreenStu extends StatefulWidget {
-  AppointmentScreenStu({super.key, required this.scheduleList});
+  AppointmentScreenStu(
+      {super.key, required this.scheduleList, required this.appointmentList});
   final List<Schedule> scheduleList;
-  static late List<Schedule> tempStore;
+  late List<Appointment> appointmentList;
 
   @override
   State<AppointmentScreenStu> createState() => AppointmentScreenStuState();
@@ -54,8 +57,8 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
             Center(
               child: AllAppointments(),
             ),
-            const Center(
-              child: BookedScreen(),
+            Center(
+              child: AllBookedAppointments(),
             )
           ])
         ],
@@ -87,13 +90,13 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
     );
   }
 
-  // ignore: non_constant_identifier_names
+  //back button to go home
   void GotoHome(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 
   Widget AllAppointments() {
-    AppointmentScreenStu.tempStore = widget.scheduleList;
     return ListView.builder(
       itemCount: widget.scheduleList.length,
       padding: const EdgeInsets.all(16),
@@ -101,6 +104,24 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
       itemBuilder: (context, index) {
         var schedule = widget.scheduleList[index];
         return AllAppointmentStuScreen(schedule: schedule);
+      },
+    );
+  }
+
+  Widget AllBookedAppointments() {
+    // print("how amny appointment? ${widget.appointmentList.length}");
+    // print(
+    //     "Fetched Appointments: ${widget.appointmentList.map((e) => e.Id).toList()}");
+    return ListView.builder(
+      itemCount: widget.appointmentList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var appointment = widget.appointmentList[index];
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.Id) {
+          return BookedScreen(appointment: appointment);
+        }
+        return const SizedBox.shrink();
       },
     );
   }

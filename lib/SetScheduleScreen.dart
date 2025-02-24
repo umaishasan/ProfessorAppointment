@@ -111,7 +111,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   void _addSchedule() {
     String time = SetTimeComponent.scheduleTime;
     String date = SetDateComponent.scheduleDate;
-    completeDateTime = "${date} at ${time}";
+    completeDateTime = "$date at $time";
     SetScheduleScreen.scheduleDateData.add(completeDateTime);
 
     for (var element in SetScheduleScreen.scheduleDateData) {
@@ -139,7 +139,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     if (AvailableText == "Available") {
       return SetTimeComponent();
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 
@@ -174,6 +174,6 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     FirebaseServices.SetSchedule(
             SetScheduleScreen.scheduleDateData, AvailableText)
         .then((_) => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => HomeScreen())));
+            context, MaterialPageRoute(builder: (_) => const HomeScreen())));
   }
 }

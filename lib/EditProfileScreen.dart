@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Stack(
         children: [
           CommonComponent.AppBarCreator(
-              context, "Profile", Icons.arrow_back, () => editProfile(context)),
+              context, "Profile", Icons.arrow_back, () => backToHome(context)),
 
           // Header
           Column(
@@ -48,16 +48,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Profile Image
-                    const SizedBox(
-                      width: 90,
-                      height: 90,
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundImage: NetworkImage(
-                            'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
+                    //Profile Image
+                    Stack(children: [
+                      CommonComponent.ImageAvatar("", 90, 90),
+                      Positioned(
+                        top: 55,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            EditImage();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(
+                                  107, 117, 117, 117), // Background color
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ]),
 
                     //Student label
                     const SizedBox(height: 16),
@@ -93,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    editProfile(context);
+                    EditProfile(userData.Name, userData.UserImage);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF32983E),
@@ -124,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       //const SizedBox(height: 16);
       return _buildInfoField('Qual.:', qualification, showTxtInitial);
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 
@@ -170,7 +186,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void editProfile(BuildContext context) {
+  void backToHome(BuildContext context) {
     CommonComponent.BacktoHome(context);
+  }
+
+  void EditProfile(String userName, String userImageUrl) {
+    CommonComponent.uploadImage(userName);
+    userImageUrl = CommonComponent.userImageUrl!;
+  }
+
+  void EditImage() {
+    CommonComponent.PickImage();
   }
 }

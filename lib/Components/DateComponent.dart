@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SetDateComponent extends StatefulWidget {
   const SetDateComponent({super.key});
-  static late String scheduleDate = '';
+  static String scheduleDate = '';
 
   @override
   // ignore: library_private_types_in_public_api

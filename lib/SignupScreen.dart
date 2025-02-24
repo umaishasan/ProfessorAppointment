@@ -161,7 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
       return _buildTextField(
           "Enter Qualification", _qualificationController, false);
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 
@@ -278,14 +278,14 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signupMethod() {
     if (_passwordController.text != _cnfrmpasswordController.text) {
-      FirebaseServices.CreateToast("Confirm password should match");
+      CommonComponent.CreateToast("Confirm password should match");
     } else if (_passwordController.text == "" ||
         _cnfrmpasswordController.text == "" ||
         _emailController.text == "" ||
         _phoneController.text == "" ||
         _usernameController.text == "" ||
         _qualificationController.text == "") {
-      FirebaseServices.CreateToast('Any fields can\'t be empty');
+      CommonComponent.CreateToast('Any fields can\'t be empty');
     } else {
       FirebaseServices.SignupAccount(
           _usernameController.text,
@@ -296,7 +296,7 @@ class _SignupScreenState extends State<SignupScreen> {
           _passwordController.text,
           _qualificationController.text);
 
-      FirebaseServices.CreateToast('Signup Successfully');
+      CommonComponent.CreateToast('Signup Successfully');
       Future.delayed(const Duration(seconds: 2));
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => const LoginScreen()));

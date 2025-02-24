@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
 class BookedScreen extends StatelessWidget {
-  const BookedScreen({super.key});
+  BookedScreen({super.key, required this.appointment});
+  late Appointment appointment;
 
   @override
   Widget build(BuildContext context) {
+    String checkAppointStatus =
+        appointment.Accept == true ? "Booked" : "Panding";
     return Column(
       children: [
         // Appointment Card
@@ -15,32 +20,37 @@ class BookedScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3), // Light shadow
+                spreadRadius: 1,
+                blurRadius: 6,
+                offset: const Offset(0, 4), // Position of shadow
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              //Profile Info
+              Row(
                 children: [
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundImage: NetworkImage(
-                        'https://dashboard.codeparrot.ai/api/image/Z6XuIqQDH3ZYFIaM/user-imag.png'),
-                  ),
-                  SizedBox(width: 15),
+                  CommonComponent.ImageAvatar("", 60, 60),
+                  const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Prof. Charlie',
-                        style: TextStyle(
+                        appointment.TeacherName,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
-                        'PhD. In AI',
-                        style: TextStyle(
+                        appointment.TeacherQualification,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w300,
                         ),
@@ -50,23 +60,15 @@ class BookedScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 25),
-              const Row(
+
+              //Time info
+              Row(
                 children: [
-                  Icon(Icons.access_time, size: 15),
-                  SizedBox(width: 3),
+                  const Icon(Icons.access_time, size: 15),
+                  const SizedBox(width: 3),
                   Text(
-                    '07:00 PM',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  SizedBox(width: 41),
-                  Icon(Icons.calendar_today, size: 15),
-                  SizedBox(width: 3),
-                  Text(
-                    '03 February, 2025',
-                    style: TextStyle(
+                    appointment.DateTimes,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w300,
                     ),
@@ -74,45 +76,53 @@ class BookedScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 25),
+
+              //button booked/panding
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 150,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD0D0D0),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Booked',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD0D0D0),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          checkAppointStatus,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      //Navigator.pop(context, 0);
-                      //CancleToGoBack(context);
-                    },
-                    child: Container(
-                      width: 150,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF32983E),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+
+                  //cancle button
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        //Navigator.pop(context, 0);
+                        CancleToGoBack(context, appointment.DocId);
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF32983E),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -127,8 +137,9 @@ class BookedScreen extends StatelessWidget {
     );
   }
 
-  // void CancleToGoBack(BuildContext context) {
-  //   Navigator.push(context,
-  //       MaterialPageRoute(builder: (_) => const AppointmentScreenStu()));
-  // }
+  void CancleToGoBack(BuildContext context, String docId) {
+    FirebaseServices.DeleteAppointment(docId).then((_) {
+      Navigator.pop(context, 1);
+    });
+  }
 }

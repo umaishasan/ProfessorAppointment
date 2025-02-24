@@ -8,6 +8,7 @@ class Person with ChangeNotifier {
   late String _gender = "";
   late String _user = "";
   late String _qualification = "";
+  late String _userImageUrl = "";
 
   void updateUserData(Map<String, dynamic> userData) {
     _name = userData["Username"] ?? "";
@@ -17,6 +18,7 @@ class Person with ChangeNotifier {
     _gender = userData["Gender"] ?? "";
     _user = userData["User"] ?? "";
     _qualification = userData["Qualification"] ?? "";
+    _userImageUrl = userData["UserImage"] ?? "";
 
     notifyListeners(); // UI ko update karne ke liye zaroori hai
   }
@@ -35,8 +37,10 @@ class Person with ChangeNotifier {
   String get User => _user;
   // Getter qualification
   String get Qualification => _qualification;
-
   //Setter name
+  String get UserImage => _userImageUrl;
+
+  // Setter Name
   set Name(String newName) {
     _name = newName;
     notifyListeners();
@@ -75,6 +79,12 @@ class Person with ChangeNotifier {
   // Setter qualification
   set Qualification(String newQualification) {
     _qualification = newQualification;
+    notifyListeners();
+  }
+
+  // Setter User image
+  set UserImage(String newUserImage) {
+    _userImageUrl = newUserImage;
     notifyListeners();
   }
 }

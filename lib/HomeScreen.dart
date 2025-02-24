@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
@@ -54,11 +55,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 20),
-                  const CircleAvatar(
-                    radius: 45,
-                    backgroundImage: NetworkImage(
-                        'https://dashboard.codeparrot.ai/api/image/Z6UIYqQDH3ZYFIXW/user-imag.png'),
-                  ),
+                  CommonComponent.ImageAvatar("", 80, 80),
                   const SizedBox(height: 14),
                   Text(
                     userData.User,
@@ -93,7 +90,7 @@ class HomeScreen extends StatelessWidget {
       //const SizedBox(height: 16);
       return _buildInfoRow('Qual.:', qualification);
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 

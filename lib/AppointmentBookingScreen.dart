@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:scholappoinment_934074496/Models/Appointment.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
@@ -57,11 +57,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
-                            const CircleAvatar(
-                              radius: 35,
-                              backgroundImage: NetworkImage(
-                                  'https://dashboard.codeparrot.ai/api/image/Z6Xs4qQDH3ZYFIaL/user-imag.png'),
-                            ),
+                            CommonComponent.ImageAvatar("", 70, 70),
                             const SizedBox(height: 12),
                             Text(
                               widget.schedule.Name,
@@ -192,7 +188,13 @@ class _BookingScreenState extends State<BookingScreen> {
                       ElevatedButton(
                         onPressed: () {
                           BookedAppointment(
-                              context, person.Name, person.User, confrimDate);
+                              context,
+                              person.Name,
+                              person.User,
+                              confrimDate,
+                              widget.schedule.Name,
+                              widget.schedule.Id,
+                              widget.schedule.Qualification);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF32983E),
@@ -238,20 +240,25 @@ class _BookingScreenState extends State<BookingScreen> {
     });
   }
 
-  // ignore: non_constant_identifier_names
+  //when click on confirm button then appointment will set
   void BookedAppointment(
-      BuildContext context, String name, String user, String dateTime) {
+      BuildContext context,
+      String name,
+      String user,
+      String dateTime,
+      String teacherName,
+      String teacherId,
+      String teacherQualification) {
     //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
-    FirebaseServices.SetAppointment(name, user, dateTime, false);
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
+        teacherId, teacherQualification);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 
-  // ignore: non_constant_identifier_names
+  //back to the appointment screen
   void BackToAppointmentScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => AppointmentScreenStu(
-                scheduleList: AppointmentScreenStu.tempStore)));
+    Navigator.pop(context, 1);
   }
 }

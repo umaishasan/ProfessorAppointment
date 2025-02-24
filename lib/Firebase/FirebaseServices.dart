@@ -149,12 +149,6 @@ class FirebaseServices extends StatelessWidget {
         .set(scheduleUser.toJson());
   }
 
-  //common method for get conversation id
-  String GetCoversationId(String id) =>
-      Auth.currentUser!.uid.hashCode <= id.hashCode
-          ? '${Auth.currentUser!.uid}_$id'
-          : '${id}_${Auth.currentUser!.uid}';
-
   //get all messages
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
     // print(
@@ -171,11 +165,22 @@ class FirebaseServices extends StatelessWidget {
 
   //get all appointment
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllAppointment() {
-    //print(
-    //    "Get message id: ${Firestore.collection('${FirestoreAppointmentCollectionName}')}");
-    return Firestore.collection(FirestoreAppointmentCollectionName).snapshots();
+    var snap =
+        Firestore.collection(FirestoreAppointmentCollectionName).snapshots();
+
+    return snap;
   }
 
+  //get all appointment doc id
+  static void GetAllAppointmentDocId() async {
+    var snap =
+        await Firestore.collection(FirestoreAppointmentCollectionName).get();
+    for (var element in snap.docs) {
+      print("Is this appointment doc id: $element");
+    }
+  }
+
+  //send messages
   static Future<void> SendMessage(
       Messaging userMessing, String messages) async {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
@@ -189,6 +194,7 @@ class FirebaseServices extends StatelessWidget {
     await ref.doc(time).set(msg.toJson());
   }
 
+  //teacher make schedule for student
   static Future<void> SetSchedule(List<String> elements, String status) async {
     DocumentReference docRef =
         Firestore.collection(FirestoreScheduleCollectionName)
@@ -200,8 +206,15 @@ class FirebaseServices extends StatelessWidget {
     CommonComponent.CreateToast("Set schedule successfully");
   }
 
+  //student set appointment accoding to time
   static Future<void> SetAppointment(
-      String name, String user, String dateTime, bool isAccept) async {
+      String name,
+      String user,
+      String dateTime,
+      bool isAccept,
+      String teacherName,
+      String teacherId,
+      String teacherQualification) async {
     try {
       DocumentReference docRef =
           await Firestore.collection(FirestoreAppointmentCollectionName).add({
@@ -209,9 +222,18 @@ class FirebaseServices extends StatelessWidget {
         'User': user,
         'DateTime': dateTime,
         'Accept': isAccept,
+        'TeacherName': teacherName,
+        'TeacherId': teacherId,
+        'TeaQualif': teacherQualification,
+        'Id': Auth.currentUser!.uid,
       });
+
       await docRef.update({'Id': docRef.id});
       print("Data added successfully!");
+      CommonComponent.CreateToast("Set appointment successfully");
+
+      await docRef.update({'DocId': docRef.id});
+      print("Data added successfully! ${docRef.id}");
       CommonComponent.CreateToast("Set appointment successfully");
     } catch (e) {
       print("Firestore Error: $e");
@@ -219,6 +241,7 @@ class FirebaseServices extends StatelessWidget {
     }
   }
 
+  //aftr that teacher will accept appointment
   static Future<void> AcceptAppointment(String id, bool isAccept) async {
     DocumentReference docRef =
         Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
@@ -252,4 +275,28 @@ class FirebaseServices extends StatelessWidget {
       CommonComponent.CreateToast("Profile do not update");
     }
   }
+
+  //teacher and student can cancle appointment
+  static Future<void> DeleteAppointment(String docId) async {
+    DocumentReference docRef =
+        Firestore.collection(FirestoreAppointmentCollectionName).doc(docId);
+    print("is this Id: $docId");
+    await docRef.delete();
+    CommonComponent.CreateToast("Cancle appointment successfully");
+  }
+
+  //login user logout from application
+  static Future<void> LogoutUser() async {
+    await Auth.signOut();
+  }
+
+  // //aftr that teacher will accept appointment
+  // static Future<void> UpdateUserImageUrl(String imageUrl) async {
+  //   var dbref = FirebaseDatabase.instance.ref(DatabaseName).;
+  //   dbref.update(value)
+  //   DocumentReference docRef =
+  //       Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
+  //   await docRef.update({"Accept": isAccept});
+  //   CreateToast("Appointment generate successfully");
+  // }
 }

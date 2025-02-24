@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
 import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
 
@@ -54,8 +55,8 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
             Center(
               child: AllPandingAppointments(),
             ),
-            const Center(
-              child: DoneAppointmentScreen(),
+            Center(
+              child: AllDoneAppointments(),
             )
           ])
         ],
@@ -89,18 +90,47 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
 
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
   }
 
   Widget AllPandingAppointments() {
     AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    //print("how amny appointment? ${widget.appointmentList.length}");
+    //print(
+    //   "Fetched Appointments: ${widget.appointmentList.map((e) => e.Id).toList()}");
     return ListView.builder(
       itemCount: widget.appointmentList.length,
       padding: const EdgeInsets.all(16),
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var appointment = widget.appointmentList[index];
-        return AllPandingAppointmentScreen(appointment: appointment);
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.TeacherId) {
+          if (appointment.Accept == true) {
+            return const SizedBox.shrink();
+          } else {
+            return AllPandingAppointmentScreen(appointment: appointment);
+          }
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget AllDoneAppointments() {
+    //AppointmentScreenProf.tempStoreAppoint = widget.appointmentList;
+    return ListView.builder(
+      itemCount: widget.appointmentList.length,
+      padding: const EdgeInsets.all(16),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var appointment = widget.appointmentList[index];
+        if (FirebaseServices.Auth.currentUser!.uid == appointment.TeacherId) {
+          if (appointment.Accept == true) {
+            return DoneAppointmentScreen(appointment: appointment);
+          }
+        }
+        return const SizedBox.shrink();
       },
     );
   }
