@@ -97,9 +97,9 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
   }
 
   Widget AllAppointments() {
-    setState(() {
-      CommonComponent.scheduleList = widget.scheduleList;
-    });
+    // setState(() {
+    //   CommonComponent.scheduleList = widget.scheduleList;
+    // });
     return ListView.builder(
       itemCount: widget.scheduleList.length,
       padding: const EdgeInsets.all(16),

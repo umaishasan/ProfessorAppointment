@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Stack(
         children: [
           CommonComponent.AppBarCreator(
-              context, "Profile", Icons.arrow_back, () => editProfile(context)),
+              context, "Profile", Icons.arrow_back, () => backToHome(context)),
 
           // Header
           Column(
@@ -56,8 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         right: 0,
                         child: GestureDetector(
                           onTap: () {
-                            //Image edit button
-                            print("Edit profile image tapped");
+                            EditImage();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(3),
@@ -110,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    editProfile(context);
+                    EditProfile(userData.Name, userData.UserImage);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF32983E),
@@ -185,7 +184,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void editProfile(BuildContext context) {
+  void backToHome(BuildContext context) {
     CommonComponent.BacktoHome(context);
+  }
+
+  void EditProfile(String userName, String userImageUrl) {
+    CommonComponent.uploadImage(userName);
+    userImageUrl = CommonComponent.userImageUrl!;
+  }
+
+  void EditImage() {
+    CommonComponent.PickImage();
   }
 }

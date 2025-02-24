@@ -253,10 +253,10 @@ class _BookingScreenState extends State<BookingScreen> {
     FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
         teacherId, teacherQualification);
 
-    setState(() {
-      CommonComponent.appointment =
-          FirebaseServices.GetAllAppointment().last as Appointment;
-    });
+    // setState(() {
+    //   CommonComponent.appointment =
+    //       FirebaseServices.GetAllAppointment().last as Appointment;
+    // });
     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
   }
 

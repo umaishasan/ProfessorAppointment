@@ -161,12 +161,6 @@ class FirebaseServices extends StatelessWidget {
     );
   }
 
-  //common method for get conversation id
-  String GetCoversationId(String id) =>
-      Auth.currentUser!.uid.hashCode <= id.hashCode
-          ? '${Auth.currentUser!.uid}_$id'
-          : '${id}_${Auth.currentUser!.uid}';
-
   //get all messages
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
     // print(
@@ -198,6 +192,7 @@ class FirebaseServices extends StatelessWidget {
     }
   }
 
+  //send messages
   static Future<void> SendMessage(
       Messaging userMessing, String messages) async {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
@@ -211,6 +206,7 @@ class FirebaseServices extends StatelessWidget {
     await ref.doc(time).set(msg.toJson());
   }
 
+  //teacher make schedule for student
   static Future<void> SetSchedule(List<String> elements, String status) async {
     DocumentReference docRef =
         Firestore.collection(FirestoreScheduleCollectionName)
@@ -222,6 +218,7 @@ class FirebaseServices extends StatelessWidget {
     CreateToast("Set schedule successfully");
   }
 
+  //student set appointment accoding to time
   static Future<void> SetAppointment(
       String name,
       String user,
@@ -251,6 +248,7 @@ class FirebaseServices extends StatelessWidget {
     }
   }
 
+  //aftr that teacher will accept appointment
   static Future<void> AcceptAppointment(String id, bool isAccept) async {
     DocumentReference docRef =
         Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
@@ -258,6 +256,7 @@ class FirebaseServices extends StatelessWidget {
     CreateToast("Appointment generate successfully");
   }
 
+  //teacher and student can cancle appointment
   static Future<void> DeleteAppointment(String docId) async {
     DocumentReference docRef =
         Firestore.collection(FirestoreAppointmentCollectionName).doc(docId);
@@ -266,7 +265,18 @@ class FirebaseServices extends StatelessWidget {
     CreateToast("Cancle appointment successfully");
   }
 
+  //login user logout from application
   static Future<void> LogoutUser() async {
     await Auth.signOut();
   }
+
+  // //aftr that teacher will accept appointment
+  // static Future<void> UpdateUserImageUrl(String imageUrl) async {
+  //   var dbref = FirebaseDatabase.instance.ref(DatabaseName).;
+  //   dbref.update(value)
+  //   DocumentReference docRef =
+  //       Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
+  //   await docRef.update({"Accept": isAccept});
+  //   CreateToast("Appointment generate successfully");
+  // }
 }
