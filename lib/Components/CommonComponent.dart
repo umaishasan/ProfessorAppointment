@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 
 class CommonComponent extends StatelessWidget {
@@ -87,11 +88,11 @@ class CommonComponent extends StatelessWidget {
     );
   }
 
-  static Widget ImageAvatar(String imageUrl, double width, double height) {
+  static Widget ImageAvatar(String imageUrls, double width, double height) {
     return CachedNetworkImage(
       width: width,
       height: height,
-      imageUrl: imageUrl,
+      imageUrl: imageUrls,
       placeholder: (context, url) => const CircularProgressIndicator(),
       errorWidget: (context, url, error) => const CircleAvatar(
         child: Icon(CupertinoIcons.person),
@@ -104,10 +105,9 @@ class CommonComponent extends StatelessWidget {
     pickedFile = await imagePick.pickImage(source: ImageSource.gallery);
   }
 
-  static Future<void> uploadImage(String userNameImg) async {
+  static Future<void> uploadImage(String id, String userNameImg) async {
     const String apiKey = "19b1963fdd29471fd33aec06974f5b19";
-    final httpPath =
-        "https://api.imgbb.com/1/upload?expiration=1000&key=$apiKey";
+    const httpPath = "https://api.imgbb.com/1/upload?&key=$apiKey";
     final Uri uriPath = Uri.parse(httpPath);
     if (pickedFile != null) {
       final bytes = await pickedFile?.readAsBytes();
@@ -123,7 +123,8 @@ class CommonComponent extends StatelessWidget {
         response.stream.transform(utf8.decoder).listen((value) {
           var responseJson = jsonDecode(value);
           String imageUrl = responseJson['data']['url'];
-          userImageUrl = imageUrl;
+          FirebaseServices.UpdateUserImage(id, imageUrl);
+          print("image url: ${userImageUrl}");
         });
       } else {
         print("Image failed to upload");

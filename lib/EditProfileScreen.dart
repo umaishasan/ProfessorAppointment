@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,7 +14,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController name = TextEditingController();
-  final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController gender = TextEditingController();
   final TextEditingController qualification = TextEditingController();
@@ -109,7 +110,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    EditProfile(userData.Name, userData.UserImage);
+                    EditProfile(userData.Id, name.text, qualification.text,
+                        phone.text, gender.text);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF32983E),
@@ -190,9 +192,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     CommonComponent.BacktoHome(context);
   }
 
-  void EditProfile(String userName, String userImageUrl) {
-    CommonComponent.uploadImage(userName);
-    userImageUrl = CommonComponent.userImageUrl!;
+  void EditProfile(String id, String userName, String qualification,
+      String phone, String gender) {
+    FirebaseServices.UpdateUserProfile(
+            id, userName, qualification, phone, gender)
+        .then((value) {
+      setState(() {
+        CommonComponent.uploadImage(id, userName);
+      });
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    });
+    print(
+        "Id: ${id}, Name: ${userName}, Qualification: ${qualification}, Gender: ${gender}");
   }
 
   void EditImage() {

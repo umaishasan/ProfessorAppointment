@@ -258,14 +258,18 @@ class FirebaseServices extends StatelessWidget {
     }
   }
 
-  Future<void> UpdateUserProfile(String id, String name, String user,
-      String qualification, String phone, String gender) async {
+  static Future<void> UpdateUserProfile(
+    String id,
+    String name,
+    String qualification,
+    String phone,
+    String gender,
+  ) async {
     try {
       DatabaseReference dbRef =
           FirebaseDatabase.instance.ref().child(DatabaseName).child(id);
       await dbRef.update({
         'Username': name,
-        'User': user,
         'Gender': gender,
         'Phone': phone,
         'Qualification': qualification
@@ -290,13 +294,28 @@ class FirebaseServices extends StatelessWidget {
     await Auth.signOut();
   }
 
-  // //aftr that teacher will accept appointment
-  // static Future<void> UpdateUserImageUrl(String imageUrl) async {
-  //   var dbref = FirebaseDatabase.instance.ref(DatabaseName).;
-  //   dbref.update(value)
-  //   DocumentReference docRef =
-  //       Firestore.collection(FirestoreAppointmentCollectionName).doc(id);
-  //   await docRef.update({"Accept": isAccept});
-  //   CreateToast("Appointment generate successfully");
-  // }
+  //aftr that teacher will accept appointment
+  static Future<void> UpdateUserImage(String id, String imageUrl) async {
+    Person person = Person();
+    try {
+      DatabaseReference dbRef =
+          FirebaseDatabase.instance.ref().child(DatabaseName).child(id);
+      await dbRef.update({
+        'UserImage': imageUrl,
+      });
+      DatabaseEvent event = await dbRef.once();
+      if (event.snapshot.value != null) {
+        Map<dynamic, dynamic> users =
+            event.snapshot.value as Map<dynamic, dynamic>;
+        users.forEach((key, value) {
+          if (value['Id'] == id) {
+            person.UserImage = value['UserImage'];
+          }
+        });
+      }
+      print("image update successfully");
+    } catch (e) {
+      print("Image do not update");
+    }
+  }
 }

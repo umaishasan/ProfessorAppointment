@@ -10,7 +10,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Person>(context);
+
     print("Why data is empty: ${userData.Email} and name: ${userData.Name}");
+    print("Image data: ${userData.UserImage}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -55,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 20),
-                  CommonComponent.ImageAvatar("", 80, 80),
+                  CommonComponent.ImageAvatar(userData.UserImage, 80, 80),
                   const SizedBox(height: 14),
                   Text(
                     userData.User,
