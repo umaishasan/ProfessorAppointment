@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
@@ -18,7 +20,9 @@ class FirebaseServices extends StatelessWidget {
   static String FirestoreAppointmentCollectionName = "Appointment";
   static FirebaseAuth Auth = FirebaseAuth.instance;
   static FirebaseFirestore Firestore = FirebaseFirestore.instance;
+  static FirebaseMessaging Fmessaging = FirebaseMessaging.instance;
   static late DataSnapshot dsnapshot;
+  static Person person = Person();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,6 @@ class FirebaseServices extends StatelessWidget {
 
   // login/signin app in this app
   static Future<Person?> SigninAccount(String email, String password) async {
-    Person person = Person();
     try {
       //login condition check
       await Auth.signInWithEmailAndPassword(email: email, password: password);
@@ -178,6 +181,17 @@ class FirebaseServices extends StatelessWidget {
     for (var element in snap.docs) {
       print("Is this appointment doc id: $element");
     }
+  }
+
+  //get token of push notification of message
+  static void GetFirebaseMessagingToken() async {
+    await Fmessaging.requestPermission();
+    await Fmessaging.getToken().then((t) {
+      if (t != null) {
+        person.PushToken = t;
+        print("messaging push token ${t}");
+      }
+    });
   }
 
   //send messages
@@ -296,7 +310,6 @@ class FirebaseServices extends StatelessWidget {
 
   //aftr that teacher will accept appointment
   static Future<void> UpdateUserImage(String id, String imageUrl) async {
-    Person person = Person();
     try {
       DatabaseReference dbRef =
           FirebaseDatabase.instance.ref().child(DatabaseName).child(id);

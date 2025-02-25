@@ -131,6 +131,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
             snapshot.docs.map((doc) => Messaging.fromJson(doc.data())).toList();
         setState(() {
           widget.userMessages = fetchedMessages;
+          FirebaseServices.GetFirebaseMessagingToken();
         });
         //print("Fetched Messages: ${jsonEncode(messagesList)}");
       }
