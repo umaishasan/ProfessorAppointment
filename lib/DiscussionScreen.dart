@@ -23,27 +23,32 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   Widget build(BuildContext context) {
     screenSizeCommon = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          //App bar and background design
-          CommonComponent.AppBarCreator(
-              context, "Discussion", Icons.arrow_back, () => GotoHome(context)),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Stack(
+          children: [
+            //App bar and background design
+            CommonComponent.AppBarCreator(context, "Discussion",
+                Icons.arrow_back, () => GotoHome(context)),
 
-          Column(
-            children: [
-              //show all messages
-              Expanded(
+            // Expanded(
+            Padding(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).padding.top * 2),
+              child: Column(children: [
+                //show all messages
+                Expanded(
                   child: Padding(
-                padding: const EdgeInsets.only(top: 45, bottom: 10),
-                child: AllMesages(),
-              )),
-
-              // Message input
-              ChatInput(),
-            ],
-          )
-        ],
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: AllMesages(),
+                  ),
+                ),
+                ChatInput(),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -57,49 +62,48 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   // ignore: non_constant_identifier_names
   Widget ChatInput() {
     return Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: screenSizeCommon.width * 0.01,
-            vertical: screenSizeCommon.height * 0.01),
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top * 0.03, bottom: 2.5),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             //Input type message
             Expanded(
               child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24)),
                 color: Colors.white,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _tyoeController,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          hintText: 'Type a message...',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(24),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey.shade100,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 16),
-                        ),
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: TextField(
+                    controller: _tyoeController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: 'Type a message...',
+                      border: InputBorder.none,
+                      //contentPadding: EdgeInsets.symmetric(vertical: 12),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
 
             //send message button
-            IconButton(
-              padding: const EdgeInsets.all(5),
-              icon: const Icon(Icons.send),
-              onPressed: () {
-                SendMessage(widget.messaging, _tyoeController);
-              },
-              color: const Color.fromARGB(255, 0, 0, 0),
-            ),
+            Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () {
+                  SendMessage(widget.messaging, _tyoeController);
+                },
+                color: const Color.fromARGB(255, 0, 0, 0),
+              ),
+            )
           ],
         ));
   }

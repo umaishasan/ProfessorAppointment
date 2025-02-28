@@ -37,95 +37,112 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: -18,
-            left: -660,
-            child: Container(
-              width: 1027,
-              height: 1701,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(73, 100, 188, 71),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            //background design
+            Positioned(
+              top: -18,
+              left: -660,
+              child: Container(
+                width: 1027,
+                height: 1701,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(73, 100, 188, 71),
+                ),
               ),
             ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 55.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 95),
-                  const Text(
-                    'SIGNUP',
-                    style: TextStyle(
-                      fontFamily: 'Jaro',
-                      fontSize: 40,
-                      color: Color(0xFF1E1E1E),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 55.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 95),
+                          const Text(
+                            'SIGNUP',
+                            style: TextStyle(
+                              fontFamily: 'Jaro',
+                              fontSize: 40,
+                              color: Color(0xFF1E1E1E),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          const SizedBox(height: 49),
+                          _buildTextField(
+                              'Enter Username', _usernameController, false),
+
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                              'Enter Email', _emailController, false),
+
+                          const SizedBox(height: 16),
+                          _buildUserToggles(),
+
+                          const SizedBox(height: 16),
+                          _buildGenderToggles(),
+
+                          const SizedBox(height: 16),
+                          _checkForQualification(),
+
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                              'Enter Phone', _phoneController, false),
+
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                              'Enter Password', _passwordController, true),
+
+                          const SizedBox(height: 16),
+                          _buildTextField('Enter Confirm Password',
+                              _cnfrmpasswordController, true),
+
+                          //Signup button
+                          const SizedBox(height: 41),
+                          _buildSignupButton(),
+
+                          //Already have an account? Signin
+                          const SizedBox(height: 20),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Already have an account? ",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Heebo',
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    signinMethod();
+                                  },
+                                  child: const Text(
+                                    " Signin",
+                                    style: TextStyle(
+                                      fontFamily: 'Heebo',
+                                      fontSize: 16,
+                                      color: Color.fromARGB(204, 117, 110, 2),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        ],
+                      ),
                     ),
-                    textAlign: TextAlign.center,
                   ),
-
-                  const SizedBox(height: 49),
-                  _buildTextField('Enter Username', _usernameController, false),
-
-                  const SizedBox(height: 16),
-                  _buildTextField('Enter Email', _emailController, false),
-
-                  const SizedBox(height: 16),
-                  _buildUserToggles(),
-
-                  const SizedBox(height: 16),
-                  _buildGenderToggles(),
-
-                  const SizedBox(height: 16),
-                  _checkForQualification(),
-
-                  const SizedBox(height: 16),
-                  _buildTextField('Enter Phone', _phoneController, false),
-
-                  const SizedBox(height: 16),
-                  _buildTextField('Enter Password', _passwordController, true),
-
-                  const SizedBox(height: 16),
-                  _buildTextField(
-                      'Enter Confirm Password', _cnfrmpasswordController, true),
-
-                  //Signup button
-                  const SizedBox(height: 41),
-                  _buildSignupButton(),
-
-                  //Already have an account? Signin
-                  const SizedBox(height: 20),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    const Text(
-                      "Already have an account? ",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Heebo',
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        signinMethod();
-                      },
-                      child: const Text(
-                        " Signin",
-                        style: TextStyle(
-                          fontFamily: 'Heebo',
-                          fontSize: 16,
-                          color: Color.fromARGB(204, 117, 110, 2),
-                        ),
-                      ),
-                    ),
-                  ]),
-                ],
-              ),
-            ),
-          ),
-        ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -283,8 +300,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _cnfrmpasswordController.text == "" ||
         _emailController.text == "" ||
         _phoneController.text == "" ||
-        _usernameController.text == "" ||
-        _qualificationController.text == "") {
+        _usernameController.text == "") {
       CommonComponent.CreateToast('Any fields can\'t be empty');
     } else {
       FirebaseServices.SignupAccount(

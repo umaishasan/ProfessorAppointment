@@ -55,7 +55,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
 
                   // New Password TextField
-                  const SizedBox(height: 143),
+                  const SizedBox(height: 130),
                   Container(
                     //width: 283,
                     height: 58,
@@ -105,7 +105,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
 
                   // Change Password Button
-                  const SizedBox(height: 67),
+                  const SizedBox(height: 50),
                   GestureDetector(
                     onTap: () {
                       forgetPassword();
@@ -130,6 +130,27 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       ),
                     ),
                   ),
+
+                  //Back to Signin
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          backToSignIn();
+                        },
+                        child: const Text(
+                          'Back to Signin',
+                          style: TextStyle(
+                            color: Color.fromARGB(204, 117, 110, 2),
+                            fontSize: 16,
+                            fontFamily: 'Heebo',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -137,6 +158,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         ],
       ),
     );
+  }
+
+  void backToSignIn() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
   }
 
   @override

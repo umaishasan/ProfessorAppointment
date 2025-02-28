@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   // Email TextField
-                  const SizedBox(height: 143),
+                  const SizedBox(height: 120),
                   Container(
                     height: 58,
                     decoration: BoxDecoration(
