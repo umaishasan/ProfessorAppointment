@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
 import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
@@ -90,8 +91,7 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
 
   // ignore: non_constant_identifier_names
   void GotoHome(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    CommonComponent.BacktoHome(context);
   }
 
   Widget AllPandingAppointments() {

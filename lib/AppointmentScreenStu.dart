@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/AllAppointmentsStuScreen.dart';
 import 'package:scholappoinment_934074496/AppointmentBookedScreen.dart';
+import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
@@ -92,8 +93,7 @@ class AppointmentScreenStuState extends State<AppointmentScreenStu>
 
   //back button to go home
   void GotoHome(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    CommonComponent.BacktoHome(context);
   }
 
   Widget AllAppointments() {

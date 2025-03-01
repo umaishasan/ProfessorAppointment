@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class CommonComponent extends StatelessWidget {
   static void BacktoHome(BuildContext context) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
   }
 
@@ -88,14 +89,19 @@ class CommonComponent extends StatelessWidget {
     );
   }
 
-  static Widget ImageAvatar(String imageUrls, double width, double height) {
-    return CachedNetworkImage(
-      width: width,
-      height: height,
-      imageUrl: imageUrls,
-      placeholder: (context, url) => const CircularProgressIndicator(),
-      errorWidget: (context, url, error) => const CircleAvatar(
-        child: Icon(CupertinoIcons.person),
+  static Widget ImageAvatar(
+      BuildContext context, String imageUrls, double width, double height) {
+    var mq = MediaQuery.of(context).size;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(mq.height * 0.3),
+      child: CachedNetworkImage(
+        width: width,
+        height: height,
+        imageUrl: imageUrls,
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const CircleAvatar(
+          child: Icon(CupertinoIcons.person),
+        ),
       ),
     );
   }

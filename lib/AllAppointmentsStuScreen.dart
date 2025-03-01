@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Models/Schedule.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
@@ -17,6 +19,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var prson = Provider.of<Person>(context);
     return Column(
       children: [
         // Appointment Card
@@ -39,7 +42,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Profile Image
-              CommonComponent.ImageAvatar("", 70, 70),
+              CommonComponent.ImageAvatar(context, prson.UserImage, 70, 70),
               const SizedBox(width: 15),
 
               // Info and Button Column

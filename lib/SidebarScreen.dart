@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
@@ -61,6 +59,7 @@ class _SidebarState extends State<Sidebar> {
   Widget buildHeader(BuildContext context) {
     String role = Provider.of<Person>(context, listen: false).User;
     String name = Provider.of<Person>(context, listen: false).Name;
+    String imageUrl = Provider.of<Person>(context, listen: false).UserImage;
     return Container(
       color: const Color.fromARGB(180, 101, 188, 71),
       height: 230,
@@ -68,7 +67,7 @@ class _SidebarState extends State<Sidebar> {
       child: Column(
         children: [
           const SizedBox(height: 35),
-          CommonComponent.ImageAvatar("", 80, 80),
+          CommonComponent.ImageAvatar(context, imageUrl, 80, 80),
           const SizedBox(height: 5),
           Text(
             name,

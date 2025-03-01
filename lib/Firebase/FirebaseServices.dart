@@ -43,20 +43,21 @@ class FirebaseServices extends StatelessWidget {
       String phoneNumber,
       String password,
       String qualification) async {
+    var db = FirebaseDatabase.instance.ref().child(DatabaseName);
+
     try {
       Map<String, String> schoolmembers = {
+        'Id': db.key.toString(),
         'Username': userName,
         'Email': email,
         'User': user,
         'Gender': gender,
         'Phone': phoneNumber,
+        'PushToken': "",
         'Qualification': qualification,
+        'UserImage': "",
       };
-      FirebaseDatabase.instance
-          .ref()
-          .child(DatabaseName)
-          .push()
-          .set(schoolmembers);
+      db.push().set(schoolmembers);
       await Auth.createUserWithEmailAndPassword(
           email: email, password: password);
       CommonComponent.CreateToast('Successfully Signup');
@@ -73,6 +74,7 @@ class FirebaseServices extends StatelessWidget {
     try {
       //login condition check
       await Auth.signInWithEmailAndPassword(email: email, password: password);
+      //await Auth.setSettings(appVerificationDisabledForTesting: true);
 
       //prepare get user data
       var dbref = FirebaseDatabase.instance.ref(DatabaseName);
@@ -91,9 +93,11 @@ class FirebaseServices extends StatelessWidget {
             person.User = value['User'];
             person.Gender = value['Gender'];
             person.Qualification = value['Qualification'];
+            person.UserImage = value['UserImage'];
           }
         });
       }
+
       //create message user data
     } on FirebaseAuthException catch (e) {
       CommonComponent.CreateToast("User not found!");

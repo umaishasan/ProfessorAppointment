@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class BookedScreen extends StatelessWidget {
   BookedScreen({super.key, required this.appointment});
@@ -9,6 +11,7 @@ class BookedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prson = Provider.of<Person>(context);
     String checkAppointStatus =
         appointment.Accept == true ? "Booked" : "Panding";
     return Column(
@@ -35,7 +38,7 @@ class BookedScreen extends StatelessWidget {
               //Profile Info
               Row(
                 children: [
-                  CommonComponent.ImageAvatar("", 60, 60),
+                  CommonComponent.ImageAvatar(context, prson.UserImage, 60, 60),
                   const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

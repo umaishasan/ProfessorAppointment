@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
+import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/SignupScreen.dart';
@@ -59,50 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Email TextField
                   const SizedBox(height: 120),
-                  Container(
-                    height: 58,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE7E5E5),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: TextField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                        hintText: 'Enter Email',
-                        hintStyle: TextStyle(
-                          color: Color(0xFF7D7777),
-                          fontSize: 20,
-                          fontFamily: 'Heebo',
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
+                  _buildTextField("Enter Email", _emailController, false),
 
                   // Password TextField
                   const SizedBox(height: 18),
-                  Container(
-                    height: 58,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE7E5E5),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: TextField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                        hintText: 'Enter Password',
-                        hintStyle: TextStyle(
-                          color: Color(0xFF7D7777),
-                          fontSize: 20,
-                          fontFamily: 'Heebo',
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
+                  _buildTextField("Enter Password", _passwordController, true),
 
                   //Forget Password
                   const SizedBox(height: 10),
@@ -189,6 +151,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  //Widget _buildTextField(String hint, dynamic _txtController) {
+  Widget _buildTextField(
+      String hint, TextEditingController textController, bool isPassword) {
+    return Container(
+      height: 58,
+      decoration: BoxDecoration(
+          color: const Color(0xFFE7E5E5),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.black, width: 1)),
+      child: TextField(
+        controller: textController,
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          hintText: hint,
+          hintStyle: const TextStyle(
+            color: Color(0xFF7D7777),
+            fontSize: 20,
+            fontFamily: 'Heebo',
+          ),
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -208,20 +196,25 @@ class _LoginScreenState extends State<LoginScreen> {
         "Phone": user.Phone,
         "Gender": user.Gender,
         "User": user.User,
-        "Qualification": user.Qualification
+        "Qualification": user.Qualification,
+        "UserImage": user.UserImage
       });
-      checkScheduleChecker(user.User, user.Name, [""], "", user.Qualification);
+      checkScheduleChecker(
+          user.User, user.Email, user.Name, [""], "", user.Qualification);
     }
     //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }
 
-  void checkScheduleChecker(String user, String name, List<String> dateTimes,
-      String status, String qualification) async {
+  void checkScheduleChecker(String user, String email, String name,
+      List<String> dateTimes, String status, String qualification) async {
+    //check user teacher
     if (user == "Teacher") {
+      //check account exist of message and schedule
       if (await FirebaseServices.IsAccountExistForSche() &&
           await FirebaseServices.IsAccountExistForMsg()) {
         Future.delayed(const Duration(seconds: 2));
         CommonComponent.CreateToast("Login Successfully");
+        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
@@ -229,17 +222,22 @@ class _LoginScreenState extends State<LoginScreen> {
             name, dateTimes, status, qualification);
         Future.delayed(const Duration(seconds: 1));
         CommonComponent.CreateToast("Login Successfully");
+        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       }
+      //else user student
     } else {
+      //check account exist of schedule
       if (await FirebaseServices.IsAccountExistForMsg()) {
         Future.delayed(const Duration(seconds: 2));
         CommonComponent.CreateToast("Login Successfully");
+        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
         Future.delayed(const Duration(seconds: 1));
         CommonComponent.CreateToast("Login Successfully");
+        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       }
     }

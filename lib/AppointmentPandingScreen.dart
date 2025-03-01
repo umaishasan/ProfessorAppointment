@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Appointment.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class PendingScreen extends StatefulWidget {
   const PendingScreen({super.key, required this.appointment});
@@ -15,6 +17,7 @@ class PendingScreen extends StatefulWidget {
 class _PendingScreenState extends State<PendingScreen> {
   @override
   Widget build(BuildContext context) {
+    var prson = Provider.of<Person>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -44,7 +47,8 @@ class _PendingScreenState extends State<PendingScreen> {
                   children: [
                     const SizedBox(height: 23),
                     // Profile image
-                    CommonComponent.ImageAvatar("", 70, 70),
+                    CommonComponent.ImageAvatar(
+                        context, prson.UserImage, 70, 70),
                     const SizedBox(height: 12),
                     Text(
                       widget.appointment.Name,

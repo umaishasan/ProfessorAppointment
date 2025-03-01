@@ -51,7 +51,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     //Profile Image
                     Stack(children: [
-                      CommonComponent.ImageAvatar("", 90, 90),
+                      CommonComponent.ImageAvatar(
+                          context, userData.UserImage, 90, 90),
                       Positioned(
                         top: 55,
                         right: 0,
@@ -107,11 +108,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 32),
               SizedBox(
                 width: 231,
-                height: 50,
+                height: 40,
                 child: ElevatedButton(
                   onPressed: () {
-                    EditProfile(userData.Id, name.text, qualification.text,
-                        phone.text, gender.text);
+                    EditProfile(
+                        userData.Id,
+                        name.text,
+                        qualification.text,
+                        phone.text,
+                        gender.text,
+                        userData.Email,
+                        userData.User,
+                        userData.UserImage);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF32983E),
@@ -193,16 +201,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void EditProfile(String id, String userName, String qualification,
-      String phone, String gender) {
+      String phone, String gender, String email, String user, String imagUrl) {
     FirebaseServices.UpdateUserProfile(
             id, userName, qualification, phone, gender)
         .then((value) {
-      setState(() {
-        CommonComponent.uploadImage(id, userName);
+      CommonComponent.uploadImage(id, userName);
+      Provider.of<Person>(context, listen: false).updateUserData({
+        "Id": id,
+        "Username": userName,
+        "User": user,
+        "Email": email,
+        "Phone": phone,
+        "Gender": gender,
+        "Qualification": qualification,
+        "UserImage": imagUrl
       });
-
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      CommonComponent.BacktoHome(context);
     });
     print(
         "Id: ${id}, Name: ${userName}, Qualification: ${qualification}, Gender: ${gender}");

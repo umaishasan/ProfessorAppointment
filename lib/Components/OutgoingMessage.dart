@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class OutgoingMessage extends StatelessWidget {
   final String yourName;
@@ -16,6 +18,7 @@ class OutgoingMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prson = Provider.of<Person>(context);
     return Card(
       color: const Color.fromARGB(0, 255, 255, 255),
       elevation: 0,
@@ -83,7 +86,8 @@ class OutgoingMessage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: CommonComponent.ImageAvatar("", 50, 50),
+            child:
+                CommonComponent.ImageAvatar(context, prson.UserImage, 50, 50),
           ),
         ],
       ),

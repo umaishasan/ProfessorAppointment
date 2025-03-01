@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
 import 'package:scholappoinment_934074496/SidebarScreen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  HomeScreen({super.key});
+  static late String personEmail;
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    //GetFetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<Person>(context);
-
     print("Why data is empty: ${userData.Email} and name: ${userData.Name}");
     print("Image data: ${userData.UserImage}");
     return Scaffold(
@@ -57,7 +68,8 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 20),
-                  CommonComponent.ImageAvatar(userData.UserImage, 80, 80),
+                  CommonComponent.ImageAvatar(
+                      context, userData.UserImage, 80, 80),
                   const SizedBox(height: 14),
                   Text(
                     userData.User,
@@ -127,4 +139,8 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  // void GetFetchData() {
+  //   FirebaseServices.GetSpecificPersonData(HomeScreen.personEmail);
+  // }
 }

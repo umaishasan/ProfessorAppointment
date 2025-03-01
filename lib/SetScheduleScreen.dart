@@ -173,7 +173,6 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   void setSchedule() {
     FirebaseServices.SetSchedule(
             SetScheduleScreen.scheduleDateData, AvailableText)
-        .then((_) => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const HomeScreen())));
+        .then((_) => CommonComponent.BacktoHome(context));
   }
 }

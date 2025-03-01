@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
+import 'package:scholappoinment_934074496/Models/Person.dart';
 
 class IncomingMessage extends StatelessWidget {
   late String senderName;
@@ -16,13 +18,14 @@ class IncomingMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prson = Provider.of<Person>(context);
     return Card(
       color: const Color.fromARGB(0, 0, 0, 0),
       elevation: 0,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonComponent.ImageAvatar("", 50, 50),
+          CommonComponent.ImageAvatar(context, prson.UserImage, 50, 50),
           const SizedBox(width: 8),
           Flexible(
             child: Container(

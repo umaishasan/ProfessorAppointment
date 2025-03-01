@@ -57,7 +57,8 @@ class _BookingScreenState extends State<BookingScreen> {
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
-                            CommonComponent.ImageAvatar("", 70, 70),
+                            CommonComponent.ImageAvatar(
+                                context, person.UserImage, 70, 70),
                             const SizedBox(height: 12),
                             Text(
                               widget.schedule.Name,
@@ -253,8 +254,7 @@ class _BookingScreenState extends State<BookingScreen> {
     FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
         teacherId, teacherQualification);
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    CommonComponent.BacktoHome(context);
   }
 
   //back to the appointment screen
