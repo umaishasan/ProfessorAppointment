@@ -218,7 +218,7 @@ class FirebaseServices extends StatelessWidget {
         Firestore.collection(FirestoreScheduleCollectionName)
             .doc(Auth.currentUser!.uid);
     docRef.update({
-      "DatesTimes": FieldValue.arrayUnion(elements),
+      "DatesTimes": elements,
       "Status": status,
     });
     CommonComponent.CreateToast("Set schedule successfully");

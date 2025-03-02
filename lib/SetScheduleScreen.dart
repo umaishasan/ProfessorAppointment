@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Components/DateComponent.dart';
 import 'package:scholappoinment_934074496/Components/TimeComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/main.dart';
 
 class SetScheduleScreen extends StatefulWidget {
@@ -51,60 +51,53 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
 
         // both Button
         Container(
-            margin: const EdgeInsets.only(left: 10, right: 10, top: 340),
+            margin: const EdgeInsets.only(left: 10, right: 10, top: 540),
             child: Center(
-                child: Row(
+                child: Column(
               children: [
-                // Set schedule Button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setSchedule();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF32983E),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(23),
-                      ),
-                    ),
-                    child: const Text(
-                      'Set Schedule',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Heebo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-
-                //Add schedule button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _addSchedule();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF32983E),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(23),
-                      ),
-                    ),
-                    child: const Text(
-                      'Add Schedule',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Heebo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
+                showButton(),
               ],
             )))
       ]),
+    );
+  }
+
+  Widget showButton() {
+    List<Widget> buttons = [];
+
+    if (AvailableText == "Available") {
+      // Add schedule Button
+      buttons.add(createButton("Add Schedule", () => _addSchedule()));
+      // Set schedule Button
+      buttons.add(createButton("Set Schedule", () => setSchedule()));
+    } else {
+      // Set schedule Button
+      buttons.add(createButton("Set Schedule", () => setSchedule()));
+    }
+
+    return Column(
+      children: buttons,
+    );
+  }
+
+  Widget createButton(String buttonName, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF32983E),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(23),
+        ),
+      ),
+      child: Text(
+        buttonName,
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontFamily: 'Heebo',
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 
@@ -171,8 +164,14 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   }
 
   void setSchedule() {
-    FirebaseServices.SetSchedule(
-            SetScheduleScreen.scheduleDateData, AvailableText)
-        .then((_) => CommonComponent.BacktoHome(context));
+    if (AvailableText == "Not Available") {
+      SetScheduleScreen.scheduleDateData = [];
+      FirebaseServices.SetSchedule([], AvailableText)
+          .then((_) => CommonComponent.BacktoHome(context));
+    } else {
+      FirebaseServices.SetSchedule(
+              SetScheduleScreen.scheduleDateData, AvailableText)
+          .then((_) => CommonComponent.BacktoHome(context));
+    }
   }
 }
