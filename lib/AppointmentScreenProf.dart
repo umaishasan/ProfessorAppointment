@@ -134,4 +134,10 @@ class AppointmentScreenProfState extends State<AppointmentScreenProf>
       },
     );
   }
+
+  void RefreshToLoad() {
+    Future.delayed(Duration(seconds: 2), () {
+      FirebaseServices.GetAllAppointment();
+    });
+  }
 }

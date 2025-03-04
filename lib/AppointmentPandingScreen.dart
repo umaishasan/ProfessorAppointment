@@ -237,9 +237,9 @@ class _PendingScreenState extends State<PendingScreen> {
 
   //when click to accept button then it will accept appointment
   void AcceptAppointment(BuildContext context) {
-    FirebaseServices.AcceptAppointment(widget.appointment.Id, true);
+    FirebaseServices.AcceptAppointment(widget.appointment.DocId, true);
     print(
-        "Before => Id: ${widget.appointment.Id}, Accpr: ${widget.appointment.Accept}");
+        "Before => Id: ${widget.appointment.DocId}, Accpr: ${widget.appointment.Accept}");
 
     Navigator.pop(context, 2);
   }
