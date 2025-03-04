@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
 
                   // Email TextField
-                  const SizedBox(height: 120),
+                  const SizedBox(height: 100),
                   _buildTextField("Enter Email", _emailController, false),
 
                   // Password TextField

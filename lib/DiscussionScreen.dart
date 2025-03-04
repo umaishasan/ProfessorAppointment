@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Components/Messages.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Messaging.dart';
 import 'package:scholappoinment_934074496/main.dart';
 
@@ -22,7 +21,6 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   @override
   Widget build(BuildContext context) {
     screenSizeCommon = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,

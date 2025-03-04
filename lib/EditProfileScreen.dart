@@ -4,6 +4,7 @@ import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
 import 'package:scholappoinment_934074496/HomeScreen.dart';
 import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:scholappoinment_934074496/main.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -26,120 +27,127 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           CommonComponent.AppBarCreator(
               context, "Profile", Icons.arrow_back, () => backToHome(context)),
-
-          // Header
-          Column(
-            children: [
-              // Profile Card
-              const SizedBox(height: 100),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3), // Light shadow
-                      spreadRadius: 1,
-                      blurRadius: 6,
-                      offset: const Offset(0, 4), // Position of shadow
+          Center(
+            // Edit profile card
+            child: SingleChildScrollView(
+              child: Column(
+                // Profile Card
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 115, horizontal: 24),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Light shadow
+                          spreadRadius: 1,
+                          blurRadius: 6,
+                          offset: const Offset(0, 4), // Position of shadow
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    //Profile Image
-                    Stack(children: [
-                      CommonComponent.ImageAvatar(
-                          context, userData.UserImage, 90, 90),
-                      Positioned(
-                        top: 55,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            EditImage();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(3),
-                            decoration: const BoxDecoration(
-                              color: Color.fromARGB(
-                                  107, 117, 117, 117), // Background color
-                              shape: BoxShape.circle,
+                    child: Column(
+                      children: [
+                        //Profile Image
+                        Stack(children: [
+                          CommonComponent.ImageAvatar(
+                              context, userData.UserImage, 90, 90),
+                          Positioned(
+                            top: 55,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                EditImage();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(3),
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(
+                                      107, 117, 117, 117), // Background color
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                              ),
                             ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                              size: 20,
-                            ),
+                          ),
+                        ]),
+
+                        //labels
+                        const SizedBox(height: 13),
+                        Text(
+                          userData.User,
+                          style: const TextStyle(
+                            fontFamily: 'Heebo',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300,
+                            color: Color(0xFF080808),
+                          ),
+                        ),
+
+                        //Text fields
+                        const SizedBox(height: 24),
+                        _buildInfoField('Name:', name, userData.Name),
+                        //const SizedBox(height: 16),
+                        //_buildInfoField('Email:', email, userData.Email),
+                        const SizedBox(height: 16),
+                        _buildInfoField('Phone:', phone, userData.Phone),
+                        const SizedBox(height: 16),
+                        _buildInfoField('Gender:', gender, userData.Gender),
+                        const SizedBox(height: 16),
+                        _checkQualification(userData.User, userData.User)
+                      ],
+                    ),
+                  ),
+                  // Edit Profile Button
+                  //Align(
+                  //alignment: Alignment.center,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: SizedBox(
+                      width: 231,
+                      height: 40,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          EditProfile(
+                              userData.Id,
+                              name.text,
+                              qualification.text,
+                              phone.text,
+                              gender.text,
+                              userData.Email,
+                              userData.User,
+                              userData.UserImage);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF32983E),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ]),
-
-                    //Student label
-                    const SizedBox(height: 16),
-                    Text(
-                      userData.User,
-                      style: const TextStyle(
-                        fontFamily: 'Heebo',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: Color(0xFF080808),
-                      ),
-                    ),
-
-                    //Text fields
-                    const SizedBox(height: 24),
-                    _buildInfoField('Name:', name, userData.Name),
-                    //const SizedBox(height: 16),
-                    //_buildInfoField('Email:', email, userData.Email),
-                    const SizedBox(height: 16),
-                    _buildInfoField('Phone:', phone, userData.Phone),
-                    const SizedBox(height: 16),
-                    _buildInfoField('Gender:', gender, userData.Gender),
-                    const SizedBox(height: 16),
-                    _checkQualification(userData.User, userData.User)
-                  ],
-                ),
-              ),
-
-              // Edit Profile Button
-              const SizedBox(height: 32),
-              SizedBox(
-                width: 231,
-                height: 40,
-                child: ElevatedButton(
-                  onPressed: () {
-                    EditProfile(
-                        userData.Id,
-                        name.text,
-                        qualification.text,
-                        phone.text,
-                        gender.text,
-                        userData.Email,
-                        userData.User,
-                        userData.UserImage);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF32983E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                  //),
+                ],
               ),
-            ],
-          ),
+            ),
+          )
         ],
       ),
     );

@@ -77,27 +77,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    ElevatedButton(
-                      onPressed: () {
-                        GotoAppointmentScreen(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF32983E),
-                        minimumSize: const Size(266, 30),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: const Text(
-                        'Book Appointment >',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    ShowButton(widget.schedule.Status)
                   ],
                 ),
               ),
@@ -108,12 +88,35 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
     );
   }
 
-  void GotoAppointmentScreen(BuildContext context) {
-    //debug in console
-    // for (var element in SetScheduleScreen.scheduleDateData) {
-    //   print("Kia data hai list me? ${element}");
-    // }
+  Widget ShowButton(String status) {
+    if (status == "Available") {
+      return ElevatedButton(
+        onPressed: () {
+          GotoAppointmentScreen(context);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF32983E),
+          minimumSize: const Size(266, 30),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: const Text(
+          'Book Appointment >',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  }
 
+  void GotoAppointmentScreen(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
