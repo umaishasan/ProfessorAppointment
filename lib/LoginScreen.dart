@@ -18,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isLoading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -146,6 +147,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+
+          //circle
+          progressCircle()
         ],
       ),
     );
@@ -177,6 +181,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget progressCircle() {
+    if (isLoading) {
+      return const Center(
+          child: CircularProgressIndicator(
+        backgroundColor: Colors.black,
+        valueColor: AlwaysStoppedAnimation(Colors.white),
+      ));
+    } else {
+      return Text("");
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -185,22 +201,40 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginMethod() async {
-    Person? user = await FirebaseServices.SigninAccount(
-        _emailController.text, _passwordController.text);
+    setState(() {
+      isLoading = true;
+    });
 
-    if (user != null) {
-      Provider.of<Person>(context, listen: false).updateUserData({
-        "Id": user.Id,
-        "Username": user.Name,
-        "Email": user.Email,
-        "Phone": user.Phone,
-        "Gender": user.Gender,
-        "User": user.User,
-        "Qualification": user.Qualification,
-        "UserImage": user.UserImage
+    try {
+      //signin account and save user
+      Person? user = await FirebaseServices.SigninAccount(
+          _emailController.text, _passwordController.text);
+
+      //set user
+      if (user != null) {
+        Provider.of<Person>(context, listen: false).updateUserData({
+          "Id": user.Id,
+          "Username": user.Name,
+          "Email": user.Email,
+          "Phone": user.Phone,
+          "Gender": user.Gender,
+          "User": user.User,
+          "Qualification": user.Qualification,
+          "UserImage": user.UserImage
+        });
+
+        //waiting
+        Future.delayed(const Duration(seconds: 1), () {
+          checkScheduleChecker(
+              user.User, user.Email, user.Name, [""], "", user.Qualification);
+        });
+      }
+    } catch (e) {
+      print("Login error: ${e}");
+    } finally {
+      setState(() {
+        isLoading = false;
       });
-      checkScheduleChecker(
-          user.User, user.Email, user.Name, [""], "", user.Qualification);
     }
     //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }
@@ -212,32 +246,24 @@ class _LoginScreenState extends State<LoginScreen> {
       //check account exist of message and schedule
       if (await FirebaseServices.IsAccountExistForSche() &&
           await FirebaseServices.IsAccountExistForMsg()) {
-        Future.delayed(const Duration(seconds: 2));
         CommonComponent.CreateToast("Login Successfully");
-        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
         await FirebaseServices.CreateScheduleUser(
             name, dateTimes, status, qualification);
-        Future.delayed(const Duration(seconds: 1));
         CommonComponent.CreateToast("Login Successfully");
-        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       }
       //else user student
     } else {
       //check account exist of schedule
       if (await FirebaseServices.IsAccountExistForMsg()) {
-        Future.delayed(const Duration(seconds: 2));
         CommonComponent.CreateToast("Login Successfully");
-        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateMessageUser(name);
-        Future.delayed(const Duration(seconds: 1));
         CommonComponent.CreateToast("Login Successfully");
-        HomeScreen.personEmail = email;
         CommonComponent.BacktoHome(context);
       }
     }

@@ -51,12 +51,12 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     );
   }
 
-  // ignore: non_constant_identifier_names
+  //Back to home
   void GotoHome(BuildContext context) {
     CommonComponent.BacktoHome(context);
   }
 
-  // ignore: non_constant_identifier_names
+  //write message
   Widget ChatInput() {
     return Padding(
         padding: EdgeInsets.only(
@@ -105,6 +105,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         ));
   }
 
+  //show all messaging
   Widget AllMesages() {
     return ListView.builder(
       itemCount: widget.userMessages.length,

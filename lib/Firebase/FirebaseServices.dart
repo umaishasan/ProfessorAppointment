@@ -43,11 +43,12 @@ class FirebaseServices extends StatelessWidget {
       String phoneNumber,
       String password,
       String qualification) async {
-    var db = FirebaseDatabase.instance.ref().child(DatabaseName);
+    var db = FirebaseDatabase.instance.ref().child(DatabaseName).push();
+    String uniqueId = db.key.toString();
 
     try {
       Map<String, String> schoolmembers = {
-        'Id': db.key.toString(),
+        'Id': uniqueId,
         'Username': userName,
         'Email': email,
         'User': user,
@@ -57,7 +58,7 @@ class FirebaseServices extends StatelessWidget {
         'Qualification': qualification,
         'UserImage': "",
       };
-      db.push().set(schoolmembers);
+      db.set(schoolmembers);
       await Auth.createUserWithEmailAndPassword(
           email: email, password: password);
       CommonComponent.CreateToast('Successfully Signup');
@@ -243,10 +244,9 @@ class FirebaseServices extends StatelessWidget {
         'TeacherName': teacherName,
         'TeacherId': teacherId,
         'TeaQualif': teacherQualification,
-        'Id': Auth.currentUser!.uid,
       });
 
-      await docRef.update({'Id': docRef.id});
+      await docRef.update({'Id': Auth.currentUser!.uid});
       print("Data added successfully!");
       CommonComponent.CreateToast("Set appointment successfully");
 
