@@ -38,13 +38,14 @@ class _SidebarState extends State<Sidebar> {
 
   @override
   Widget build(BuildContext context) {
+    var person = Provider.of<Person>(context, listen: false);
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildHeader(context),
+          buildHeader(context, person.User, person.Name, person.UserImage),
           Expanded(
-            child: buildMenuItem(context),
+            child: buildMenuItem(context, person.Name, person.Id),
           ),
           const Divider(
             color: Color.fromARGB(255, 73, 73, 73),
@@ -56,10 +57,8 @@ class _SidebarState extends State<Sidebar> {
   }
 
   //Profile Photo at header
-  Widget buildHeader(BuildContext context) {
-    String role = Provider.of<Person>(context, listen: false).User;
-    String name = Provider.of<Person>(context, listen: false).Name;
-    String imageUrl = Provider.of<Person>(context, listen: false).UserImage;
+  Widget buildHeader(
+      BuildContext context, String role, String name, String imageUrl) {
     return Container(
       color: const Color.fromARGB(180, 101, 188, 71),
       height: 230,
@@ -115,7 +114,8 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
-  Widget buildMenuItem(BuildContext context) {
+  Widget buildMenuItem(BuildContext context, String name, String id) {
+    final time = DateTime.now().microsecondsSinceEpoch.toString();
     return Column(
       children: [
         ListTile(
@@ -148,7 +148,11 @@ class _SidebarState extends State<Sidebar> {
                 MaterialPageRoute(
                     builder: (_) => DiscussionScreen(
                         userMessages: messagesList,
-                        messaging: messagesList.last)));
+                        messaging: new Messaging(
+                            Message: "",
+                            Name: name,
+                            MesageTime: time,
+                            Id: id))));
           },
         ),
         IsScheduleOn(context),

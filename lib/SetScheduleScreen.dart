@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
 import 'package:scholappoinment_934074496/Components/DateComponent.dart';
@@ -35,7 +34,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
 
         Card(
             margin: const EdgeInsets.only(
-                left: 10, right: 10, top: 100, bottom: 250),
+                left: 10, right: 10, top: 110, bottom: 250),
             color: Colors.white,
             elevation: 3,
             child: Padding(
@@ -51,13 +50,19 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
 
         // both Button
         Container(
-            margin: const EdgeInsets.only(left: 10, right: 10, top: 540),
-            child: Center(
-                child: Column(
+          margin: const EdgeInsets.only(left: 10, right: 10, top: 540),
+          child: Center(
+            child: Column(
               children: [
                 showButton(),
               ],
-            )))
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 650, // Adjust height as needed
+          child: ShowSchedules(SetScheduleScreen.scheduleDateData),
+        )
       ]),
     );
   }
@@ -105,11 +110,24 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     String time = SetTimeComponent.scheduleTime;
     String date = SetDateComponent.scheduleDate;
     completeDateTime = "$date at $time";
-    SetScheduleScreen.scheduleDateData.add(completeDateTime);
 
-    for (var element in SetScheduleScreen.scheduleDateData) {
-      print(element);
-    }
+    setState(() {
+      SetScheduleScreen.scheduleDateData.add(completeDateTime);
+    });
+    //ShowSchedules(SetScheduleScreen.scheduleDateData);
+  }
+
+  Widget ShowSchedules(List<String> datesTimes) {
+    return ListView.builder(
+      itemCount: datesTimes.length,
+      padding: const EdgeInsets.only(top: 50),
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        var showDate = datesTimes[index];
+        print(showDate);
+        return Text(showDate);
+      },
+    );
   }
 
   Widget _buildAvailableToggles() {

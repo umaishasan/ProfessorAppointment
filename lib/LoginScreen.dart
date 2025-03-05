@@ -243,13 +243,11 @@ class _LoginScreenState extends State<LoginScreen> {
       List<String> dateTimes, String status, String qualification) async {
     //check user teacher
     if (user == "Teacher") {
-      //check account exist of message and schedule
-      if (await FirebaseServices.IsAccountExistForSche() &&
-          await FirebaseServices.IsAccountExistForMsg()) {
+      //check account exist and schedule
+      if (await FirebaseServices.IsAccountExistForSche()) {
         CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       } else {
-        await FirebaseServices.CreateMessageUser(name);
         await FirebaseServices.CreateScheduleUser(
             name, dateTimes, status, qualification);
         CommonComponent.CreateToast("Login Successfully");
@@ -257,15 +255,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       //else user student
     } else {
-      //check account exist of schedule
-      if (await FirebaseServices.IsAccountExistForMsg()) {
-        CommonComponent.CreateToast("Login Successfully");
-        CommonComponent.BacktoHome(context);
-      } else {
-        await FirebaseServices.CreateMessageUser(name);
-        CommonComponent.CreateToast("Login Successfully");
-        CommonComponent.BacktoHome(context);
-      }
+      CommonComponent.CreateToast("Login Successfully");
+      CommonComponent.BacktoHome(context);
     }
   }
 

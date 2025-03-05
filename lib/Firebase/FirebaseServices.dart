@@ -207,7 +207,7 @@ class FirebaseServices extends StatelessWidget {
         Message: messages,
         Name: userMessing.Name,
         MesageTime: time,
-        Id: userMessing.Id);
+        Id: Auth.currentUser!.uid);
     final ref = Firestore.collection(FirestoreMsgCollectionName);
 
     await ref.doc(time).set(msg.toJson());
