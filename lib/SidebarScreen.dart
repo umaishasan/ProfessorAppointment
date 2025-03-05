@@ -45,7 +45,8 @@ class _SidebarState extends State<Sidebar> {
         children: [
           buildHeader(context, person.User, person.Name, person.UserImage),
           Expanded(
-            child: buildMenuItem(context, person.Name, person.Id),
+            child: buildMenuItem(
+                context, person.Name, person.Id, person.UserImage),
           ),
           const Divider(
             color: Color.fromARGB(255, 73, 73, 73),
@@ -114,7 +115,8 @@ class _SidebarState extends State<Sidebar> {
     );
   }
 
-  Widget buildMenuItem(BuildContext context, String name, String id) {
+  Widget buildMenuItem(
+      BuildContext context, String name, String id, String userImage) {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
     return Column(
       children: [
@@ -151,6 +153,7 @@ class _SidebarState extends State<Sidebar> {
                         messaging: new Messaging(
                             Message: "",
                             Name: name,
+                            UserImage: userImage,
                             MesageTime: time,
                             Id: id))));
           },

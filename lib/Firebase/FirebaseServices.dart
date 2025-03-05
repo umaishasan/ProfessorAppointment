@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,12 +128,13 @@ class FirebaseServices extends StatelessWidget {
   }
 
   //check if this user not available then create user for message
-  static Future<void> CreateMessageUser(String Name) async {
+  static Future<void> CreateMessageUser(String Name, String imageUrl) async {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
     final messageUser = Messaging(
         Id: Auth.currentUser!.uid,
         Name: Name,
         MesageTime: time,
+        UserImage: imageUrl,
         Message: "This new member available now!");
 
     await Firestore.collection(FirestoreMsgCollectionName)
@@ -144,12 +144,13 @@ class FirebaseServices extends StatelessWidget {
 
   //check if this user not available then create user for schedule
   static Future<void> CreateScheduleUser(String name, List<String> dateTimes,
-      String status, String qualification) async {
+      String status, String qualification, String imageUrl) async {
     final scheduleUser = Schedule(
         Id: Auth.currentUser!.uid,
         Name: name,
         DateTimes: dateTimes,
         Status: status,
+        UserImage: imageUrl,
         Qualification: qualification);
 
     await Firestore.collection(FirestoreScheduleCollectionName)
@@ -201,12 +202,13 @@ class FirebaseServices extends StatelessWidget {
 
   //send messages
   static Future<void> SendMessage(
-      Messaging userMessing, String messages) async {
+      Messaging userMessing, String messages, String imageUrl) async {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
     final Messaging msg = Messaging(
         Message: messages,
         Name: userMessing.Name,
         MesageTime: time,
+        UserImage: imageUrl,
         Id: Auth.currentUser!.uid);
     final ref = Firestore.collection(FirestoreMsgCollectionName);
 
@@ -233,7 +235,8 @@ class FirebaseServices extends StatelessWidget {
       bool isAccept,
       String teacherName,
       String teacherId,
-      String teacherQualification) async {
+      String teacherQualification,
+      String imageUrl) async {
     try {
       DocumentReference docRef =
           await Firestore.collection(FirestoreAppointmentCollectionName).add({
@@ -244,6 +247,7 @@ class FirebaseServices extends StatelessWidget {
         'TeacherName': teacherName,
         'TeacherId': teacherId,
         'TeaQualif': teacherQualification,
+        'UserImage': imageUrl,
       });
 
       await docRef.update({'Id': Auth.currentUser!.uid});

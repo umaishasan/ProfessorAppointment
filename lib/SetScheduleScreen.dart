@@ -33,21 +33,25 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
             () => CommonComponent.BacktoHome(context)),
 
         Card(
-            margin: const EdgeInsets.only(
-                left: 10, right: 10, top: 110, bottom: 250),
-            color: Colors.white,
-            elevation: 3,
-            child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: screenSizeCommon.width * 0.01,
-                    vertical: screenSizeCommon.height * 0.01),
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    _checkAvailablityToShowDatetime(),
-                    _buildAvailableToggles(),
-                  ]),
-                ))),
-
+          margin:
+              const EdgeInsets.only(left: 10, right: 10, top: 110, bottom: 250),
+          color: Colors.white,
+          elevation: 3,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: screenSizeCommon.width * 0.01,
+                vertical: screenSizeCommon.height * 0.01),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _checkAvailablityToShowDatetime(),
+                  _buildAvailableToggles(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        ShowSchedule(),
         // both Button
         Container(
           margin: const EdgeInsets.only(left: 10, right: 10, top: 540),
@@ -59,10 +63,6 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
             ),
           ),
         ),
-        SizedBox(
-          height: 650, // Adjust height as needed
-          child: ShowSchedules(SetScheduleScreen.scheduleDateData),
-        )
       ]),
     );
   }
@@ -114,17 +114,33 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     setState(() {
       SetScheduleScreen.scheduleDateData.add(completeDateTime);
     });
-    //ShowSchedules(SetScheduleScreen.scheduleDateData);
   }
 
-  Widget ShowSchedules(List<String> datesTimes) {
+  Widget ShowSchedule() {
+    if (AvailableText == "Available") {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          margin: EdgeInsets.only(left: 40, top: 670, right: 40),
+          color: Colors.white,
+          width: 400,
+          height: 200,
+          child: ShowDateOfSchedules(SetScheduleScreen.scheduleDateData),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  }
+
+  Widget ShowDateOfSchedules(List<String> datesTimes) {
     return ListView.builder(
       itemCount: datesTimes.length,
-      padding: const EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.only(right: 5, top: 5, bottom: 5, left: 5),
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var showDate = datesTimes[index];
-        print(showDate);
+        //print(showDate);
         return Text(showDate);
       },
     );

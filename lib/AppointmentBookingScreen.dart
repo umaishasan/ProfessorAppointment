@@ -195,7 +195,8 @@ class _BookingScreenState extends State<BookingScreen> {
                               confrimDate,
                               widget.schedule.Name,
                               widget.schedule.Id,
-                              widget.schedule.Qualification);
+                              widget.schedule.Qualification,
+                              widget.schedule.UserImage);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF32983E),
@@ -249,10 +250,11 @@ class _BookingScreenState extends State<BookingScreen> {
       String dateTime,
       String teacherName,
       String teacherId,
-      String teacherQualification) {
+      String teacherQualification,
+      String imageUrl) {
     //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
     FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
-        teacherId, teacherQualification);
+        teacherId, teacherQualification, imageUrl);
 
     CommonComponent.BacktoHome(context);
   }

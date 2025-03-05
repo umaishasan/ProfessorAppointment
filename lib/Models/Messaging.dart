@@ -4,11 +4,13 @@ class Messaging {
     required this.Name,
     required this.MesageTime,
     required this.Id,
+    required this.UserImage,
   });
   late final String Message;
   late final String Name;
   late final String MesageTime;
   late final String Id;
+  late final String UserImage;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -16,6 +18,7 @@ class Messaging {
     data['Name'] = Name;
     data['MesageTime'] = MesageTime;
     data['Id'] = Id;
+    data['UserImage'] = UserImage;
     return data;
   }
 
@@ -24,5 +27,6 @@ class Messaging {
     Name = json['Name'];
     MesageTime = json['MesageTime'];
     Id = json['Id'];
+    UserImage = json['UserImage'];
   }
 }

@@ -225,8 +225,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         //waiting
         Future.delayed(const Duration(seconds: 1), () {
-          checkScheduleChecker(
-              user.User, user.Email, user.Name, [""], "", user.Qualification);
+          checkScheduleChecker(user.User, user.Email, user.Name, [""], "",
+              user.Qualification, user.UserImage);
         });
       }
     } catch (e) {
@@ -239,8 +239,14 @@ class _LoginScreenState extends State<LoginScreen> {
     //print("Name: ${user?.Name}, Email: ${user?.Email}, User: ${user?.User}, Gender: ${user?.Gender}");
   }
 
-  void checkScheduleChecker(String user, String email, String name,
-      List<String> dateTimes, String status, String qualification) async {
+  void checkScheduleChecker(
+      String user,
+      String email,
+      String name,
+      List<String> dateTimes,
+      String status,
+      String qualification,
+      String imageUrl) async {
     //check user teacher
     if (user == "Teacher") {
       //check account exist and schedule
@@ -249,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
         CommonComponent.BacktoHome(context);
       } else {
         await FirebaseServices.CreateScheduleUser(
-            name, dateTimes, status, qualification);
+            name, dateTimes, status, qualification, imageUrl);
         CommonComponent.CreateToast("Login Successfully");
         CommonComponent.BacktoHome(context);
       }

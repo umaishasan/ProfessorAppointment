@@ -96,7 +96,8 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
               child: IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
-                  SendMessage(widget.messaging, _tyoeController);
+                  SendMessage(widget.messaging, _tyoeController,
+                      widget.messaging.UserImage);
                 },
                 color: const Color.fromARGB(255, 0, 0, 0),
               ),
@@ -118,9 +119,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     );
   }
 
-  void SendMessage(Messaging messaging, TextEditingController type) {
+  void SendMessage(
+      Messaging messaging, TextEditingController type, String imageUrl) {
     if (type.text.isNotEmpty) {
-      FirebaseServices.SendMessage(messaging, type.text);
+      FirebaseServices.SendMessage(messaging, type.text, imageUrl);
       type.text = '';
       _fetchMessages();
     }
