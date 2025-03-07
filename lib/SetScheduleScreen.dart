@@ -122,7 +122,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           margin: EdgeInsets.only(left: 40, top: 670, right: 40),
-          color: Colors.white,
+          color: const Color.fromARGB(147, 255, 255, 255),
           width: 400,
           height: 200,
           child: ShowDateOfSchedules(SetScheduleScreen.scheduleDateData),
@@ -134,14 +134,15 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   }
 
   Widget ShowDateOfSchedules(List<String> datesTimes) {
-    return ListView.builder(
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(),
       itemCount: datesTimes.length,
       padding: const EdgeInsets.only(right: 5, top: 5, bottom: 5, left: 5),
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var showDate = datesTimes[index];
         //print(showDate);
-        return Text(showDate);
+        return Text(showDate, textAlign: TextAlign.center);
       },
     );
   }
@@ -166,6 +167,7 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
     if (AvailableText == "Available") {
       return SetTimeComponent();
     } else {
+      SetScheduleScreen.scheduleDateData.clear();
       return const SizedBox.shrink();
     }
   }
