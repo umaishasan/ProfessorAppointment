@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Appointment.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/Models/Schedule.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/Models/Schedule.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key, required this.schedule});

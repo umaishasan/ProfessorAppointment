@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Components/IncomingMessage.dart';
-import 'package:scholappoinment_934074496/Components/OutgoingMessage.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/Models/Messaging.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Components/IncomingMessage.dart';
+import 'package:myacademicappointment/Components/OutgoingMessage.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/Models/Messaging.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key, required this.messaging});
@@ -26,6 +26,7 @@ class _MessageScreenState extends State<MessageScreen> {
     return IncomingMessage(
         senderName: widget.messaging.Name,
         messageUser: widget.messaging.Message,
+        imageUrl: widget.messaging.UserImage,
         messageTime:
             CommonComponent.FetchTiming(context, widget.messaging.MesageTime));
   }
@@ -34,6 +35,7 @@ class _MessageScreenState extends State<MessageScreen> {
     return OutgoingMessage(
         yourName: widget.messaging.Name,
         messageUser: widget.messaging.Message,
+        imageUrl: widget.messaging.UserImage,
         messageTime:
             CommonComponent.FetchTiming(context, widget.messaging.MesageTime));
   }

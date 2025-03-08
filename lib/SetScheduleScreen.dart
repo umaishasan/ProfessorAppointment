@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Components/DateComponent.dart';
-import 'package:scholappoinment_934074496/Components/TimeComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/main.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Components/DateComponent.dart';
+import 'package:myacademicappointment/Components/TimeComponent.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/main.dart';
 
 class SetScheduleScreen extends StatefulWidget {
   const SetScheduleScreen({

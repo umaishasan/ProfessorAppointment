@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/SidebarScreen.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/SidebarScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: const Color(0xFF32983E),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       drawer: Sidebar(),
       body: Stack(

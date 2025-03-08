@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Models/Person.dart';
 
 class OutgoingMessage extends StatelessWidget {
   final String yourName;
@@ -9,12 +9,13 @@ class OutgoingMessage extends StatelessWidget {
   final String messageTime;
   final String imageUrl;
 
-  const OutgoingMessage(
-      {super.key,
-      required this.yourName,
-      required this.messageUser,
-      required this.messageTime,
-      this.imageUrl = ""});
+  const OutgoingMessage({
+    super.key,
+    required this.yourName,
+    required this.messageUser,
+    required this.messageTime,
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {

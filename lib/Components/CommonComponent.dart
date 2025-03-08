@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/HomeScreen.dart';
 
 class CommonComponent extends StatelessWidget {
   const CommonComponent({super.key});

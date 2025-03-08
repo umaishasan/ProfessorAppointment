@@ -3,10 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Models/Messaging.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/Models/Schedule.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Models/Messaging.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/Models/Schedule.dart';
 
 // ignore: must_be_immutable
 class FirebaseServices extends StatelessWidget {

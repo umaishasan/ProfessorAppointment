@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/ForgetPasswordScreen.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/SignupScreen.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/ForgetPasswordScreen.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/SignupScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   //static String User = "";
@@ -53,9 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(
                     'LOGIN',
                     style: TextStyle(
+                      fontFamily: 'Jaro',
+                      fontWeight: FontWeight.bold,
                       fontSize: 40,
                       color: Color(0xFF1E1E1E),
-                      fontFamily: 'Jaro',
                     ),
                   ),
 

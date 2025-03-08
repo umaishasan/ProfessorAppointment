@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/LoginScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:myacademicappointment/LoginScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -53,17 +54,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
 
-              const SizedBox(height: 37),
-
               // Make Study Easy Text
-              const Text(
+              const SizedBox(height: 2),
+              Text(
                 'Make Study Easy',
-                style: TextStyle(
-                  fontFamily: 'Herr Von Muellerhoff',
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                ),
+                style: GoogleFonts.herrVonMuellerhoff(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
                 textAlign: TextAlign.center,
               ),
 

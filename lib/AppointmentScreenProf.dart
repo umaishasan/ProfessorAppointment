@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/AllPandingsAppointment.dart';
-import 'package:scholappoinment_934074496/AppointmentDoneScreen.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/HomeScreen.dart';
-import 'package:scholappoinment_934074496/Models/Appointment.dart';
+import 'package:myacademicappointment/AllPandingsAppointment.dart';
+import 'package:myacademicappointment/AppointmentDoneScreen.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/Models/Appointment.dart';
 
 class AppointmentScreenProf extends StatefulWidget {
   const AppointmentScreenProf({super.key, required this.appointmentList});

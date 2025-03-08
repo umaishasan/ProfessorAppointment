@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Models/Person.dart';
 
 class IncomingMessage extends StatelessWidget {
   late String senderName;
@@ -14,7 +14,7 @@ class IncomingMessage extends StatelessWidget {
       required this.senderName,
       required this.messageUser,
       required this.messageTime,
-      this.imageUrl = ""});
+      required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

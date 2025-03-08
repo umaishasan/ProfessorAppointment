@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenProf.dart';
-import 'package:scholappoinment_934074496/AppointmentScreenStu.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/DiscussionScreen.dart';
-import 'package:scholappoinment_934074496/EditProfileScreen.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/LoginScreen.dart';
-import 'package:scholappoinment_934074496/Models/Appointment.dart';
-import 'package:scholappoinment_934074496/Models/Messaging.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/Models/Schedule.dart';
-import 'package:scholappoinment_934074496/SetScheduleScreen.dart';
+import 'package:myacademicappointment/AppointmentScreenProf.dart';
+import 'package:myacademicappointment/AppointmentScreenStu.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/DiscussionScreen.dart';
+import 'package:myacademicappointment/EditProfileScreen.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/LoginScreen.dart';
+import 'package:myacademicappointment/Models/Appointment.dart';
+import 'package:myacademicappointment/Models/Messaging.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/Models/Schedule.dart';
+import 'package:myacademicappointment/SetScheduleScreen.dart';
 
 // ignore: must_be_immutable
 class Sidebar extends StatefulWidget {
@@ -61,9 +61,17 @@ class _SidebarState extends State<Sidebar> {
   Widget buildHeader(
       BuildContext context, String role, String name, String imageUrl) {
     return Container(
-      color: const Color.fromARGB(180, 101, 188, 71),
       height: 230,
       padding: const EdgeInsets.only(top: 50),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFE0E0E0),
+              Color(0xFF2E7D32),
+            ]),
+      ),
       child: Column(
         children: [
           const SizedBox(height: 35),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/DateComponent.dart';
+import 'package:myacademicappointment/Components/DateComponent.dart';
 
 class SetTimeComponent extends StatefulWidget {
   final int initialHour;

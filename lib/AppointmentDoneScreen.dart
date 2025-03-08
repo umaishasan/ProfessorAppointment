@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Models/Appointment.dart';
+import 'package:myacademicappointment/Models/Appointment.dart';
 
 class DoneAppointmentScreen extends StatelessWidget {
   late Appointment appointment;

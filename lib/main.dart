@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:myacademicappointment/Models/Person.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:scholappoinment_934074496/SplashScreen.dart';
+import 'package:myacademicappointment/SplashScreen.dart';
 import 'Firebase/firebase_options.dart';
 
 //This variable use for screen size
@@ -34,11 +34,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
             centerTitle: true,
-            elevation: 20,
+            elevation: 5,
+            shadowColor: Colors.black54,
             iconTheme: IconThemeData(color: Colors.black),
             titleTextStyle: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
-            backgroundColor: Color(0xFF32983E),
+                color: Colors.black,
+                fontFamily: 'Jaro',
+                fontWeight: FontWeight.bold,
+                fontSize: 20),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
             toolbarTextStyle: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

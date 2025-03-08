@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/LoginScreen.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/LoginScreen.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -68,6 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             'SIGNUP',
                             style: TextStyle(
                               fontFamily: 'Jaro',
+                              fontWeight: FontWeight.bold,
                               fontSize: 40,
                               color: Color(0xFF1E1E1E),
                             ),

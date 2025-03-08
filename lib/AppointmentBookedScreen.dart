@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/Models/Appointment.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/Models/Appointment.dart';
+import 'package:myacademicappointment/Models/Person.dart';
 
 class BookedScreen extends StatelessWidget {
   BookedScreen({super.key, required this.appointment});

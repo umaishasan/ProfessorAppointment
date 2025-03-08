@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/LoginScreen.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/LoginScreen.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key, required this.email});
@@ -48,8 +48,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   const Text(
                     'Forget Password',
                     style: TextStyle(
-                      fontSize: 37,
+                      fontSize: 35,
                       fontFamily: 'Jaro',
+                      fontWeight: FontWeight.bold,
                       color: Color(0xFF1E1E1E),
                     ),
                   ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Components/Messages.dart';
-import 'package:scholappoinment_934074496/Firebase/FirebaseServices.dart';
-import 'package:scholappoinment_934074496/Models/Messaging.dart';
-import 'package:scholappoinment_934074496/main.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Components/Messages.dart';
+import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
+import 'package:myacademicappointment/Models/Messaging.dart';
+import 'package:myacademicappointment/main.dart';
 
 // ignore: must_be_immutable
 class DiscussionScreen extends StatefulWidget {

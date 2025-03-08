@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scholappoinment_934074496/AppointmentBookingScreen.dart';
-import 'package:scholappoinment_934074496/Components/CommonComponent.dart';
-import 'package:scholappoinment_934074496/Models/Person.dart';
-import 'package:scholappoinment_934074496/Models/Schedule.dart';
+import 'package:myacademicappointment/AppointmentBookingScreen.dart';
+import 'package:myacademicappointment/Components/CommonComponent.dart';
+import 'package:myacademicappointment/Models/Person.dart';
+import 'package:myacademicappointment/Models/Schedule.dart';
 
 class AllAppointmentStuScreen extends StatefulWidget {
   const AllAppointmentStuScreen({super.key, required this.schedule});
