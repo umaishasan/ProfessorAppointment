@@ -10,6 +10,7 @@ class Appointment {
     required this.TeacherId,
     required this.TeacherQualification,
     required this.UserImage,
+    required this.TechImage,
   });
 
   late String Id;
@@ -22,6 +23,7 @@ class Appointment {
   late String TeacherId;
   late String TeacherQualification;
   late String UserImage;
+  late String TechImage;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -35,6 +37,7 @@ class Appointment {
     data['TeacherId'] = TeacherId;
     data['TeaQualif'] = TeacherQualification;
     data['UserImage'] = UserImage;
+    data['TechImage'] = TechImage;
     return data;
   }
 
@@ -49,5 +52,6 @@ class Appointment {
     TeacherId = json['TeacherId'];
     TeacherQualification = json['TeaQualif'];
     UserImage = json['UserImage'];
+    TechImage = json['TechImage'];
   }
 }

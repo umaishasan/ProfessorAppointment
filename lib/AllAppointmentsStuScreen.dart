@@ -42,7 +42,8 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Profile Image
-              CommonComponent.ImageAvatar(context, prson.UserImage, 70, 70),
+              CommonComponent.ImageAvatar(
+                  context, widget.schedule.UserImage, 70, 70),
               const SizedBox(width: 15),
 
               // Info and Button Column
@@ -50,6 +51,7 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //name
                     Text(
                       widget.schedule.Name,
                       style: const TextStyle(
@@ -58,6 +60,8 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
+                    //qualification
                     const SizedBox(height: 5),
                     Text(
                       widget.schedule.Qualification,
@@ -67,6 +71,8 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                         fontWeight: FontWeight.w300,
                       ),
                     ),
+
+                    //status
                     const SizedBox(height: 5),
                     Text(
                       widget.schedule.Status,
@@ -76,6 +82,8 @@ class _AllAppointmentStuScreenState extends State<AllAppointmentStuScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
+                    //show book button
                     const SizedBox(height: 14),
                     ShowButton(widget.schedule.Status)
                   ],

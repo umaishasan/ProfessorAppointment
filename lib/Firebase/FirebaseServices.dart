@@ -162,7 +162,9 @@ class FirebaseServices extends StatelessWidget {
   static Stream<QuerySnapshot<Map<String, dynamic>>> GetAllMeassages() {
     // print(
     //     "Get message id: ${Firestore.collection('${FirestoreMsgCollectionName}')}");
-    return Firestore.collection(FirestoreMsgCollectionName).snapshots();
+    return Firestore.collection(FirestoreMsgCollectionName)
+        .orderBy('MesageTime', descending: false)
+        .snapshots();
   }
 
   //get all schedule
@@ -236,7 +238,8 @@ class FirebaseServices extends StatelessWidget {
       String teacherName,
       String teacherId,
       String teacherQualification,
-      String imageUrl) async {
+      String imageUrl,
+      String techImage) async {
     try {
       DocumentReference docRef =
           await Firestore.collection(FirestoreAppointmentCollectionName).add({
@@ -248,6 +251,7 @@ class FirebaseServices extends StatelessWidget {
         'TeacherId': teacherId,
         'TeaQualif': teacherQualification,
         'UserImage': imageUrl,
+        'TechImage': techImage,
       });
 
       await docRef.update({'Id': Auth.currentUser!.uid});

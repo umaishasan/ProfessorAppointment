@@ -135,6 +135,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
       if (snapshot.docs.isNotEmpty) {
         List<Messaging> fetchedMessages =
             snapshot.docs.map((doc) => Messaging.fromJson(doc.data())).toList();
+        fetchedMessages.sort((a, b) => a.MesageTime.compareTo(b.MesageTime));
         setState(() {
           widget.userMessages = fetchedMessages;
           FirebaseServices.GetFirebaseMessagingToken();

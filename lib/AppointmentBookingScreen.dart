@@ -56,7 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           children: [
                             const SizedBox(height: 20),
                             CommonComponent.ImageAvatar(
-                                context, person.UserImage, 70, 70),
+                                context, widget.schedule.UserImage, 70, 70),
                             const SizedBox(height: 12),
                             Text(
                               widget.schedule.Name,
@@ -187,14 +187,16 @@ class _BookingScreenState extends State<BookingScreen> {
                       ElevatedButton(
                         onPressed: () {
                           BookedAppointment(
-                              context,
-                              person.Name,
-                              person.User,
-                              confrimDate,
-                              widget.schedule.Name,
-                              widget.schedule.Id,
-                              widget.schedule.Qualification,
-                              widget.schedule.UserImage);
+                            context,
+                            person.Name,
+                            person.User,
+                            confrimDate,
+                            widget.schedule.Name,
+                            widget.schedule.Id,
+                            widget.schedule.Qualification,
+                            person.UserImage,
+                            widget.schedule.UserImage,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF32983E),
@@ -249,10 +251,11 @@ class _BookingScreenState extends State<BookingScreen> {
       String teacherName,
       String teacherId,
       String teacherQualification,
-      String imageUrl) {
+      String imageUrl,
+      String techImage) {
     //print("Name: ${name}, User: ${user}, DateTime: ${dateTime} ");
     FirebaseServices.SetAppointment(name, user, dateTime, false, teacherName,
-        teacherId, teacherQualification, imageUrl);
+        teacherId, teacherQualification, imageUrl, techImage);
 
     CommonComponent.BacktoHome(context);
   }

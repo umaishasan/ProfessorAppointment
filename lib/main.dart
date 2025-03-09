@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.black,
                 fontFamily: 'Jaro',
                 fontWeight: FontWeight.bold,
-                fontSize: 20),
+                fontSize: 30),
             backgroundColor: Color.fromARGB(255, 255, 255, 255),
             toolbarTextStyle: TextStyle(
                 color: Colors.black,

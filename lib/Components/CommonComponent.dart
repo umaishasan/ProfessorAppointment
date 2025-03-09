@@ -96,7 +96,7 @@ class CommonComponent extends StatelessWidget {
       child: CachedNetworkImage(
         width: width,
         height: height,
-        imageUrl: imageUrls ?? '',
+        imageUrl: imageUrls,
         placeholder: (context, url) => const CircularProgressIndicator(),
         errorWidget: (context, url, error) => const CircleAvatar(
           child: Icon(CupertinoIcons.person),

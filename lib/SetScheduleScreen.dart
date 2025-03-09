@@ -200,9 +200,9 @@ class _SetScheduleScreenState extends State<SetScheduleScreen> {
   }
 
   void setSchedule() {
-    if (AvailableText == "Not Available") {
+    if (AvailableText == "Not Available" || AvailableText == "") {
       SetScheduleScreen.scheduleDateData = [];
-      FirebaseServices.SetSchedule([], AvailableText)
+      FirebaseServices.SetSchedule([], "Not Available")
           .then((_) => CommonComponent.BacktoHome(context));
     } else {
       FirebaseServices.SetSchedule(

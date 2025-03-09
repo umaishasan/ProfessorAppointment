@@ -225,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       CommonComponent.BacktoHome(context);
     });
     print(
-        "Id: ${id}, Name: ${userName}, Qualification: ${qualification}, Gender: ${gender}");
+        "Id: ${id}, Name: ${userName}, Qualification: ${qualification}, Gender: ${gender}, userImage: ${imagUrl}");
   }
 
   void EditImage() {

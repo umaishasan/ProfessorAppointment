@@ -21,6 +21,8 @@ class _AllPandingAppointmentScreenState
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "Which name is comming => Panding name: ${widget.appointment.Name}, image: ${widget.appointment.UserImage}");
     var prson = Provider.of<Person>(context);
     return Column(
       children: [
@@ -45,11 +47,14 @@ class _AllPandingAppointmentScreenState
             children: [
               Row(
                 children: [
-                  CommonComponent.ImageAvatar(context, prson.UserImage, 60, 60),
+                  //user image
+                  CommonComponent.ImageAvatar(
+                      context, widget.appointment.UserImage, 60, 60),
                   const SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //name
                       Text(
                         widget.appointment.Name,
                         style: const TextStyle(
@@ -58,6 +63,8 @@ class _AllPandingAppointmentScreenState
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
+                      //role teacher/student
                       const SizedBox(height: 4),
                       Text(
                         widget.appointment.User,
@@ -67,6 +74,8 @@ class _AllPandingAppointmentScreenState
                           fontWeight: FontWeight.w300,
                         ),
                       ),
+
+                      //request for approval
                       const SizedBox(height: 4),
                       const Text(
                         'Request For Appointment',
@@ -80,6 +89,8 @@ class _AllPandingAppointmentScreenState
                   ),
                 ],
               ),
+
+              //button for confirm
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
