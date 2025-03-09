@@ -6,9 +6,9 @@ import 'package:myacademicappointment/Firebase/FirebaseServices.dart';
 import 'package:myacademicappointment/Models/Messaging.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key, required this.messaging});
+  MessageScreen({super.key, required this.messaging});
 
-  final Messaging messaging;
+  late Messaging messaging;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
@@ -23,15 +23,20 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Widget OthersMessages() {
+    // print(
+    //     "Message Screen => Their name: ${widget.messaging.Name}, Their image: ${widget.messaging.UserImage}");
+    String url = widget.messaging.UserImage;
     return IncomingMessage(
         senderName: widget.messaging.Name,
         messageUser: widget.messaging.Message,
-        imageUrl: widget.messaging.UserImage,
+        imageUrl: url,
         messageTime:
             CommonComponent.FetchTiming(context, widget.messaging.MesageTime));
   }
 
   Widget YoursMessages() {
+    // print(
+    //     "Message screen => Your name: ${widget.messaging.Name}, Your image: ${widget.messaging.UserImage}");
     return OutgoingMessage(
         yourName: widget.messaging.Name,
         messageUser: widget.messaging.Message,

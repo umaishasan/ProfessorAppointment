@@ -114,6 +114,8 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         var messageUser = widget.userMessages[index];
+        // print(
+        //     "In Discussion screen => name: ${messageUser.Name}, image: ${messageUser.UserImage}");
         return MessageScreen(messaging: messageUser);
       },
     );

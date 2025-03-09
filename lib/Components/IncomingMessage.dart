@@ -7,7 +7,7 @@ class IncomingMessage extends StatelessWidget {
   late String senderName;
   late String messageUser;
   late String messageTime;
-  final String imageUrl;
+  late String imageUrl;
 
   IncomingMessage(
       {super.key,
@@ -18,14 +18,16 @@ class IncomingMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var prson = Provider.of<Person>(context);
+    //print("In incoming message: ${imageUrl}");
     return Card(
       color: const Color.fromARGB(0, 0, 0, 0),
       elevation: 0,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonComponent.ImageAvatar(context, prson.UserImage, 50, 50),
+          //image network use for debugging
+          //Image.network(imageUrl, width: 50, height: 50),
+          CommonComponent.ImageAvatar(context, imageUrl, 50, 50),
           const SizedBox(width: 8),
           Flexible(
             child: Container(
